@@ -26,25 +26,45 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("ADD to do"),
+        centerTitle: true,
+        title: Text("Adicione uma tarefa"),
       ),
       body: ListView(
         children: [
           Container(
+            padding: EdgeInsets.all(30),
             child: Column(
               children: [
+                Icon(
+                  Icons.featured_play_list_outlined,
+                  size: 110.0,
+                  color: Colors.red,
+                ),
                 TextField(
+                  style: TextStyle(color: Colors.red, fontSize: 20),
                   controller: toDoTitleController,
+                  decoration: InputDecoration(
+                      labelStyle: TextStyle(color: Colors.red),
+                      labelText: "Digite a sua tarefa"),
                 ),
                 TextField(
+                  style: TextStyle(color: Colors.red, fontSize: 20),
                   controller: toDoDescriptionController,
+                  decoration: InputDecoration(
+                      labelStyle: TextStyle(color: Colors.red),
+                      labelText: "Digite a sua tarefa"),
                 ),
-                RaisedButton(
-                    child: Text("Add"),
-                    onPressed: () {
-                      onAdd();
-                      Navigator.of(context).pop();
-                    })
+                Padding(
+                  padding: EdgeInsets.only(top: 30),
+                  child: RaisedButton(
+                      color: Colors.red,
+                      child: Text("Confirmar",
+                          style: TextStyle(color: Colors.white)),
+                      onPressed: () {
+                        onAdd();
+                        Navigator.of(context).pop();
+                      }),
+                )
               ],
             ),
           )
