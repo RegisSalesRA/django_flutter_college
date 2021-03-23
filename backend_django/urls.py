@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('api/v1/', include('To_do_list.urls')),
     path('api/', ListToDoList.as_view()),
-    path('api/<int:pk>',DetailToDoList.as_view()),
+    path('api/<int:pk>/',DetailToDoList.as_view()),
 ]
