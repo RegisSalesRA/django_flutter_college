@@ -41,4 +41,4 @@ Second Step:
 ## Have fun =)
 
     
-<img src="frontend_flutter/images/readme.png" alt="">
+<img src="frontend_flutter/images/ReadmeLogo.png" alt="">
