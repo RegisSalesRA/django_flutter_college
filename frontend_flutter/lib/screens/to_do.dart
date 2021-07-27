@@ -1,28 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_flutter/model/model.dart';
 import 'package:frontend_flutter/screens/addToDo.dart';
 import 'package:provider/provider.dart';
 
-import 'api/api.dart';
+import '../api/api.dart';
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ToDoProvider(),
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.red,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: HomePage(),
-      ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
+class ToDo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final toDoP = Provider.of<ToDoProvider>(context);

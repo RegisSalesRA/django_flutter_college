@@ -17,10 +17,19 @@ from To_do_list.models import ToDoList
 from django.contrib import admin
 from django.urls import path,include
 from To_do_list.urls import *
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('api/v1/', include('To_do_list.urls')),
     path('api/', ListToDoList.as_view()),
     path('api/<int:pk>/',DetailToDoList.as_view()),
+    path('api/v1/', include('django_forms.urls'))
+
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

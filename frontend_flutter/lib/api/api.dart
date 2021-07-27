@@ -1,5 +1,5 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:frontend_flutter/config/api_adress.dart';
 import 'dart:convert';
 import '../model/model.dart';
 import 'package:http/http.dart' as http;
@@ -16,7 +16,7 @@ class ToDoProvider with ChangeNotifier {
   }
 
   void addToDo(ToDo toDoList) async {
-    final response = await http.post('http://10.0.2.2:8000/api/',
+    final response = await http.post('$baseUrl:8000/api/',
         headers: {"Content-Type": "application/json"},
         body: json.encode(toDoList));
     if (response.statusCode == 201) {
@@ -27,8 +27,7 @@ class ToDoProvider with ChangeNotifier {
   }
 
   void deleteToDo(ToDo toDoList) async {
-    final response =
-        await http.delete('http://10.0.2.2:8000/api/${toDoList.id}/');
+    final response = await http.delete('$baseUrl:8000/api/${toDoList.id}/');
     if (response.statusCode == 204) {
       _toDoList.remove(toDoList);
       notifyListeners();
@@ -36,7 +35,7 @@ class ToDoProvider with ChangeNotifier {
   }
 
   fetchTasks() async {
-    final url = 'http://10.0.2.2:8000/api/?format=json';
+    final url = '$baseUrl:8000/api/?format=json';
     final response = await http.get(url);
     if (response.statusCode == 200) {
       var data = json.decode(response.body) as List;

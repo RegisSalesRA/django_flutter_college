@@ -56,6 +56,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 30),
+                  // ignore: deprecated_member_use
                   child: RaisedButton(
                       color: Colors.red,
                       child: Text("Confirmar",
