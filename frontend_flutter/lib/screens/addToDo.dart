@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/api/api.dart';
-import 'package:frontend_flutter/model/model.dart';
+import 'package:frontend_flutter/model/model_todo.dart';
 import 'package:provider/provider.dart';
 
 class AddTodoScreen extends StatefulWidget {
@@ -20,6 +20,13 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
       final ToDo todo = ToDo(title: textVal, description: descriptionVal);
       Provider.of<ToDoProvider>(context, listen: false).addToDo(todo);
     }
+  }
+
+  @override
+  void dispose() {
+    toDoTitleController.dispose();
+    toDoDescriptionController.dispose();
+    super.dispose();
   }
 
   @override

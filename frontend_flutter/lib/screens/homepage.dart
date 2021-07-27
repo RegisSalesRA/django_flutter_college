@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend_flutter/api/api_form.dart';
 import 'package:provider/provider.dart';
 
+import 'formCrud/cadastrar.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -33,6 +35,15 @@ class _HomePageState extends State<HomePage> {
           title: Text("Home Django Flutter"),
           centerTitle: true,
         ),
+        floatingActionButton: FloatingActionButton(
+            child: Icon(
+              Icons.add,
+              size: 30,
+            ),
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (ctx) => CadastrarForm()));
+            }),
         body: Container(
             child: ListView.builder(
                 itemCount: cadastros.length,
@@ -57,10 +68,14 @@ class _HomePageState extends State<HomePage> {
                             width: 70,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(1.0),
-                              child: Image.network(
-                                cadastros[index].image,
-                                fit: BoxFit.cover,
-                              ),
+                              child: cadastros[index].image != null
+                                  ? Image.network(
+                                      cadastros[index].image,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Center(
+                                      child: Text("Sem imagem"),
+                                    ),
                             ),
                           ),
                           Container(
@@ -90,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'Rua Bueno Costa Augusto Nunes',
+                                            cadastros[index].school,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
@@ -101,15 +116,9 @@ class _HomePageState extends State<HomePage> {
                                             height: 3,
                                           ),
                                           Text(
-                                            "(85) 91234-1234",
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 8,
-                                                color: Colors.black),
-                                          ),
-                                          Text(
-                                            "contato@timehouse.com.br",
+                                            cadastros[index]
+                                                .isCompleted
+                                                .toString(),
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,

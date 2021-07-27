@@ -31,16 +31,39 @@ class CadastroProvider with ChangeNotifier {
     }
   }
 
-  // void addToDo(CadastroForm toDoList) async {
-  //   final response = await http.post('$baseUrl:8000/api/',
-  //       headers: {"Content-Type": "application/json"},
-  //       body: json.encode(toDoList));
-  //   if (response.statusCode == 201) {
-  //     toDoList.id = json.decode(response.body)['id'];
-  //     _toDoList.add(toDoList);
-  //     notifyListeners();
-  //   }
-  // }
+  void cadastrarForm(CadastroForm cadastroForm) async {
+    final response = await http.post('$baseUrl:8000/api/v1/',
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(cadastroForm));
+    if (response.statusCode == 200) {
+      cadastroForm.id = json.decode(response.body)['id'];
+      print(cadastroForm);
+      _cadastroList.add(cadastroForm);
+      notifyListeners();
+    }
+  }
+
+  Future<CadastroForm> createCase(CadastroForm cadastroForm) async {
+    String url = '$baseUrl:8000/api/v1/';
+
+    Map data = {
+      'image': cadastroForm.image,
+      'nome': cadastroForm.nome,
+      'school': cadastroForm.school,
+      'isCompleted': cadastroForm.isCompleted
+    };
+    http.Response response = await http.post(url,
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+        },
+        body: jsonEncode(data));
+
+    if (response.statusCode == 201) {
+      return CadastroForm.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to post cases');
+    }
+  }
 
   // void deleteToDo(CadastroForm toDoList) async {
   //   final response = await http.delete('$baseUrl:8000/api/${toDoList.id}/');

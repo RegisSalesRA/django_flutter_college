@@ -26,3 +26,14 @@ class CadastroForm(models.Model):
 
     def __str__(self):
         return self.nome
+
+
+class FastCadastro(models.Model):
+    nome = models.CharField(max_length=100)
+    sobrenome = models.CharField(max_length=100)
+
+    def __repr__(self):
+        return self.nome
+
+    def __str__(self):
+        return self.nome
