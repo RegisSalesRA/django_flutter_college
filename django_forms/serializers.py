@@ -15,5 +15,5 @@ class FastCadastroserializers(serializers.ModelSerializer):
     class Meta:
         model = FastCadastro
         fields = (
-            'id','nome', 'sobrenome'
+            'id','nome', 'sobrenome' ,'isCompleted','image'
         )

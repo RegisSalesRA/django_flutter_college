@@ -33,36 +33,37 @@ class CadastroFastProvider with ChangeNotifier {
   }
 
   void cadastrarFastForm(FastCadastro cadastroForm) async {
-    final response = await http.post('$baseUrl:8000/api/v1/cadastro/',
-        headers: {"Content-Type": "application/json"},
-        body: json.encode(cadastroForm));
-    if (response.statusCode == 200) {
-      cadastroForm.id = json.decode(response.body)['id'];
-      print(cadastroForm);
-      _cadastrofastList.add(cadastroForm);
+    String url = '$baseUrl:8000/api/v1/cadastro/';
+    try {
+      http.Response response = await http.post(url,
+          headers: {"Content-Type": "application/json"},
+          body: json.encode(cadastroForm));
       notifyListeners();
+      return print("${response.body} Cadastrado com sucesso!");
+    } catch (e) {
+      print(e);
     }
   }
 
-  Future<CadastroForm> createCase(FastCadastro cadastroForm) async {
-    String url = '$baseUrl:8000/api/v1/';
+  // Future<CadastroForm> createCase(FastCadastro cadastroForm) async {
+  //   String url = '$baseUrl:8000/api/v1/';
 
-    Map data = {
-      'nome': cadastroForm.nome,
-      'sobrenome': cadastroForm.sobrenome,
-    };
-    http.Response response = await http.post(url,
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-        },
-        body: jsonEncode(data));
+  //   Map data = {
+  //     'nome': cadastroForm.nome,
+  //     'sobrenome': cadastroForm.sobrenome,
+  //   };
+  //   http.Response response = await http.post(url,
+  //       headers: {
+  //         'Content-Type': 'application/json;charset=UTF-8',
+  //       },
+  //       body: jsonEncode(data));
 
-    if (response.statusCode == 200) {
-      return CadastroForm.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to post cases');
-    }
-  }
+  //   if (response.statusCode == 200) {
+  //     return CadastroForm.fromJson(json.decode(response.body));
+  //   } else {
+  //     throw Exception('Failed to post cases');
+  //   }
+  // }
 
   // void deleteToDo(CadastroForm toDoList) async {
   //   final response = await http.delete('$baseUrl:8000/api/${toDoList.id}/');

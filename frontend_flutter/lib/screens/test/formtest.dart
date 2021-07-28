@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/api/api_fast_form.dart';
 import 'package:frontend_flutter/model/model_fast_cadastro.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class CadastrarFormFast extends StatefulWidget {
@@ -16,12 +17,24 @@ class _CadastrarFormFastState extends State<CadastrarFormFast> {
   String sobrenome;
   String school;
   bool isCompleted = false;
+  File image;
+  final picker = ImagePicker();
+
+  Future<void> chooseImage() async {
+    var choosedimage = await ImagePicker.pickImage(source: ImageSource.camera);
+    //set source: ImageSource.camera to get image from camera
+    setState(() {
+      image = choosedimage;
+    });
+  }
 
   void adicionar() {
     if (_formKeyCadastro.currentState.validate()) {
-      final FastCadastro cadastroForm =
-          FastCadastro(nome: nome, sobrenome: sobrenome);
-      print(nome);
+      final FastCadastro cadastroForm = FastCadastro(
+          nome: nome,
+          sobrenome: sobrenome,
+          isCompleted: isCompleted,
+          image: image);
       Provider.of<CadastroFastProvider>(context, listen: false)
           .cadastrarFastForm(cadastroForm);
     }
@@ -77,7 +90,6 @@ class _CadastrarFormFastState extends State<CadastrarFormFast> {
                       });
                     },
                   ),
-
 /*
                   Padding(
                       padding: EdgeInsets.all(8),
@@ -114,6 +126,8 @@ class _CadastrarFormFastState extends State<CadastrarFormFast> {
                           },
                         ),
                       )),
+
+                      */
                   Divider(),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     Checkbox(
@@ -133,10 +147,47 @@ class _CadastrarFormFastState extends State<CadastrarFormFast> {
                     ),
                   ]),
                   SizedBox(
+                    height: 25,
+                  ),
+                  Container(
+                      //show upload button after choosing image
+                      child: image != null
+                          ? InkWell(
+                              onTap: () {
+                                chooseImage();
+                              },
+                              child: Container(
+                                height: 150,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(50.0)),
+                                ),
+                                child: CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.transparent,
+                                  child: Image.file(image),
+                                ),
+                              ))
+                          : //if uploadimage is null then show empty container
+                          Container(
+                              //elese show uplaod button
+                              // ignore: deprecated_member_use
+                              child: RaisedButton.icon(
+                              onPressed: () {
+                                chooseImage();
+                                //start uploading image
+                              },
+                              icon: Icon(Icons.file_upload),
+                              label: Text("UPLOAD IMAGE"),
+                              color: Colors.red,
+                              colorBrightness: Brightness.dark,
+                              //set brghtness to dark, because deepOrangeAccent is darker coler
+                              //so that its text color is light
+                            ))),
+                  SizedBox(
                     height: 55,
                   ),
-
-                  */
                   ElevatedButton(
                       onPressed: () {
                         adicionar();

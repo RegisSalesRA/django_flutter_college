@@ -31,6 +31,8 @@ class CadastroForm(models.Model):
 class FastCadastro(models.Model):
     nome = models.CharField(max_length=100)
     sobrenome = models.CharField(max_length=100)
+    isCompleted = models.BooleanField(default=False)
+    image = models.ImageField(upload_to="fotosCamera/")
 
     def __repr__(self):
         return self.nome
