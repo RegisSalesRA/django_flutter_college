@@ -5,11 +5,11 @@ import 'package:frontend_flutter/model/model_fast_cadastro.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class CadastroProvider with ChangeNotifier {
+class CadastroFastProvider with ChangeNotifier {
   List<FastCadastro> _cadastrofastList = [];
 
   Future<bool> getfastCadastro() async {
-    String url = '$baseUrl:8000/api/v1/';
+    String url = '$baseUrl:8000/api/v1/cadastro/';
 
     try {
       http.Response response = await http.get(url, headers: {
@@ -32,8 +32,8 @@ class CadastroProvider with ChangeNotifier {
     }
   }
 
-  void cadastrarForm(FastCadastro cadastroForm) async {
-    final response = await http.post('$baseUrl:8000/api/v1/',
+  void cadastrarFastForm(FastCadastro cadastroForm) async {
+    final response = await http.post('$baseUrl:8000/api/v1/cadastro/',
         headers: {"Content-Type": "application/json"},
         body: json.encode(cadastroForm));
     if (response.statusCode == 200) {
@@ -57,7 +57,7 @@ class CadastroProvider with ChangeNotifier {
         },
         body: jsonEncode(data));
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       return CadastroForm.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to post cases');

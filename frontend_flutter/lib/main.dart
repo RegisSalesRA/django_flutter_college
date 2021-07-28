@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend_flutter/screens/homepage.dart';
 import 'package:provider/provider.dart';
 import 'api/api.dart';
+import 'api/api_fast_form.dart';
 import 'api/api_form.dart';
 
 void main() {
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (ctx) => ToDoProvider()),
         ChangeNotifierProvider(create: (ctx) => CadastroProvider()),
+        ChangeNotifierProvider(create: (ctx) => CadastroFastProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

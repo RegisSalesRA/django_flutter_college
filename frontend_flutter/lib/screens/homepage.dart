@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/api/api_form.dart';
+import 'package:frontend_flutter/screens/test/formtest.dart';
 import 'package:provider/provider.dart';
 
 import 'formCrud/cadastrar.dart';
@@ -41,8 +42,8 @@ class _HomePageState extends State<HomePage> {
               size: 30,
             ),
             onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (ctx) => CadastrarForm()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (ctx) => CadastrarFormFast()));
             }),
         body: Container(
             child: ListView.builder(
