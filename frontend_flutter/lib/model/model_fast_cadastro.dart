@@ -5,7 +5,7 @@ class FastCadastro {
   String nome;
   String sobrenome;
   bool isCompleted;
-  File image;
+  String image;
 
   FastCadastro(
       {this.id, this.nome, this.sobrenome, this.isCompleted, this.image});
