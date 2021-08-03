@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/api/api_form.dart';
 import 'package:frontend_flutter/model/model_cadastro.dart';
@@ -118,7 +116,7 @@ class _CadastrarFormState extends State<CadastrarForm> {
                   ElevatedButton(
                       onPressed: () {
                         adicionar();
-                        print('Adicionado');
+
                         Navigator.of(context).pop();
                       },
                       child: Text('Submit Data')),

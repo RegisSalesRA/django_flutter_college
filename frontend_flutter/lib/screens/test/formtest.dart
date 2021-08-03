@@ -1,11 +1,10 @@
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/api/api_fast_form.dart';
 import 'package:frontend_flutter/model/model_fast_cadastro.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 
 class CadastrarFormFast extends StatefulWidget {
@@ -19,43 +18,52 @@ class _CadastrarFormFastState extends State<CadastrarFormFast> {
   String sobrenome;
   String school;
   bool isCompleted = false;
-  File _image;
-  String _imagepath;
+  File imageSelected;
+  String imageData;
   final picker = ImagePicker();
 
-  Future<void> chooseImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
-    final data = DateTime.now().millisecondsSinceEpoch.toString();
-    //set source: ImageSource.camera to get image from camera
-    Directory appDocDir = await getApplicationDocumentsDirectory();
-    print('Directory é: ${appDocDir}');
-    String bgPath = appDocDir.uri.resolve(data.toString()).path;
-    print('Path é: ${bgPath}');
-    // ignore: unused_local_variable
-    File bgFile = await image.copy(bgPath);
+  Future chooseImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
     setState(() {
-      _image = image;
-      _imagepath = bgPath;
+      if (pickedFile != null) {
+        imageSelected = File(pickedFile.path);
+        print(imageSelected);
+        imageData = base64Encode(imageSelected.readAsBytesSync());
+        return imageData;
+      } else {
+        print('No image selected.');
+      }
     });
+
+    // ImagePicker imagePicker = ImagePicker();
+    // final image = await ImagePicker.pickImage(source: ImageSource.camera);
+    // imageSelected = File(image.path);
+
+    // var caminho = image.path;
+    // var bytes = image.readAsBytesSync();
+    // print(caminho);
+    // print(bytes);
+    // setState(() {
+    //   imageSelected = image;
+    // });
   }
 
-  void saveImage(path) async {
-    SharedPreferences saveimage = await SharedPreferences.getInstance();
-    saveimage.setString("imagepath", path);
-  }
+  Future<String> pickImage() async {
+    PickedFile pickedFile;
+    File file;
+    ImagePicker imagePicker = ImagePicker();
 
-  void loadImage() async {
-    SharedPreferences saveimage = await SharedPreferences.getInstance();
-    setState(() {
-      _imagepath = saveimage.getString("imagepath");
-    });
-  }
+    pickedFile = await imagePicker.getImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      file = File(pickedFile.path);
 
-  @override
-  // ignore: must_call_super
-  void initState() {
-    loadImage();
+      String image = base64Encode(file.readAsBytesSync());
+      return image;
+    } else {
+      print('Pick Image First');
+      return 'Error';
+    }
   }
 
   void adicionar() {
@@ -64,10 +72,11 @@ class _CadastrarFormFastState extends State<CadastrarFormFast> {
           nome: nome,
           sobrenome: sobrenome,
           isCompleted: isCompleted,
-          image: _imagepath.toString());
-      print(_imagepath);
+          image: imageData);
+
       Provider.of<CadastroFastProvider>(context, listen: false)
           .cadastrarFastForm(cadastroForm);
+      print(cadastroForm);
     }
   }
 
@@ -182,7 +191,7 @@ class _CadastrarFormFastState extends State<CadastrarFormFast> {
                   ),
                   Container(
                       //show upload button after choosing image
-                      child: _image != null
+                      child: imageSelected != null
                           ? InkWell(
                               onTap: () {
                                 chooseImage();
@@ -197,7 +206,7 @@ class _CadastrarFormFastState extends State<CadastrarFormFast> {
                                 child: CircleAvatar(
                                   radius: 50,
                                   backgroundColor: Colors.transparent,
-                                  child: Image.file(_image),
+                                  child: Image.file(imageSelected),
                                 ),
                               ))
                           : //if uploadimage is null then show empty container
@@ -221,9 +230,9 @@ class _CadastrarFormFastState extends State<CadastrarFormFast> {
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        //   adicionar();
-                        print('Adicionado');
-                        Navigator.of(context).pop();
+                        adicionar();
+
+                        // Navigator.of(context).pop();
                       },
                       child: Text('Submit Data')),
                 ],

@@ -33,7 +33,9 @@ dependencies:
   image_picker: ^0.6.5+2
   shared_preferences: ^0.5.7
   path_provider: ^2.0.2
-  
+  dio: ^3.0.10
+  http_parser: ^3.1.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

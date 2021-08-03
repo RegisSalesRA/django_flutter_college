@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/config/api_adress.dart';
-import 'package:frontend_flutter/model/model_cadastro.dart';
 import 'package:frontend_flutter/model/model_fast_cadastro.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -38,6 +37,7 @@ class CadastroFastProvider with ChangeNotifier {
       http.Response response = await http.post(url,
           headers: {"Content-Type": "application/json"},
           body: json.encode(cadastroForm));
+      print(response.body);
       notifyListeners();
       return print("${response.body} Cadastrado com sucesso!");
     } catch (e) {
