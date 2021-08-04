@@ -1,11 +1,12 @@
-import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/api/api_fast_form.dart';
+import 'package:frontend_flutter/config/api_adress.dart';
 import 'package:frontend_flutter/model/model_fast_cadastro.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:path_provider/path_provider.dart';
 
 class CadastrarFormFast extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class CadastrarFormFast extends StatefulWidget {
 }
 
 class _CadastrarFormFastState extends State<CadastrarFormFast> {
+  final nomeController = TextEditingController();
   final _formKeyCadastro = GlobalKey<FormState>();
   String nome;
   String sobrenome;
@@ -23,17 +25,10 @@ class _CadastrarFormFastState extends State<CadastrarFormFast> {
   final picker = ImagePicker();
 
   Future chooseImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    var pickedFile = await picker.getImage(source: ImageSource.gallery);
 
     setState(() {
-      if (pickedFile != null) {
-        imageSelected = File(pickedFile.path);
-        print(imageSelected);
-        imageData = base64Encode(imageSelected.readAsBytesSync());
-        return imageData;
-      } else {
-        print('No image selected.');
-      }
+      imageSelected = File(pickedFile.path);
     });
 
     // ImagePicker imagePicker = ImagePicker();
@@ -49,22 +44,65 @@ class _CadastrarFormFastState extends State<CadastrarFormFast> {
     // });
   }
 
-  Future<String> pickImage() async {
-    PickedFile pickedFile;
-    File file;
-    ImagePicker imagePicker = ImagePicker();
+  // Future<String> pickImage() async {
+  //   PickedFile pickedFile;
+  //   File file;
+  //   ImagePicker imagePicker = ImagePicker();
 
-    pickedFile = await imagePicker.getImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      file = File(pickedFile.path);
+  //   pickedFile = await imagePicker.getImage(source: ImageSource.gallery);
+  //   if (pickedFile != null) {
+  //     file = File(pickedFile.path);
 
-      String image = base64Encode(file.readAsBytesSync());
-      return image;
-    } else {
-      print('Pick Image First');
-      return 'Error';
-    }
-  }
+  //     String image = base64Encode(file.readAsBytesSync());
+  //     return image;
+  //   } else {
+  //     print('Pick Image First');
+  //     return 'Error';
+  //   }
+  // }
+
+  // Future adicionarFormFast() async {
+  //   try {
+  //     final uri = Uri.parse('$baseUrl:8000/api/v1/alunos/');
+  //     var request = http.MultipartRequest('POST', uri);
+  //     request.fields['nome'] = nomeController.text;
+  //     var pic = await http.MultipartFile.fromPath('Image', imageSelected.path,
+  //         contentType: MediaType('image', 'jpeg'));
+  //     request.files.add(pic);
+  //     var response = await request.send();
+
+  //     if (response.statusCode == 200) {
+  //       print("Image Uploaded");
+  //     } else {
+  //       print("Image Not Uploaded");
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
+//  uploadFile() async {
+//     var postUri = Uri.parse('$baseUrl:8000/api/v1/alunos/');
+//     var request = new http.MultipartRequest("POST", postUri);
+//     request.fields['user'] = 'blah';
+//     request.files.add(new http.MultipartFile.fromBytes('file', await File.fromUri().readAsBytes(), contentType: new MediaType('image', 'jpeg')))
+
+//     request.send().then((response) {
+//       if (response.statusCode == 200) print("Uploaded!");
+//     });
+//   }
+
+  // static ocr(File image) async {
+  //   var url = '$baseUrl:8000/api/v1/alunos/';
+  //   var bytes = image.readAsBytesSync();
+
+  //   var response = await http.post(url,
+  //       headers: {"Content-Type": "multipart/form-data"},
+  //       body: {"nome": "${nomeController.text}", "image": bytes},
+  //       encoding: Encoding.getByName("utf-8"));
+
+  //   return response.body;
+  // }
 
   void adicionar() {
     if (_formKeyCadastro.currentState.validate()) {
@@ -78,6 +116,12 @@ class _CadastrarFormFastState extends State<CadastrarFormFast> {
           .cadastrarFastForm(cadastroForm);
       print(cadastroForm);
     }
+  }
+
+  @override
+  void dispose() {
+    nomeController.dispose();
+    super.dispose();
   }
 
   @override
@@ -99,37 +143,17 @@ class _CadastrarFormFastState extends State<CadastrarFormFast> {
                   SizedBox(
                     height: 15,
                   ),
-                  TextFormField(
-                    validator: (v) {
-                      if (v.isEmpty) {
-                        return "Por favor preencher os dados";
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(hintText: 'nome'),
-                    onChanged: (value) {
-                      setState(() {
-                        nome = value;
-                      });
-                    },
+                  TextField(
+                    style: TextStyle(color: Colors.red, fontSize: 20),
+                    controller: nomeController,
+                    decoration: InputDecoration(
+                        labelStyle: TextStyle(color: Colors.red),
+                        labelText: "Digite o nome"),
                   ),
                   SizedBox(
                     height: 15,
                   ),
-                  TextFormField(
-                    validator: (v) {
-                      if (v.isEmpty) {
-                        return "Por favor preencher os dados";
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(hintText: 'sobrenome'),
-                    onChanged: (value) {
-                      setState(() {
-                        sobrenome = value;
-                      });
-                    },
-                  ),
+
 /*
                   Padding(
                       padding: EdgeInsets.all(8),
@@ -169,23 +193,23 @@ class _CadastrarFormFastState extends State<CadastrarFormFast> {
 
                       */
                   Divider(),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Checkbox(
-                      value: isCompleted,
-                      activeColor: Colors.orange,
-                      onChanged: (bool valor) {
-                        setState(() {
-                          isCompleted = valor;
-                        });
-                        print("Checkbox: " + valor.toString());
-                      },
-                    ),
-                    Text(
-                      'is completed?',
-                      style:
-                          TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
-                    ),
-                  ]),
+                  // Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  //   Checkbox(
+                  //     value: isCompleted,
+                  //     activeColor: Colors.orange,
+                  //     onChanged: (bool valor) {
+                  //       setState(() {
+                  //         isCompleted = valor;
+                  //       });
+                  //       print("Checkbox: " + valor.toString());
+                  //     },
+                  //   ),
+                  //   Text(
+                  //     'is completed?',
+                  //     style:
+                  //         TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                  //   ),
+                  // ]),
                   SizedBox(
                     height: 25,
                   ),
@@ -230,9 +254,9 @@ class _CadastrarFormFastState extends State<CadastrarFormFast> {
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        adicionar();
-
-                        // Navigator.of(context).pop();
+                        //  adicionar();
+                        //  adicionarFormFast();
+                        enviarFotoBack(imageSelected);
                       },
                       child: Text('Submit Data')),
                 ],
@@ -240,5 +264,26 @@ class _CadastrarFormFastState extends State<CadastrarFormFast> {
             ),
           ),
         ));
+  }
+
+  Future<bool> enviarFotoBack(File imagePath) async {
+    var dio = Dio();
+    try {
+      final content = await MultipartFile.fromFile(imagePath.path);
+      final contentType = 'multipart/form-data';
+      final Response response = await dio.post(
+          'http://192.168.15.57:8000/api/v1/alunos/',
+          data: FormData.fromMap(
+              {'fachada': content, 'nome': nomeController.text}),
+          options: Options(
+            contentType: contentType,
+          ));
+      if (response.statusCode == 200) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return true;
+    }
   }
 }
