@@ -6,9 +6,9 @@ class Cadastro(models.Model):
     GRADUATE = 'Graduate'
     
     SCHOOL_CHOICES = [
-        (JUNIOR, 'Junior'),
-        (SENIOR, 'Senior'),
-        (GRADUATE, 'Graduate'),
+        (JUNIOR, 'junior'),
+        (SENIOR, 'senior'),
+        (GRADUATE, 'graduate'),
     ]
 
     nome = models.CharField(max_length=100)
