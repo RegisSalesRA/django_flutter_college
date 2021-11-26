@@ -1,20 +1,18 @@
 from django.db import models
 
 class Cadastro(models.Model):
-    FRESHMAN = 'FR'
-    JUNIOR = 'JR'
-    SENIOR = 'SR'
-    GRADUATE = 'GR'
+    JUNIOR = 'Junior'
+    SENIOR = 'Senior'
+    GRADUATE = 'Graduate'
     
     SCHOOL_CHOICES = [
-        (FRESHMAN, 'Freshman'),
         (JUNIOR, 'Junior'),
         (SENIOR, 'Senior'),
         (GRADUATE, 'Graduate'),
     ]
 
     nome = models.CharField(max_length=100)
-    school = models.CharField(max_length=2,choices=SCHOOL_CHOICES,default=FRESHMAN)    
+    school = models.CharField(max_length=25,choices=SCHOOL_CHOICES,default=JUNIOR)    
     isCompleted = models.BooleanField(default=False)
 
 
