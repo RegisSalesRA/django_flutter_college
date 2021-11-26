@@ -21,9 +21,3 @@ class FastCadastroList(generics.ListCreateAPIView):
 class DetailFastCadastroList(generics.RetrieveUpdateDestroyAPIView):
     queryset = FastCadastro.objects.all()
     serializer_class = FastCadastroserializers 
-
-
-
-
-
-     
