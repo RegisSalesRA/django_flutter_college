@@ -8,7 +8,7 @@ class CadastroProvider with ChangeNotifier {
   List<CadastroForm> _cadastroList = [];
 
   Future<bool> getCadastro() async {
-    String url = '$baseUrl:8000/api/v1/';
+    final url = Uri.parse('$baseUrl/api/v1/cadastro/');
 
     try {
       http.Response response = await http.get(url, headers: {
@@ -32,7 +32,7 @@ class CadastroProvider with ChangeNotifier {
   }
 
   void cadastrarForm(CadastroForm cadastroForm) async {
-    final response = await http.post('$baseUrl:8000/api/v1/',
+    final response = await http.post('$baseUrl:8000/api/v1/cadastro/',
         headers: {"Content-Type": "application/json"},
         body: json.encode(cadastroForm));
     if (response.statusCode == 200) {
@@ -44,10 +44,10 @@ class CadastroProvider with ChangeNotifier {
   }
 
   Future<CadastroForm> createCase(CadastroForm cadastroForm) async {
-    String url = '$baseUrl:8000/api/v1/';
+    String url = '$baseUrl:8000/api/v1/cadastro/';
 
     Map data = {
-      'image': cadastroForm.image,
+      //    'image': cadastroForm.image,
       'nome': cadastroForm.nome,
       'school': cadastroForm.school,
       'isCompleted': cadastroForm.isCompleted
@@ -64,14 +64,6 @@ class CadastroProvider with ChangeNotifier {
       throw Exception('Failed to post cases');
     }
   }
-
-  // void deleteToDo(CadastroForm toDoList) async {
-  //   final response = await http.delete('$baseUrl:8000/api/${toDoList.id}/');
-  //   if (response.statusCode == 204) {
-  //     _toDoList.remove(toDoList);
-  //     notifyListeners();
-  //   }
-  // }
 
   List<CadastroForm> get cadastroList {
     return [..._cadastroList];

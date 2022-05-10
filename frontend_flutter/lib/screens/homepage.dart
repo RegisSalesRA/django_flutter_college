@@ -3,6 +3,7 @@ import 'package:frontend_flutter/api/api_form.dart';
 import 'package:frontend_flutter/screens/test/formtest.dart';
 import 'package:provider/provider.dart';
 
+import '../model/model_cadastro.dart';
 import 'formCrud/cadastrar.dart';
 
 class HomePage extends StatefulWidget {
@@ -42,8 +43,8 @@ class _HomePageState extends State<HomePage> {
               size: 30,
             ),
             onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (ctx) => CadastrarFormFast()));
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (ctx) => CadastrarForm()));
             }),
         body: Container(
             child: ListView.builder(
@@ -64,21 +65,7 @@ class _HomePageState extends State<HomePage> {
                       elevation: 5,
                       child: Row(
                         children: <Widget>[
-                          Container(
-                            height: 60,
-                            width: 70,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(1.0),
-                              child: cadastros[index].image != null
-                                  ? Image.network(
-                                      cadastros[index].image,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Center(
-                                      child: Text("Sem imagem"),
-                                    ),
-                            ),
-                          ),
+                          Container(height: 60, width: 70, child: Text("awe")),
                           Container(
                             width: 105,
                             height: 60,
