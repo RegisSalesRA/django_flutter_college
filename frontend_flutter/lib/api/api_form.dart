@@ -8,10 +8,9 @@ class CadastroProvider with ChangeNotifier {
   List<CadastroForm> _cadastroList = [];
 
   Future<bool> getCadastro() async {
-    final url = Uri.parse('$baseUrl/api/v1/cadastro/');
-
     try {
-      http.Response response = await http.get(url, headers: {
+      http.Response response =
+          await http.get('$baseUrl:8000/api/v1/cadastro/', headers: {
         'Content-Type': 'application/json;charset=UTF-8',
       });
       if (response.statusCode == 200) {
@@ -39,29 +38,6 @@ class CadastroProvider with ChangeNotifier {
       cadastroForm.id = json.decode(response.body)['id'];
       print(cadastroForm);
       _cadastroList.add(cadastroForm);
-      notifyListeners();
-    }
-  }
-
-  Future<CadastroForm> createCase(CadastroForm cadastroForm) async {
-    String url = '$baseUrl:8000/api/v1/cadastro/';
-
-    Map data = {
-      //    'image': cadastroForm.image,
-      'nome': cadastroForm.nome,
-      'school': cadastroForm.school,
-      'isCompleted': cadastroForm.isCompleted
-    };
-    http.Response response = await http.post(url,
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-        },
-        body: jsonEncode(data));
-
-    if (response.statusCode == 201) {
-      return CadastroForm.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to post cases');
     }
   }
 

@@ -20,7 +20,7 @@ class _CadastrarFormState extends State<CadastrarForm> {
           CadastroForm(nome: nome, school: school, isCompleted: isCompleted);
       print(nome);
       Provider.of<CadastroProvider>(context, listen: false)
-          .createCase(cadastroForm);
+          .cadastrarForm(cadastroForm);
     }
   }
 
@@ -75,7 +75,7 @@ class _CadastrarFormState extends State<CadastrarForm> {
                           style: TextStyle(
                             color: Colors.blue,
                           ),
-                          items: ['Masculino', 'Feminino'].map(
+                          items: ['Junior', 'junior'].map(
                             (val) {
                               return DropdownMenuItem<String>(
                                 value: val,

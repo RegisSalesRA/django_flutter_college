@@ -13,7 +13,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        
         ChangeNotifierProvider(create: (ctx) => CadastroProvider()),
         //    ChangeNotifierProvider(create: (ctx) => CadastroFastProvider()),
       ],
