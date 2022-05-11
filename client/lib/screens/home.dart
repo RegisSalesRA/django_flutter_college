@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_flutter/api/api_form.dart';
+import 'package:client/api/api_form.dart';
 
 import 'package:provider/provider.dart';
 
 import '../model/model_cadastro.dart';
 import 'formCrud/cadastrar.dart';
 
-class HomePage extends StatefulWidget {
+class Home extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomeState createState() => _HomeState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeState extends State<Home> {
   bool _init = true;
 
-
+  bool? _isLoading = true;
   @override
   void didChangeDependencies() async {
     if (_init) {
-      Provider.of<CadastroProvider>(context).getCadastro();
+      _isLoading = await Provider.of<CadastroProvider>(context).getCadastro();
+      setState(() {});
     }
     _init = false;
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    final cadastros = Provider.of<CadastroProvider>(context).cadastroList;
-    print(cadastros);
+    final cart = Provider.of<CadastroProvider>(context).cadastroList;
+
     return Scaffold(
         appBar: AppBar(
           title: Text("Home Django Flutter"),
@@ -43,9 +45,9 @@ class _HomePageState extends State<HomePage> {
             }),
         body: Container(
             child: ListView.builder(
-                itemCount: cadastros.length,
+                itemCount: cart.length,
                 itemBuilder: (BuildContext context, index) {
-                  return Text(cadastros[index].nome);
+                  return ListTile(title: Text(cart[index].nome));
                 })));
   }
 }

@@ -3,7 +3,7 @@ import 'package:client/api/api_form.dart';
 import 'package:client/model/model_cadastro.dart';
 import 'package:provider/provider.dart';
 
-import '../homepage.dart';
+import '../home.dart';
 
 class CadastrarForm extends StatefulWidget {
   @override
@@ -21,8 +21,10 @@ class _CadastrarFormState extends State<CadastrarForm> {
     if (_formKeyCadastro.currentState!.validate()) {
       final CadastroForm cadastroForm =
           CadastroForm(nome: nome!, school: school!, isCompleted: isCompleted);
-      print(nome);
+
       cadastro_.cadastrarForm(cadastroForm);
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (ctx) => Home()));
     }
   }
 
@@ -87,7 +89,7 @@ class _CadastrarFormState extends State<CadastrarForm> {
                           style: TextStyle(
                             color: Colors.blue,
                           ),
-                          items: ['Junior', 'junior'].map(
+                          items: ['Junior', 'Pleno', 'Senior'].map(
                             (val) {
                               return DropdownMenuItem<String>(
                                 value: val,
@@ -128,9 +130,6 @@ class _CadastrarFormState extends State<CadastrarForm> {
                   ElevatedButton(
                       onPressed: () {
                         adicionar();
-                        cadastro_.getCadastro();
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (ctx) => HomePage()));
                       },
                       child: Text('Submit Data')),
                 ],
