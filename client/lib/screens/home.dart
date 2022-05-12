@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:client/api/api_form.dart';
+import 'package:client/api/api_dev.dart';
 
 import 'package:provider/provider.dart';
-
-import '../model/model_cadastro.dart';
-import 'formCrud/cadastrar.dart';
+ 
+import 'forms/dev_form.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -31,7 +30,7 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("Home Django Flutter"),
+          title: const Text("Home Django Flutter"),
           centerTitle: true,
         ),
         floatingActionButton: FloatingActionButton(
