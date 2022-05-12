@@ -15,27 +15,21 @@ class _CadastrarFormState extends State<CadastrarForm> {
   String? nome;
   String? school;
   bool isCompleted = false;
-  final cadastro_ = CadastroProvider();
 
   void adicionar() {
     if (_formKeyCadastro.currentState!.validate()) {
       final CadastroForm cadastroForm =
           CadastroForm(nome: nome!, school: school!, isCompleted: isCompleted);
+      Provider.of<CadastroProvider>(context, listen: false)
+          .cadastrarForm(cadastroForm);
 
-      cadastro_.cadastrarForm(cadastroForm);
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (ctx) => Home()));
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Home(),
+        ),
+      );
     }
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    cadastro_.getCadastro();
-    cadastro_.addListener(() {
-      setState(() {});
-    });
   }
 
   @override
@@ -43,18 +37,18 @@ class _CadastrarFormState extends State<CadastrarForm> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text("Cadastro"),
+          title: const Text("Cadastro"),
         ),
         body: Form(
           key: _formKeyCadastro,
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             width: MediaQuery.of(context).size.width,
             height: double.infinity,
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   TextFormField(
@@ -64,7 +58,7 @@ class _CadastrarFormState extends State<CadastrarForm> {
                       }
                       return null;
                     },
-                    decoration: InputDecoration(hintText: 'Title'),
+                    decoration: const InputDecoration(hintText: 'Title'),
                     onChanged: (value) {
                       setState(() {
                         nome = value;
@@ -86,7 +80,7 @@ class _CadastrarFormState extends State<CadastrarForm> {
                                 ),
                           isExpanded: true,
                           iconSize: 30.0,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.blue,
                           ),
                           items: ['Junior', 'Pleno', 'Senior'].map(
@@ -106,7 +100,7 @@ class _CadastrarFormState extends State<CadastrarForm> {
                           },
                         ),
                       )),
-                  Divider(),
+                  const Divider(),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     Checkbox(
                       value: isCompleted,
@@ -124,14 +118,14 @@ class _CadastrarFormState extends State<CadastrarForm> {
                           TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
                     ),
                   ]),
-                  SizedBox(
+                  const SizedBox(
                     height: 55,
                   ),
                   ElevatedButton(
                       onPressed: () {
                         adicionar();
                       },
-                      child: Text('Submit Data')),
+                      child: Text('Accept Dev')),
                 ],
               ),
             ),

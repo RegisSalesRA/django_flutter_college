@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<CadastroProvider>(context).cadastroList;
+    final dev = Provider.of<CadastroProvider>(context).cadastroList;
 
     return Scaffold(
         appBar: AppBar(
@@ -35,19 +35,19 @@ class _HomeState extends State<Home> {
           centerTitle: true,
         ),
         floatingActionButton: FloatingActionButton(
-            child: Icon(
+            child: const Icon(
               Icons.add,
               size: 30,
             ),
             onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (ctx) => CadastrarForm()));
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (ctx) => CadastrarForm()));
             }),
         body: Container(
             child: ListView.builder(
-                itemCount: cart.length,
+                itemCount: dev.length,
                 itemBuilder: (BuildContext context, index) {
-                  return ListTile(title: Text(cart[index].nome));
+                  return ListTile(title: Text(dev[index].nome));
                 })));
   }
 }
