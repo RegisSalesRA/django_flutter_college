@@ -13,13 +13,13 @@ class CadastrarForm extends StatefulWidget {
 class _CadastrarFormState extends State<CadastrarForm> {
   final _formKeyCadastro = GlobalKey<FormState>();
   String? nome;
-  String? school;
+  String? dev;
   bool isCompleted = false;
 
   void adicionar() {
     if (_formKeyCadastro.currentState!.validate()) {
       final CadastroForm cadastroForm =
-          CadastroForm(nome: nome!, school: school!, isCompleted: isCompleted);
+          CadastroForm(nome: nome!, dev: dev!, isCompleted: isCompleted);
       Provider.of<CadastroProvider>(context, listen: false)
           .cadastrarForm(cadastroForm);
 
@@ -69,13 +69,13 @@ class _CadastrarFormState extends State<CadastrarForm> {
                       padding: EdgeInsets.all(8),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton(
-                          hint: school == null
+                          hint: dev == null
                               ? Text(
                                   'Selecione a opção',
                                   style: TextStyle(fontSize: 20),
                                 )
                               : Text(
-                                  school.toString(),
+                                  dev.toString(),
                                   style: TextStyle(color: Colors.blue),
                                 ),
                           isExpanded: true,
@@ -94,7 +94,7 @@ class _CadastrarFormState extends State<CadastrarForm> {
                           onChanged: (val) {
                             setState(
                               () {
-                                school = val.toString();
+                                dev = val.toString();
                               },
                             );
                           },
@@ -112,7 +112,7 @@ class _CadastrarFormState extends State<CadastrarForm> {
                         print("Checkbox: " + valor.toString());
                       },
                     ),
-                    Text(
+                    const Text(
                       'is completed?',
                       style:
                           TextStyle(fontSize: 19, fontWeight: FontWeight.bold),

@@ -5,7 +5,7 @@ class CadastroSerializers(serializers.ModelSerializer):
     class Meta:
         model = Cadastro
         fields = (
-            'id','nome', 'school','isCompleted'
+            'id','nome', 'dev','isCompleted'
         )
 
 
