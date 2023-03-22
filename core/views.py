@@ -30,15 +30,14 @@ class StudentSignupView(generics.GenericAPIView):
 
 class GetUser(APIView):
     permission_classes = [IsAuthenticated]
-    def get(self, request, format=None):
-
+    def get(self, request):
         user = request.user
-        value = Student.objects.get(user_id=user.id)
-
-         
-        print(value.user)
         content = {
-            'user': str(request.user),
-            'args': str(value)
+            'user': str(user),
+            'is_student': user.is_student,
+            'is_teacher':user.is_teacher,
+            'name': str(user.student.name),
+            'phone': str(user.student.phone),
+            'cpf': str(user.student.cpf),
         }
         return Response(content)
