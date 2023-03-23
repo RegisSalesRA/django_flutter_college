@@ -1,6 +1,13 @@
 from django.contrib import admin
-from core.v1.models.auth_models import User,Teacher,Student
-# Register your models here.
+from core.v1.models.auth_models import User, Teacher, Student
+from core.v1.models.school_models import Discipline, Scores, Semester
+
+# Auth Models
 admin.site.register(User)
 admin.site.register(Teacher)
 admin.site.register(Student)
+
+# School Models
+admin.site.register(Discipline)
+admin.site.register(Scores)
+admin.site.register(Semester)

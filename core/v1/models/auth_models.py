@@ -5,7 +5,9 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     is_teacher = models.BooleanField(default=False)
     is_student = models.BooleanField(default=False)
-
+    createAt = models.DateTimeField(auto_now_add=True, auto_created=True)
+    updateAt = models.DateTimeField(auto_now=True, auto_created=True)
+    
     def __str__(self):
         return self.username
 
