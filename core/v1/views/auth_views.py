@@ -3,9 +3,7 @@ from django.http import request
 from rest_framework.response import Response
 from rest_framework import generics, permissions, status
 from rest_framework.permissions import IsAuthenticated
-
-from core.models import Student
-from  .serializer import (
+from core.v1.serializers.serializers_auth import (
     UserSerializer,
     StudentSerializer,
     TeacherSerializer,

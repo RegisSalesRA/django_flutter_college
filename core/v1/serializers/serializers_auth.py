@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.models import User, Student, Teacher
+from core.v1.models.auth_models import User, Student, Teacher
 
 
 class UserSerializer(serializers.ModelSerializer):

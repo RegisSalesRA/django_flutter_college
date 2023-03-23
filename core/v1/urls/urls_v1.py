@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import (
+from core.v1.views.auth_views import (
     StudentSignupView,GetUser
 )
 
