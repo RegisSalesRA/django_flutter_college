@@ -7,7 +7,7 @@ class DisciplineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Discipline
         fields = "__all__"
-        depth = 2
+        depth = 1
 
 class SemesterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,3 +20,9 @@ class ScoresSerializer(serializers.ModelSerializer):
         model = Scores
         fields = "__all__"
         depth = 1
+
+
+class ScoresPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Scores
+        fields = "__all__"
