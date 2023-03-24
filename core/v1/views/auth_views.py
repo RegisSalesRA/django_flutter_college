@@ -36,6 +36,5 @@ class GetUser(APIView):
             'is_teacher':user.is_teacher,
             'name': str(user.student.name),
             'phone': str(user.student.phone),
-            'cpf': str(user.student.cpf),
         }
         return Response(content)

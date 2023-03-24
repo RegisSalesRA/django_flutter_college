@@ -18,7 +18,6 @@ class Student(models.Model):
     )
     name = models.CharField(max_length=255)
     phone = models.CharField(max_length=12, null=True, blank=True)
-    cpf = models.CharField(max_length=255)
 
     def __str__(self):
         return self.user.username
@@ -28,7 +27,6 @@ class Teacher(models.Model):
         User, related_name="teacher", on_delete=models.CASCADE
     )
     phone = models.CharField(max_length=12, null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
     
     def __str__(self):
         return self.user.username
