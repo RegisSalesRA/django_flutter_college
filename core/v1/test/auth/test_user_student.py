@@ -1,11 +1,9 @@
-import json
 from rest_framework.test import APIClient
-from django.contrib.auth import get_user_model
 from rest_framework import status
-from django.urls import reverse
 from rest_framework.test import APITestCase
 from core.v1.models.auth_models import User, Student
-from django.test import TestCase
+
+
 client = APIClient()
 
 
@@ -23,11 +21,41 @@ class UserLoginStudentTests(APITestCase):
             'username': self.username,
             'password': self.password
         } 
-    
+
+        
     def test_login_student_user(self):
         url = '/api/token/'
         response = self.client.post(url, self.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK, response.content)
+
+ 
+class GetCurrentStudentUserTest(APITestCase):
+    url = '/api/user/'
+    url_token = '/api/token/'
+
+    def setUp(self):
+        
+        user = User.objects.create_user(username='self.username', password= 'self.password', is_active=True)
+        student = Student(user=user, name='self.name', phone='self.phone')
+        print(student.user.username)
+        self.data = {
+            'username':str(student.user.username),
+            'password': str(student.user.password)
+        } 
+
+        response = self.client.post(self.url_token, self.data, format='json')
+        print(response.data)
+        token = response.data['access']
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}') 
+
+        
+    def test_get_current_student_user(self):
+        pass
+        #response = self.client.get(self.url)
+        #print(f'response print = {response.data}')
+        #self.assertEqual(response.status_code, status.HTTP_200_OK, response.content)
+
+
 
 
 
@@ -47,3 +75,5 @@ class UserSignUpStudentTest(APITestCase):
         url = '/api/signup/student/'
         response = self.client.post(url, self.data_student)
         self.assertEqual(response.status_code, status.HTTP_200_OK, response.content)
+
+        
