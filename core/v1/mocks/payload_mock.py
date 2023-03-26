@@ -2,15 +2,14 @@
 class PayLoadMocks():
     
     data_student = {
-  "username": "username255",
-  "name": "username3@gmail.com",
+  "username": "userStudent",
+  "name": "user",
   "password": "adminadmin",
   "password2" : "adminadmin",
-	"phone": "12345"
+	"phone": "12345678"
   }
     
     data_user = {
-        "username": "username255",
+        "username": "userStudent",
         "password": "adminadmin",
     }
-

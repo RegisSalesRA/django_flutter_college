@@ -8,45 +8,45 @@ from core.v1.mocks.payload_mock import PayLoadMocks
 client = APIClient()
 ApiRouteMocks()
 
-class UserLoginStudentTests(APITestCase):
+class TestLoginUserStudent(APITestCase):
 
     def setUp(self):
         data_student = PayLoadMocks.data_student
-        self.client.post(ApiRouteMocks.url_student, data_student, format='json')
+        self.client.post(ApiRouteMocks.url_signup_student, data_student, format='json')
         self.data = PayLoadMocks.data_user
         
-    def test_login_student_user(self):
+    def test_login_user_student_success(self):
         
-        response = self.client.post(ApiRouteMocks.url_token, self.data)
+        response = self.client.post(ApiRouteMocks.url_api_token, self.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK, response.content)
 
  
-class GetCurrentStudentUserTest(APITestCase):
+class TestGetUserLogged(APITestCase):
 
     def setUp(self):
         
         data_student = PayLoadMocks.data_student
-        response = self.client.post(ApiRouteMocks.url_student, data_student, format='json')
+        response = self.client.post(ApiRouteMocks.url_signup_student, data_student, format='json')
         data = PayLoadMocks.data_user
-        response = self.client.post(ApiRouteMocks.url_token, data, format='json')
+        response = self.client.post(ApiRouteMocks.url_api_token, data, format='json')
         token = response.data['access']
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}') 
         
-    def test_get_current_student_user(self):
+    def test_get_user_logged_success(self):
         
-        response = self.client.get(ApiRouteMocks.url)
+        response = self.client.get(ApiRouteMocks.url_api_user)
         self.assertEqual(response.status_code, status.HTTP_200_OK, response.content)
 
 
 
-class UserSignUpStudentTest(APITestCase):
+class TestSignUpStudentTest(APITestCase):
 
     def setUp(self):    
         self.data_student = PayLoadMocks.data_student
 
 
-    def test_signup_student(self):
-        response = self.client.post(ApiRouteMocks.url_student, self.data_student)
+    def test_signup_student_success(self):
+        response = self.client.post(ApiRouteMocks.url_signup_student, self.data_student)
         self.assertEqual(response.status_code, status.HTTP_200_OK, response.content)
 
         
