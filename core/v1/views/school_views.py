@@ -1,3 +1,5 @@
+import requests
+from core.exceptions.exceptions import handle_error_response
 from core.v1.permissions.permissions import TeacherUser
 from rest_framework import generics
 from django.http import request
@@ -12,9 +14,13 @@ from rest_framework.response import Response
 class DisciplineListCreateView(generics.ListCreateAPIView):
     serializer_class = DisciplineSerializer 
     def get_queryset(self):
-       user = self.request.user
-       queryset = Discipline.objects.all()
-       return queryset
+       try:
+            queryset = Discipline.objects.all()
+            print(queryset)
+            return queryset
+       except requests.exceptions.HTTPError as e:
+           raise handle_error_response(e)
+           
 
 
 class DisciplineRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
