@@ -5,7 +5,7 @@ from core.v1.models.auth_models import User, Student, Teacher
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["username", "email"]
+        fields = "__all__"
 
 
 
@@ -16,7 +16,7 @@ class StudentSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ["username","password", "password2", "phone","name"]
+        fields = "__all__"
         extra_kwargs = {"password": {"write_only": True}}
 
     def save(self, **kwargs):
@@ -40,7 +40,7 @@ class TeacherSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(max_length=20, style={"input_type": "text"})
     class Meta:
         model = User
-        fields = ["username", "phone", "password", "password2"]
+        fields = "__all__"
         extra_kwargs = {"password": {"write_only": True}}
 
     def save(self, **kwargs):
@@ -56,3 +56,10 @@ class TeacherSerializer(serializers.ModelSerializer):
         user.save()
         Teacher.objects.create(user=user,phone=self.validated_data["phone"])
         return user
+
+
+class TeacherSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Teacher
+        fields = "__all__"
+        depth = 1
