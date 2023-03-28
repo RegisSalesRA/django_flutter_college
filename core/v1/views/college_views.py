@@ -3,9 +3,9 @@ from rest_framework import generics
 from core.v1.models.college_models import Discipline,Semester,Scores
 from core.v1.serializers.serializers_college import ScoresPostSerializer, DisciplineSerializer,SemesterSerializer,ScoresSerializer
 from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.views import APIView
 from rest_framework.response import Response
-
+import json
 
 # Discpline
 class DisciplineListCreateView(generics.ListCreateAPIView):
@@ -56,4 +56,17 @@ class ScoresCreateView(generics.CreateAPIView):
 
 class ScoresRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Scores.objects.all()
-    serializer_class = ScoresSerializer     
+    serializer_class = ScoresSerializer
+
+
+class InsertScoreToStudent(APIView):
+    def get(self,request):
+        queryset = Scores.objects.all()
+        return Response(queryset)
+    
+    def post(self,request):
+        data = request.data
+        queryset_discipline = Discipline.objects.all()
+        
+        print(queryset_discipline)
+        return Response(data)
