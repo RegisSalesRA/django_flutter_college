@@ -4,8 +4,9 @@ from rest_framework.response import Response
 from rest_framework import generics, permissions, status
 from rest_framework.permissions import IsAuthenticated
 from core.exceptions.exceptions import except_error_response
-from core.v1.models.auth_models import Teacher
+from core.v1.models.auth_models import Student, Teacher
 from core.v1.serializers.serializers_auth import (
+    StudentSerializer,
     TeacherSerializerRegister,
     TeacherSerializerRegister,
     TeacherSerializer,
@@ -73,6 +74,10 @@ class GetUser(APIView):
 class TeacherListCreateView(generics.ListCreateAPIView):
     serializer_class = TeacherSerializer 
     queryset = Teacher.objects.all()
+    
+class StudentListCreateView(generics.ListCreateAPIView):
+    serializer_class = StudentSerializer 
+    queryset = Student.objects.all()
     
 
 
