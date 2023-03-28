@@ -1,4 +1,3 @@
-from core.exceptions.exceptions import handle_error_response
 from core.v1.permissions.permissions import TeacherUser
 from rest_framework import generics
 from core.v1.models.school_models import Discipline,Semester,Scores
@@ -14,7 +13,6 @@ class DisciplineListCreateView(generics.ListCreateAPIView):
     
     def get_queryset(self):
             queryset = Discipline.objects.all()
-            print(queryset)
             return queryset
        
            

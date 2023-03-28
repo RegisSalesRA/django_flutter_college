@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from core.v1.models.auth_models import User, Student, Teacher
-
+from rest_framework import generics, permissions, status
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,7 +26,7 @@ class StudentSerializerRegister(serializers.ModelSerializer):
         password = self.validated_data["password"]
         password2 = self.validated_data["password2"]
         if password != password2:
-            raise serializers.ValidationError({"error": "password do not match"})
+            raise serializers.ValidationError(status_code = status.HTTP_400_BAD_REQUEST)
         user.set_password(password)
         user.is_student = True
         user.save()
