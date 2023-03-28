@@ -1,8 +1,6 @@
-import requests
 from core.exceptions.exceptions import handle_error_response
 from core.v1.permissions.permissions import TeacherUser
 from rest_framework import generics
-from django.http import request
 from core.v1.models.school_models import Discipline,Semester,Scores
 from core.v1.serializers.serializers_school import ScoresPostSerializer, DisciplineSerializer,SemesterSerializer,ScoresSerializer
 from rest_framework.permissions import IsAuthenticated
@@ -13,13 +11,12 @@ from rest_framework.response import Response
 # Discpline
 class DisciplineListCreateView(generics.ListCreateAPIView):
     serializer_class = DisciplineSerializer 
+    
     def get_queryset(self):
-       try:
             queryset = Discipline.objects.all()
             print(queryset)
             return queryset
-       except requests.exceptions.HTTPError as e:
-           raise handle_error_response(e)
+       
            
 
 

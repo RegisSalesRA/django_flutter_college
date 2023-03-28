@@ -1,16 +1,16 @@
 from rest_framework.views import APIView
-from django.http import request
 from rest_framework.response import Response
 from rest_framework import generics, permissions, status
 from rest_framework.permissions import IsAuthenticated
 from core.v1.models.auth_models import Teacher
 from core.v1.serializers.serializers_auth import (
-    StudentSerializer,
+    TeacherSerializerRegister,
+    TeacherSerializerRegister,
     TeacherSerializer,
 )
 
 class StudentSignupView(generics.GenericAPIView):
-    serializer_class = StudentSerializer
+    serializer_class = TeacherSerializerRegister
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -23,7 +23,7 @@ class StudentSignupView(generics.GenericAPIView):
         )
     
 class TeacherSignupView(generics.GenericAPIView):
-    serializer_class = TeacherSerializer
+    serializer_class = TeacherSerializerRegister
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

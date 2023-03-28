@@ -5,8 +5,8 @@ from core.v1.views.auth_views import (
 from core.v1.views.school_views import (DisciplineListByTeacher,  DisciplineListCreateView,DisciplineRetrieveUpdateDestroyView,SemesterListCreateView,SemesterRetrieveUpdateDestroyView,ScoresCreateView,ScoresListView,ScoresRetrieveUpdateDestroyView)
 
 urlpatterns = [
+
     #School
-    path("teacher/", TeacherListCreateView.as_view()),
     path("discipline/", DisciplineListCreateView.as_view()),
     path("discipline_teacher/", DisciplineListByTeacher.as_view()),
     path("discipline/<int:pk>/", DisciplineRetrieveUpdateDestroyView.as_view()),
@@ -18,6 +18,7 @@ urlpatterns = [
 
     #Auth
     path("signup/student/", StudentSignupView.as_view()),
+    path("teacher/", TeacherListCreateView.as_view()),
     path("signup/teacher/", TeacherSignupView.as_view()),
     path("user/", GetUser.as_view())
 ]

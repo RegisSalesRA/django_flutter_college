@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 
-class StudentSerializer(serializers.ModelSerializer):
+class StudentSerializerRegister(serializers.ModelSerializer):
     password2 = serializers.CharField(style={"input_type": "password"}, write_only=True)
     phone = serializers.CharField(max_length=20, style={"input_type": "text"})
     name = serializers.CharField(max_length=255, style={"input_type": "text"})
@@ -35,7 +35,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
 
 
-class TeacherSerializer(serializers.ModelSerializer):
+class TeacherSerializerRegister(serializers.ModelSerializer):
     password2 = serializers.CharField(style={"input_type": "password"}, write_only=True)
     phone = serializers.CharField(max_length=20, style={"input_type": "text"})
     class Meta:
