@@ -1,7 +1,7 @@
 from core.v1.permissions.permissions import TeacherUser
 from rest_framework import generics
-from core.v1.models.school_models import Discipline,Semester,Scores
-from core.v1.serializers.serializers_school import ScoresPostSerializer, DisciplineSerializer,SemesterSerializer,ScoresSerializer
+from core.v1.models.college_models import Discipline,Semester,Scores
+from core.v1.serializers.serializers_college import ScoresPostSerializer, DisciplineSerializer,SemesterSerializer,ScoresSerializer
 from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.response import Response
@@ -15,8 +15,6 @@ class DisciplineListCreateView(generics.ListCreateAPIView):
             queryset = Discipline.objects.all()
             return queryset
        
-           
-
 
 class DisciplineRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Discipline.objects.all()

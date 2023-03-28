@@ -2,7 +2,7 @@ from django.urls import path
 from core.v1.views.auth_views import (
     StudentSignupView,GetUser,TeacherSignupView,TeacherListCreateView
 )
-from core.v1.views.school_views import (DisciplineListByTeacher,  DisciplineListCreateView,DisciplineRetrieveUpdateDestroyView,SemesterListCreateView,SemesterRetrieveUpdateDestroyView,ScoresCreateView,ScoresListView,ScoresRetrieveUpdateDestroyView)
+from core.v1.views.college_views import (DisciplineListByTeacher,  DisciplineListCreateView,DisciplineRetrieveUpdateDestroyView,SemesterListCreateView,SemesterRetrieveUpdateDestroyView,ScoresCreateView,ScoresListView,ScoresRetrieveUpdateDestroyView)
 
 urlpatterns = [
 
