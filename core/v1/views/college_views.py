@@ -61,7 +61,9 @@ class ScoresRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class InsertScoreToStudent(APIView):
+
     permission_classes = [IsAuthenticated,TeacherUser]
+
     def get(self,request):
         queryset = Scores.objects.all()
         serializers = ScoresSerializer(queryset,many=True)
@@ -86,3 +88,23 @@ class InsertScoreToStudent(APIView):
             return Response(
                 {"error":"object missing variables"},
                 status=status.HTTP_400_BAD_REQUEST)
+        
+class ChoseDisciplineByStudent(APIView):
+
+    def post(self,request):
+
+        try:
+            id_student = request.data['id_student']
+            id_discpline = request.data['id_discpline']
+            querset_student = Student.objects.get(id=id_student)
+            queryset_discipline = Discipline.objects.get(id=id_discpline)
+
+            if (queryset_discipline.student.contains(querset_student)):
+                return Response({"error":"object alerady exists"},status=status.HTTP_400_BAD_REQUEST)
+            else:
+                queryset_discipline.student.add(querset_student)
+                return Response({"success":"create"},status=status.HTTP_200_OK)       
+        
+        except Exception as e:
+            return Response({"error":"object missing variables"},status=status.HTTP_400_BAD_REQUEST )
+
