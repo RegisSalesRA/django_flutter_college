@@ -1,12 +1,12 @@
+from core.exceptions.exceptions import except_error_response
 from core.v1.models.auth_models import Student
 from core.v1.permissions.permissions import TeacherUser
-from rest_framework import generics
+from rest_framework import generics , status
 from core.v1.models.college_models import Discipline,Semester,Scores
 from core.v1.serializers.serializers_college import ScoresPostSerializer, DisciplineSerializer,SemesterSerializer,ScoresSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
-import json
 
 # Discpline
 class DisciplineListCreateView(generics.ListCreateAPIView):
@@ -23,7 +23,7 @@ class DisciplineRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView)
 
 class DisciplineListByTeacher(generics.ListAPIView):
     serializer_class = DisciplineSerializer 
-    permission_classes = [IsAuthenticated,TeacherUser]
+    permission_classes = [IsAuthenticated, TeacherUser]
     def get_queryset(self):
         user = self.request.user
         queryset = Discipline.objects.filter(teacher_id=user.teacher.id)
@@ -61,17 +61,28 @@ class ScoresRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class InsertScoreToStudent(APIView):
+    permission_classes = [IsAuthenticated,TeacherUser]
     def get(self,request):
         queryset = Scores.objects.all()
         serializers = ScoresSerializer(queryset,many=True)
         return Response(serializers.data)
     
     def post(self,request):
-        id_student = request.data['id_student']
-        id_discpline = request.data['id_discpline']
-        nota = request.data['nota']
-        querset_student = Student.objects.get(id=id_student)
-        queryset_discipline = Discipline.objects.get(id=id_discpline)
-        query_score = Scores.objects.create(aluno=querset_student, discipline=queryset_discipline, score=nota )
-        query_score.save() 
-        return Response({"success":"create"})
+        try:
+            id_student = request.data['id_student']
+            id_discpline = request.data['id_discpline']
+            nota = request.data['nota']
+            querset_student = Student.objects.get(id=id_student)
+            queryset_discipline = Discipline.objects.get(id=id_discpline)
+            query_score_filter = Scores.objects.filter(aluno=querset_student, discipline=queryset_discipline, score=nota)
+            
+            if query_score_filter.exists():
+                return Response({"error":"object alerady exists"}, status=status.HTTP_400_BAD_REQUEST)    
+            else: 
+                query_score = Scores.objects.create(aluno=querset_student, discipline=queryset_discipline, score=nota)
+                query_score.save() 
+                return Response({"success":"create"}, status=status.HTTP_201_CREATED)
+        except:
+            return Response(
+                {"error":"object missing variables"},
+                status=status.HTTP_400_BAD_REQUEST)

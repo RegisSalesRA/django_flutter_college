@@ -7,13 +7,14 @@ from core.exceptions.exceptions import except_error_response
 from core.v1.models.auth_models import Student, Teacher
 from core.v1.serializers.serializers_auth import (
     StudentSerializer,
+    StudentSerializerRegister,
     TeacherSerializerRegister,
     TeacherSerializerRegister,
     TeacherSerializer,
 )
 
 class StudentSignupView(generics.GenericAPIView):
-    serializer_class = TeacherSerializerRegister
+    serializer_class = StudentSerializerRegister
 
     def post(self, request, *args, **kwargs):
         try: 
@@ -51,7 +52,7 @@ class GetUser(APIView):
             'user': str(user),
             'is_student': user.is_student,
             'is_teacher':user.is_teacher,
-            'id_teacher' : user.student.id,
+            'id_student' : user.student.id,
             'name': str(user.student.name),
             'phone': str(user.student.phone),
         }
