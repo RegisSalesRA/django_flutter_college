@@ -1,6 +1,5 @@
-from core.exceptions.exceptions import except_error_response
 from core.v1.models.auth_models import Student
-from core.v1.permissions.permissions import TeacherUser
+from core.v1.permissions.permissions import StudentUser, TeacherUser
 from rest_framework import generics , status
 from core.v1.models.college_models import Discipline,Semester,Scores
 from core.v1.serializers.serializers_college import ScoresPostSerializer, DisciplineSerializer,SemesterSerializer,ScoresSerializer
@@ -90,11 +89,12 @@ class InsertScoreToStudent(APIView):
                 status=status.HTTP_400_BAD_REQUEST)
         
 class ChoseDisciplineByStudent(APIView):
+    permission_classes = [IsAuthenticated,StudentUser]
 
     def post(self,request):
-
+        user = request.user
         try:
-            id_student = request.data['id_student']
+            id_student = user.student.id
             id_discpline = request.data['id_discpline']
             querset_student = Student.objects.get(id=id_student)
             queryset_discipline = Discipline.objects.get(id=id_discpline)
@@ -105,6 +105,6 @@ class ChoseDisciplineByStudent(APIView):
                 queryset_discipline.student.add(querset_student)
                 return Response({"success":"create"},status=status.HTTP_200_OK)       
         
-        except Exception as e:
-            return Response({"error":"object missing variables"},status=status.HTTP_400_BAD_REQUEST )
+        except:
+            return Response({"error":"object missing variables"},status=status.HTTP_400_BAD_REQUEST)
 
