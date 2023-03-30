@@ -29,6 +29,18 @@ class DisciplineListByTeacher(generics.ListAPIView):
         return queryset
 
 
+class DisciplineListLeftStudent(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = DisciplineSerializer 
+    
+    def get_queryset(self):
+    
+        user = self.request.user
+        current_student_discipline = user.student.discipline_set.all()
+        queryset = Discipline.objects.exclude(id__in=current_student_discipline)
+        return queryset
+
+
 # Semester
 
 class SemesterListCreateView(generics.ListCreateAPIView):
