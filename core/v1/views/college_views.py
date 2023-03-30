@@ -124,3 +124,12 @@ class ChoseDisciplineByStudent(APIView):
         except:
             return Response({"error":"object missing variables"},status=status.HTTP_400_BAD_REQUEST)
 
+ 
+class DisciplinyByStudent(generics.ListAPIView):
+    serializer_class = DisciplineSerializer 
+    permission_classes = [IsAuthenticated, StudentUser]
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Discipline.objects.filter(student=user.student)
+        print(dir(queryset))
+        return queryset    

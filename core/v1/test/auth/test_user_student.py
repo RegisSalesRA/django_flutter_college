@@ -47,6 +47,6 @@ class TestSignUpStudentTest(APITestCase):
 
     def test_signup_student_success(self):
         response = self.client.post(ApiRouteMocks.url_signup_student, self.data_student)
-        self.assertEqual(response.status_code, status.HTTP_200_OK, response.content)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED, response.content)
 
         

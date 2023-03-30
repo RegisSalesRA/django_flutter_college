@@ -78,6 +78,3 @@ class TeacherListCreateView(generics.ListCreateAPIView):
 class StudentListCreateView(generics.ListCreateAPIView):
     serializer_class = StudentSerializer 
     queryset = Student.objects.all()
-    
-
-
