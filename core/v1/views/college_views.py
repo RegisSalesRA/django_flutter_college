@@ -30,16 +30,20 @@ class DisciplineListByTeacher(generics.ListAPIView):
 
 
 class DisciplineListLeftStudent(generics.ListAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, StudentUser]
     serializer_class = DisciplineSerializer 
     
     def get_queryset(self):
-    
-        user = self.request.user
-        current_student_discipline = user.student.discipline_set.all()
-        queryset = Discipline.objects.exclude(id__in=current_student_discipline)
-        return queryset
+        try:
+            user = self.request.user
+            current_student_discipline = user.student.discipline_set.all()
+            queryset = Discipline.objects.exclude(id__in=current_student_discipline)
+            if queryset is not None:
+                return queryset
 
+        except Exception as e:
+            message = str(e)
+            print(e) 
 
 # Semester
 
