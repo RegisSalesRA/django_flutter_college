@@ -49,7 +49,6 @@ class ScoresListView(generics.ListAPIView):
 
 
 class ScoresCreateView(generics.CreateAPIView):
-    permission_classes = [IsAuthenticated,TeacherUser]
     queryset = Scores.objects.all()
     serializer_class = ScoresPostSerializer
  
@@ -88,6 +87,7 @@ class InsertScoreToStudent(APIView):
                 {"error":"object missing variables"},
                 status=status.HTTP_400_BAD_REQUEST)
         
+        
 class ChoseDisciplineByStudent(APIView):
     permission_classes = [IsAuthenticated,StudentUser]
 
@@ -107,4 +107,8 @@ class ChoseDisciplineByStudent(APIView):
         
         except:
             return Response({"error":"object missing variables"},status=status.HTTP_400_BAD_REQUEST)
+        
+
+
+
 
