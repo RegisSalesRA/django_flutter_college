@@ -6,16 +6,18 @@ from rest_framework.test import APITestCase
 
 from core.v1.mocks.api_routes_mock import ApiRouteMocks
 from core.v1.mocks.payload_mock import PayLoadMocks
-from core.v1.models.auth_models import Teacher
-from core.v1.models.college_models import Discipline
+from core.v1.models.auth_models import Student, Teacher
+from core.v1.models.college_models import Discipline, Semester
 
 
 client = APIClient()
 
 
-class TestDisciplineApi(APITestCase):
+class TestDisciplineLeftByStudentApi(APITestCase):
     discpline_url = ApiRouteMocks.url_api_discipline_left_student
+
     def setUp(self):
+
         data_student = PayLoadMocks.data_student
         response = self.client.post(ApiRouteMocks.url_signup_student, data_student, format='json')
         data = PayLoadMocks.data_user_student
@@ -24,12 +26,26 @@ class TestDisciplineApi(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
 
 
-    def test_get_discpline_list_success(self):
+    def test_get_discpline__left_by_sudent_success(self):
+
         client.post(ApiRouteMocks.url_signup_teacher, PayLoadMocks.data_teacher)
         teacher_instance = Teacher.objects.get(phone=PayLoadMocks.data_teacher["phone"])
-        print(dir(teacher_instance.user.id))
-        #discipline = Discipline.objects.create( name="Geo", ano= "2014", teacher=teacher, semester=1,student=[1])
-        
+        Semester.objects.create(id=1,semester='semester_1')
+        semester_instance = Semester.objects.get(id=1)
+        student_instance = Student.objects.get(phone="12345678", name="user")
+        discipline = Discipline.objects.create( name="Geo", ano= "2014", teacher=teacher_instance,semester=semester_instance)
+        discipline = Discipline.objects.create( name="Matematica", ano= "2017", teacher=teacher_instance,semester=semester_instance)
+        discipline_instance = Discipline.objects.get(name="Geo", ano= "2014", teacher=teacher_instance,semester=semester_instance)
+        discipline_instance.student.add(student_instance.id)
+
         response = self.client.get(ApiRouteMocks.url_api_discipline_left_student)
-        #print(response.data)
         self.assertEqual(response.status_code,status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+
+
+    def test_get_discpline__left_by_sudent_fail(self):
+        
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer invalid_token')
+        response = self.client.get(ApiRouteMocks.url_api_discipline_left_student)
+        self.assertEqual(response.status_code,status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.data["detail"], "Given token not valid for any token type")
