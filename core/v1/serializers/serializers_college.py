@@ -5,11 +5,18 @@ from core.v1.models.auth_models import Teacher
 
 
 class DisciplineSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Discipline
+        depth = 1
+        fields = "__all__"
+
+class DisciplineSerializerPost(serializers.ModelSerializer):
+
     class Meta:
         model = Discipline
         fields = "__all__"
-        depth = 1
-
+    
 class SemesterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Semester

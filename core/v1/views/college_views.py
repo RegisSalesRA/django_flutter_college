@@ -2,18 +2,20 @@ from core.v1.models.auth_models import Student
 from core.v1.permissions.permissions import StudentUser, TeacherUser
 from rest_framework import generics , status
 from core.v1.models.college_models import Discipline,Semester,Scores
-from core.v1.serializers.serializers_college import ScoresPostSerializer, DisciplineSerializer,SemesterSerializer,ScoresSerializer
+from core.v1.serializers.serializers_college import DisciplineSerializerPost, ScoresPostSerializer, DisciplineSerializer,SemesterSerializer,ScoresSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 # Discpline
-class DisciplineListCreateView(generics.ListCreateAPIView):
+class DisciplineListView(generics.ListAPIView):
+    queryset = Discipline.objects.all()
     serializer_class = DisciplineSerializer 
+
+class DisciplineCreateView(generics.CreateAPIView):
+    queryset = Discipline.objects.all()
+    serializer_class = DisciplineSerializerPost    
     
-    def get_queryset(self):
-            queryset = Discipline.objects.all()
-            return queryset
        
 
 class DisciplineRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):

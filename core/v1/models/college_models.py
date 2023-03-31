@@ -22,7 +22,7 @@ class Discipline(models.Model):
     name = models.CharField(max_length=100)
     ano = models.CharField(max_length=4)
     student = models.ManyToManyField(Student)
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, blank=False)
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
 
     createAt = models.DateTimeField(auto_now_add=True, auto_created=True)

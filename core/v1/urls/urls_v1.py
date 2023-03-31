@@ -2,12 +2,13 @@ from django.urls import path
 from core.v1.views.auth_views import (
     StudentListCreateView, StudentSignupView,GetUser,TeacherSignupView,TeacherListCreateView
 )
-from core.v1.views.college_views import (DisciplineListLeftStudent, DisciplinyByStudent,InsertScoreToStudent, DisciplineListByTeacher, ChoseDisciplineByStudent, DisciplineListCreateView, DisciplineRetrieveUpdateDestroyView, SemesterListCreateView,SemesterRetrieveUpdateDestroyView,ScoresCreateView,ScoresListView,ScoresRetrieveUpdateDestroyView)
+from core.v1.views.college_views import (DisciplineCreateView, DisciplineListLeftStudent, DisciplineListView, DisciplinyByStudent,InsertScoreToStudent, DisciplineListByTeacher, ChoseDisciplineByStudent,  DisciplineRetrieveUpdateDestroyView, SemesterListCreateView,SemesterRetrieveUpdateDestroyView,ScoresCreateView,ScoresListView,ScoresRetrieveUpdateDestroyView)
 
 urlpatterns = [
 
     #College
-    path("discipline/", DisciplineListCreateView.as_view()),
+    path("discipline/", DisciplineListView.as_view()),
+    path("discipline_post/", DisciplineCreateView.as_view()),
     path("discipline_student/", DisciplinyByStudent.as_view()),
     path("discipline_chose/", ChoseDisciplineByStudent.as_view()),
     path("discipline_left_student/", DisciplineListLeftStudent.as_view()),
