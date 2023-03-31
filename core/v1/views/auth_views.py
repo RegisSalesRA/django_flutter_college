@@ -37,7 +37,8 @@ class TeacherSignupView(generics.GenericAPIView):
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             user = serializer.save()
-            return Response({"result": "Teacher account created successfully","status_code":status.HTTP_201_CREATED})
+            return Response({"result": "Teacher account created successfully","status_code":status.HTTP_201_CREATED},
+            status=status.HTTP_201_CREATED,)
         except Exception as e:
             return Response(except_error_response(e) ,status=status.HTTP_400_BAD_REQUEST)    
            
@@ -67,10 +68,6 @@ class GetUser(APIView):
         } 
         
         return Response(content)
-    
-
-    
-
 
 class TeacherListCreateView(generics.ListCreateAPIView):
     serializer_class = TeacherSerializer 
@@ -79,6 +76,3 @@ class TeacherListCreateView(generics.ListCreateAPIView):
 class StudentListCreateView(generics.ListCreateAPIView):
     serializer_class = StudentSerializer 
     queryset = Student.objects.all()
-    
-
-

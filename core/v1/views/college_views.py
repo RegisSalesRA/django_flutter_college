@@ -28,7 +28,22 @@ class DisciplineListByTeacher(generics.ListAPIView):
         queryset = Discipline.objects.filter(teacher_id=user.teacher.id)
         return queryset
 
+class DisciplineListLeftStudent(generics.ListAPIView):
+    permission_classes = [IsAuthenticated, StudentUser]
+    serializer_class = DisciplineSerializer 
+    
+    def get_queryset(self):
+        try:
+            user = self.request.user
+            current_student_discipline = user.student.discipline_set.all()
+            queryset = Discipline.objects.exclude(id__in=current_student_discipline)
+            if queryset is not None:
+                return queryset
 
+        except Exception as e:
+            message = str(e)
+            print(e) 
+            
 # Semester
 
 class SemesterListCreateView(generics.ListCreateAPIView):
@@ -109,6 +124,11 @@ class ChoseDisciplineByStudent(APIView):
             return Response({"error":"object missing variables"},status=status.HTTP_400_BAD_REQUEST)
         
 
-
-
-
+class DisciplinyByStudent(generics.ListAPIView):
+    serializer_class = DisciplineSerializer 
+    permission_classes = [IsAuthenticated, StudentUser]
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Discipline.objects.filter(student=user.student)
+        print(dir(queryset))
+        return queryset  
