@@ -132,5 +132,4 @@ class DisciplinyByStudent(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         queryset = Discipline.objects.filter(student=user.student)
-        print(dir(queryset))
         return queryset  
