@@ -27,4 +27,5 @@ urlpatterns = [
     path("teacher/", TeacherListCreateView.as_view()),
     path("signup/teacher/", TeacherSignupView.as_view()),
     path("user/", GetUser.as_view())
+    
 ]

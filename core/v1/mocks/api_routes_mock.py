@@ -7,3 +7,5 @@ class ApiRouteMocks():
     url_api_discipline_left_student = '/api/discipline_left_student/'
     url_api_discipline_teacher = '/api/discipline_teacher/'
     url_api_discipline_student = '/api/discipline_student/'
+    url_api_score_add_student = '/api/score_add_student/'
+    url_api_discipline_chose_by_student = '/api/discipline_chose/'

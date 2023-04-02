@@ -54,6 +54,12 @@ class PayLoadMocks():
 		},
 		"student": []
 	},
-     
-
+    data_score = {
+	"id_student": 1,
+	"id_discpline": 1,
+	"nota": 10
+}
+    data_discipline_choose = {
+	"id_discpline": 1
+}
 
