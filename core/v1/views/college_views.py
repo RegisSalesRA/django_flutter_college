@@ -43,7 +43,7 @@ class DisciplineListLeftStudent(generics.ListAPIView):
                 return queryset
 
         except Exception as e:
-            message = str(e)
+            str(e)
             print(e) 
             
 # Semester

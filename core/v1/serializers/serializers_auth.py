@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from core.v1.models.auth_models import User, Student, Teacher
-from rest_framework import generics, permissions, status
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

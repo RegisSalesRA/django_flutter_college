@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from core.v1.models.college_models import Discipline,Semester,Scores
-from core.v1.models.auth_models import Teacher
 
 
 

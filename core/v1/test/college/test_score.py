@@ -1,7 +1,5 @@
 from rest_framework.test import APIClient
-from django.contrib.auth import get_user_model
 from rest_framework import status
-from django.urls import reverse
 from rest_framework.test import APITestCase
 from core.v1.mocks.api_routes_mock import ApiRouteMocks
 
@@ -31,8 +29,8 @@ class TestScoreInsertStudenteApi(APITestCase):
         Semester.objects.create(id=1,semester='semester_1')
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
-        discipline = Discipline.objects.create( name="Geo", ano= "2014", teacher=teacher_instance,semester=semester_instance)
-        discipline = Discipline.objects.create( name="Matematica", ano= "2017", teacher=teacher_instance,semester=semester_instance)
+        Discipline.objects.create( name="Geo", ano= "2014", teacher=teacher_instance,semester=semester_instance)
+        Discipline.objects.create( name="Matematica", ano= "2017", teacher=teacher_instance,semester=semester_instance)
         discipline_instance = Discipline.objects.get(name="Geo", ano= "2014", teacher=teacher_instance,semester=semester_instance)
         discipline_instance.student.add(student_instance.id)
         
@@ -46,8 +44,8 @@ class TestScoreInsertStudenteApi(APITestCase):
         Semester.objects.create(id=1,semester='semester_1')
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
-        discipline = Discipline.objects.create( name="Geo", ano= "2014", teacher=teacher_instance,semester=semester_instance)
-        discipline = Discipline.objects.create( name="Matematica", ano= "2017", teacher=teacher_instance,semester=semester_instance)
+        Discipline.objects.create( name="Geo", ano= "2014", teacher=teacher_instance,semester=semester_instance)
+        Discipline.objects.create( name="Matematica", ano= "2017", teacher=teacher_instance,semester=semester_instance)
         discipline_instance = Discipline.objects.get(name="Geo", ano= "2014", teacher=teacher_instance,semester=semester_instance)
         discipline_instance.student.add(student_instance.id)
         query_score = Scores.objects.create(aluno=student_instance, discipline=discipline_instance, score=10)
@@ -65,11 +63,11 @@ class TestScoreInsertStudenteApi(APITestCase):
         Semester.objects.create(id=1,semester='semester_1')
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
-        discipline = Discipline.objects.create( name="Geo", ano= "2014", teacher=teacher_instance,semester=semester_instance)
-        discipline = Discipline.objects.create( name="Matematica", ano= "2017", teacher=teacher_instance,semester=semester_instance)
+        Discipline.objects.create( name="Geo", ano= "2014", teacher=teacher_instance,semester=semester_instance)
+        Discipline.objects.create( name="Matematica", ano= "2017", teacher=teacher_instance,semester=semester_instance)
         discipline_instance = Discipline.objects.get(name="Geo", ano= "2014", teacher=teacher_instance,semester=semester_instance)
         discipline_instance.student.add(student_instance.id)
-        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer invalid_token')
+        self.client.credentials(HTTP_AUTHORIZATION='Bearer invalid_token')
         response = self.client.post(ApiRouteMocks.url_api_score_add_student, PayLoadMocks.data_score,format='json')
       
         self.assertEqual(response.status_code,status.HTTP_401_UNAUTHORIZED)

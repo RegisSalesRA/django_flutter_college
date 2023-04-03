@@ -1,7 +1,5 @@
 from rest_framework.test import APIClient
-from django.contrib.auth import get_user_model
 from rest_framework import status
-from django.urls import reverse
 from rest_framework.test import APITestCase
 
 from core.v1.mocks.api_routes_mock import ApiRouteMocks
@@ -45,7 +43,7 @@ class TestDisciplineLeftByStudentApi(APITestCase):
 
     def test_get_discpline_left_by_sudent_fail(self):
         
-        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer invalid_token')
+        self.client.credentials(HTTP_AUTHORIZATION='Bearer invalid_token')
         response = self.client.get(ApiRouteMocks.url_api_discipline_left_student)
         self.assertEqual(response.status_code,status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(response.data["detail"], "Given token not valid for any token type")
@@ -90,7 +88,7 @@ class TestDisciplineByStudentApi(APITestCase):
         Discipline.objects.create( name="Matematica", ano= "2017", teacher=teacher_instance,semester=semester_instance)
         discipline_instance = Discipline.objects.get(name="Geo", ano= "2014", teacher=teacher_instance,semester=semester_instance)
         discipline_instance.student.add(student_instance.id)
-        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer invalid_token')
+        self.client.credentials(HTTP_AUTHORIZATION='Bearer invalid_token')
 
         response = self.client.get(ApiRouteMocks.url_api_discipline_student)
 
@@ -154,7 +152,7 @@ class TestDisciplineByTeacherApi(APITestCase):
         Discipline.objects.create( name="Matematica", ano= "2017", teacher=teacher_instance,semester=semester_instance)
         discipline_instance = Discipline.objects.get(name="Geo", ano= "2014", teacher=teacher_instance,semester=semester_instance)
         discipline_instance.student.add(student_instance.id)
-        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer invalid_token')
+        self.client.credentials(HTTP_AUTHORIZATION='Bearer invalid_token')
 
         response = self.client.get(ApiRouteMocks.url_api_discipline_teacher)
 
@@ -227,7 +225,7 @@ class TestDisciplineChoseByStudent(APITestCase):
         semester_instance = Semester.objects.get(id=1)
         Discipline.objects.create( name="Geo", ano= "2014", teacher=teacher_instance,semester=semester_instance)
         Discipline.objects.create( name="Matematica", ano= "2017", teacher=teacher_instance,semester=semester_instance)
-        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer invalid_token')
+        self.client.credentials(HTTP_AUTHORIZATION='Bearer invalid_token')
 
         response = self.client.post(ApiRouteMocks.url_api_discipline_chose_by_student,PayLoadMocks.data_discipline_choose,format='json')
         self.assertEqual(response.status_code,status.HTTP_401_UNAUTHORIZED)

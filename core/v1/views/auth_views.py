@@ -1,7 +1,6 @@
 from rest_framework.views import APIView
-import json
 from rest_framework.response import Response
-from rest_framework import generics, permissions, status
+from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from core.exceptions.exceptions import except_error_response
 from core.v1.models.auth_models import Student, Teacher
@@ -20,7 +19,7 @@ class StudentSignupView(generics.GenericAPIView):
         try: 
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
-            user = serializer.save()
+            serializer.save()
             return Response({"result": "Student account created successfully","status_code":status.HTTP_201_CREATED},
             status=status.HTTP_201_CREATED,)
         except Exception as e:
@@ -36,7 +35,7 @@ class TeacherSignupView(generics.GenericAPIView):
         try:
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
-            user = serializer.save()
+            serializer.save()
             return Response({"result": "Teacher account created successfully","status_code":status.HTTP_201_CREATED},
             status=status.HTTP_201_CREATED,)
         except Exception as e:
