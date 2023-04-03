@@ -1,0 +1,3 @@
+poetry run pylint --generate-rcfile > .pylintrc
+
+# Vermelho
