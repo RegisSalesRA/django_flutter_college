@@ -1,12 +1,10 @@
-from rest_framework.test import APIClient
 from rest_framework import status
-from rest_framework.test import APITestCase
+from rest_framework.test import APIClient, APITestCase
 
 from core.v1.mocks.api_routes_mock import ApiRouteMocks
 from core.v1.mocks.payload_mock import PayLoadMocks
 from core.v1.models.auth_models import Student, Teacher
 from core.v1.models.college_models import Discipline, Semester
-
 
 client = APIClient()
 
