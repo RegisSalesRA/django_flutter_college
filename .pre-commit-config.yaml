@@ -1,0 +1,5 @@
+- repo: https://github.com/RegisSalesRA/django_flutter_school.git
+  # Ruff version.
+  rev: 'v0.0.234'
+  hooks:
+    - id: ruff
