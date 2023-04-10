@@ -1,11 +1,86 @@
+from abc import ABC, abstractmethod
 
-class ApiRouteMocks():
-    url_api_user = '/api/user/'
-    url_api_token = '/api/token/'
-    url_signup_student = '/api/signup/student/'
-    url_signup_teacher = '/api/signup/teacher/'
-    url_api_discipline_left_student = '/api/discipline_left_student/'
-    url_api_discipline_teacher = '/api/discipline_teacher/'
-    url_api_discipline_student = '/api/discipline_student/'
-    url_api_score_add_student = '/api/score_add_student/'
-    url_api_discipline_chose_by_student = '/api/discipline_chose/'
+
+class ApiRouteInterface(ABC):
+    @property
+    @abstractmethod
+    def url_api_user(self):
+        pass
+
+    @property
+    @abstractmethod
+    def url_api_token(self):
+        pass
+
+    @property
+    @abstractmethod
+    def url_signup_student(self):
+        pass
+
+    @property
+    @abstractmethod
+    def url_signup_teacher(self):
+        pass
+
+    @property
+    @abstractmethod
+    def url_api_discipline_left_student(self):
+        pass
+
+    @property
+    @abstractmethod
+    def url_api_discipline_teacher(self):
+        pass
+
+    @property
+    @abstractmethod
+    def url_api_discipline_student(self):
+        pass
+
+    @property
+    @abstractmethod
+    def url_api_score_add_student(self):
+        pass
+
+    @property
+    @abstractmethod
+    def url_api_discipline_chose_by_student(self):
+        pass
+
+
+class ApiRouteMocks(ApiRouteInterface):
+    @property
+    def url_api_user(self):
+        return "/api/user/"
+
+    @property
+    def url_api_token(self):
+        return "/api/token/"
+
+    @property
+    def url_signup_student(self):
+        return "/api/signup/student/"
+
+    @property
+    def url_signup_teacher(self):
+        return "/api/signup/teacher/"
+
+    @property
+    def url_api_discipline_left_student(self):
+        return "/api/discipline_left_student/"
+
+    @property
+    def url_api_discipline_teacher(self):
+        return "/api/discipline_teacher/"
+
+    @property
+    def url_api_discipline_student(self):
+        return "/api/discipline_student/"
+
+    @property
+    def url_api_score_add_student(self):
+        return "/api/score_add_student/"
+
+    @property
+    def url_api_discipline_chose_by_student(self):
+        return "/api/discipline_chose/"

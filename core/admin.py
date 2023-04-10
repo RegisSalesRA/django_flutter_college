@@ -1,5 +1,6 @@
 from django.contrib import admin
-from core.v1.models.auth_models import User, Teacher, Student
+
+from core.v1.models.auth_models import Student, Teacher, User
 from core.v1.models.college_models import Discipline, Scores, Semester
 
 # Auth Models
