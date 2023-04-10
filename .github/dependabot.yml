@@ -1,0 +1,22 @@
+version: 2
+updates:
+  - package-ecosystem: "pip" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "12:00"
+      timezone: "America/Fortaleza"
+    commit-message:
+      prefix: "pip enviroments"
+    open-pull-requests-limit: 5
+  - package-ecosystem: "pub" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "12:00"
+      timezone: "America/Fortaleza"
+    commit-message:
+      prefix: "pub enviroments"
+    open-pull-requests-limit: 5   
