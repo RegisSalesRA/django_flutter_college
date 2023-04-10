@@ -3,6 +3,7 @@ from rest_framework.test import APIClient, APITestCase
 
 from core.v1.mocks.api_routes_mock import ApiRouteMocks
 from core.v1.mocks.data_mock import DataMocks
+from core.v1.test.helpers.get_token_helpers import create_student_and_get_token, create_teacher_and_get_token
 
 client = APIClient()
 
@@ -25,11 +26,7 @@ class TestLoginUserStudent(APITestCase):
 
 class TestGetStudentUserLogged(APITestCase):
     def setUp(self):
-        data_student = DataMocks.data_student
-        response = self.client.post(ApiRouteMocks().url_signup_student, data_student, format="json")
-        data = DataMocks.data_user_student
-        response = self.client.post(ApiRouteMocks().url_api_token, data, format="json")
-        token = response.data["access"]
+        token = create_student_and_get_token(self)
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
 
     def test_get_user_logged_success(self):
@@ -74,11 +71,7 @@ class TestLoginUserTeacher(APITestCase):
 
 class TestGetTeacherUserLogged(APITestCase):
     def setUp(self):
-        data_teacher = DataMocks.data_teacher
-        response = self.client.post(ApiRouteMocks().url_signup_teacher, data_teacher, format="json")
-        data = DataMocks.data_user_teacher
-        response = self.client.post(ApiRouteMocks().url_api_token, data, format="json")
-        token = response.data["access"]
+        token = create_teacher_and_get_token(self)
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
 
     def test_get_user_logged_success(self):
