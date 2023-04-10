@@ -5,28 +5,25 @@ from core.v1.mocks.api_routes_mock import ApiRouteMocks
 from core.v1.mocks.data_mock import DataMocks
 from core.v1.models.auth_models import Student, Teacher
 from core.v1.models.college_models import Discipline, Scores, Semester
+from core.v1.test.helpers.discipline_test_helpers import create_discipline, create_semester
+from core.v1.test.helpers.users_test_helpers import create_student, create_teacher_and_get_token
 
 client = APIClient()
 
 
 class TestScoreInsertStudenteApi(APITestCase):
     def setUp(self):
-        data_teacher = DataMocks.data_teacher
-        data_student = DataMocks.data_student
-        response = self.client.post(ApiRouteMocks().url_signup_teacher, data_teacher, format="json")
-        self.client.post(ApiRouteMocks().url_signup_student, data_student, format="json")
-        data = DataMocks.data_user_teacher
-        response = self.client.post(ApiRouteMocks().url_api_token, data, format="json")
-        token = response.data["access"]
+        create_student(self)
+        token = create_teacher_and_get_token(self)
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
 
     def test_score_insert_student_api_success(self):
         teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
-        Semester.objects.create(id=1, semester="semester_1")
+        create_semester(self, "semester_1")
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
-        Discipline.objects.create(name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
-        Discipline.objects.create(name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
         discipline_instance = Discipline.objects.get(
             name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance
         )
@@ -38,11 +35,11 @@ class TestScoreInsertStudenteApi(APITestCase):
 
     def test_score_insert_student_api_already_exists(self):
         teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
-        Semester.objects.create(id=1, semester="semester_1")
+        create_semester(self, "semester_1")
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
-        Discipline.objects.create(name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
-        Discipline.objects.create(name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
         discipline_instance = Discipline.objects.get(
             name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance
         )
@@ -58,11 +55,11 @@ class TestScoreInsertStudenteApi(APITestCase):
 
     def test_score_insert_student_api_fail(self):
         teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
-        Semester.objects.create(id=1, semester="semester_1")
+        create_semester(self, "semester_1")
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
-        Discipline.objects.create(name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
-        Discipline.objects.create(name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
         discipline_instance = Discipline.objects.get(
             name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance
         )

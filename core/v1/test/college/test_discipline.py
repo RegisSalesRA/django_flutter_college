@@ -5,29 +5,32 @@ from core.v1.mocks.api_routes_mock import ApiRouteMocks
 from core.v1.mocks.data_mock import DataMocks
 from core.v1.models.auth_models import Student, Teacher
 from core.v1.models.college_models import Discipline, Semester
+from core.v1.test.helpers.discipline_test_helpers import create_discipline, create_semester
+from core.v1.test.helpers.users_test_helpers import (
+    create_student,
+    create_student_and_get_token,
+    create_teacher,
+    create_teacher_and_get_token,
+)
 
 client = APIClient()
 
 
 class TestDisciplineLeftByStudentApi(APITestCase):
-    discpline_url = ApiRouteMocks().url_api_discipline_left_student
-
     def setUp(self):
-        data_student = DataMocks.data_student
-        response = self.client.post(ApiRouteMocks().url_signup_student, data_student, format="json")
-        data = DataMocks.data_user_student
-        response = self.client.post(ApiRouteMocks().url_api_token, data, format="json")
-        token = response.data["access"]
+        token = create_student_and_get_token(self)
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
 
     def test_get_discpline_left_by_sudent_success(self):
-        client.post(ApiRouteMocks().url_signup_teacher, DataMocks.data_teacher)
+        create_teacher(self)
         teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
-        Semester.objects.create(id=1, semester="semester_1")
+        create_semester(self, "semester_1")
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
-        Discipline.objects.create(name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
-        Discipline.objects.create(name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
+
+        create_discipline(self, name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
+
         discipline_instance = Discipline.objects.get(
             name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance
         )
@@ -46,21 +49,17 @@ class TestDisciplineLeftByStudentApi(APITestCase):
 
 class TestDisciplineByStudentApi(APITestCase):
     def setUp(self):
-        data_student = DataMocks.data_student
-        response = self.client.post(ApiRouteMocks().url_signup_student, data_student, format="json")
-        data = DataMocks.data_user_student
-        response = self.client.post(ApiRouteMocks().url_api_token, data, format="json")
-        token = response.data["access"]
+        token = create_student_and_get_token(self)
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
 
     def test_discipline_by_student_success(self):
-        client.post(ApiRouteMocks().url_signup_teacher, DataMocks.data_teacher)
+        create_teacher(self)
         teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
-        Semester.objects.create(id=1, semester="semester_1")
+        create_semester(self, "semester_1")
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
-        Discipline.objects.create(name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
-        Discipline.objects.create(name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
         discipline_instance = Discipline.objects.get(
             name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance
         )
@@ -70,13 +69,13 @@ class TestDisciplineByStudentApi(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_discipline_by_student_fail(self):
-        client.post(ApiRouteMocks().url_signup_teacher, DataMocks.data_teacher)
+        create_teacher(self)
         teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
-        Semester.objects.create(id=1, semester="semester_1")
+        create_semester(self, "semester_1")
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
-        Discipline.objects.create(name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
-        Discipline.objects.create(name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
         discipline_instance = Discipline.objects.get(
             name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance
         )
@@ -88,13 +87,13 @@ class TestDisciplineByStudentApi(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_discipline_by_student_fail_forbidden(self):
-        client.post(ApiRouteMocks().url_signup_teacher, DataMocks.data_teacher)
+        create_teacher(self)
         teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
-        Semester.objects.create(id=1, semester="semester_1")
+        create_semester(self, "semester_1")
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
-        Discipline.objects.create(name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
-        Discipline.objects.create(name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
         discipline_instance = Discipline.objects.get(
             name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance
         )
@@ -107,22 +106,17 @@ class TestDisciplineByStudentApi(APITestCase):
 
 class TestDisciplineByTeacherApi(APITestCase):
     def setUp(self):
-        data_teacher = DataMocks.data_teacher
-        data_student = DataMocks.data_student
-        response = self.client.post(ApiRouteMocks().url_signup_teacher, data_teacher, format="json")
-        response = self.client.post(ApiRouteMocks().url_signup_student, data_student, format="json")
-        data = DataMocks.data_user_teacher
-        response = self.client.post(ApiRouteMocks().url_api_token, data, format="json")
-        token = response.data["access"]
+        token = create_teacher_and_get_token(self)
+        create_student(self)
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
 
     def test_discipline_by_teacher_success(self):
         teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
-        Semester.objects.create(id=1, semester="semester_1")
+        create_semester(self, "semester_1")
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
-        Discipline.objects.create(name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
-        Discipline.objects.create(name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
         discipline_instance = Discipline.objects.get(
             name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance
         )
@@ -132,13 +126,13 @@ class TestDisciplineByTeacherApi(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_discipline_by_teacher_fail(self):
-        client.post(ApiRouteMocks().url_signup_teacher, DataMocks.data_teacher)
+        create_teacher(self)
         teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
-        Semester.objects.create(id=1, semester="semester_1")
+        create_semester(self, "semester_1")
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
-        Discipline.objects.create(name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
-        Discipline.objects.create(name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
         discipline_instance = Discipline.objects.get(
             name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance
         )
@@ -150,13 +144,13 @@ class TestDisciplineByTeacherApi(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_discipline_by_teacher_fail_forbidden(self):
-        client.post(ApiRouteMocks().url_signup_teacher, DataMocks.data_teacher)
+        create_teacher(self)
         teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
-        Semester.objects.create(id=1, semester="semester_1")
+        create_semester(self, "semester_1")
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
-        Discipline.objects.create(name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
-        Discipline.objects.create(name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
         discipline_instance = Discipline.objects.get(
             name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance
         )
@@ -169,20 +163,16 @@ class TestDisciplineByTeacherApi(APITestCase):
 
 class TestDisciplineChoseByStudent(APITestCase):
     def setUp(self):
-        data_student = DataMocks.data_student
-        self.client.post(ApiRouteMocks().url_signup_student, data_student, format="json")
-        data = DataMocks.data_user_student
-        response = self.client.post(ApiRouteMocks().url_api_token, data, format="json")
-        token = response.data["access"]
+        token = create_student_and_get_token(self)
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
 
     def test_discipline_chose_by_student_success(self):
-        client.post(ApiRouteMocks().url_signup_teacher, DataMocks.data_teacher)
+        create_teacher(self)
         teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
-        Semester.objects.create(id=1, semester="semester_1")
+        create_semester(self, "semester_1")
         semester_instance = Semester.objects.get(id=1)
-        Discipline.objects.create(name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
-        Discipline.objects.create(name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
 
         response = self.client.post(
             ApiRouteMocks().url_api_discipline_chose_by_student, DataMocks.data_discipline_choose, format="json"
@@ -193,12 +183,12 @@ class TestDisciplineChoseByStudent(APITestCase):
 
     def test_discipline_chose_by_student_already_created_fail(self):
         student_instance = Student.objects.get(phone="12345678", name="user")
-        client.post(ApiRouteMocks().url_signup_teacher, DataMocks.data_teacher)
+        create_teacher(self)
         teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
-        Semester.objects.create(id=1, semester="semester_1")
+        create_semester(self, "semester_1")
         semester_instance = Semester.objects.get(id=1)
-        Discipline.objects.create(name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
-        Discipline.objects.create(name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
         discipline_instance = Discipline.objects.get(
             name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance
         )
@@ -212,12 +202,12 @@ class TestDisciplineChoseByStudent(APITestCase):
         self.assertEqual(response.data, {"error": "object alerady exists"})
 
     def test_discipline_chose_by_student_fail_unauthorized(self):
-        client.post(ApiRouteMocks().url_signup_teacher, DataMocks.data_teacher)
+        create_teacher(self)
         teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
-        Semester.objects.create(id=1, semester="semester_1")
+        create_semester(self, "semester_1")
         semester_instance = Semester.objects.get(id=1)
-        Discipline.objects.create(name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
-        Discipline.objects.create(name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
+        create_discipline(self, name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
         self.client.credentials(HTTP_AUTHORIZATION="Bearer invalid_token")
 
         response = self.client.post(

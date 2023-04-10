@@ -3,7 +3,7 @@ from rest_framework.test import APIClient, APITestCase
 
 from core.v1.mocks.api_routes_mock import ApiRouteMocks
 from core.v1.mocks.data_mock import DataMocks
-from core.v1.test.helpers.get_token_helpers import create_student_and_get_token, create_teacher_and_get_token
+from core.v1.test.helpers.users_test_helpers import create_student_and_get_token, create_teacher_and_get_token
 
 client = APIClient()
 
