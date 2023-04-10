@@ -16,7 +16,7 @@ class Semester(models.Model):
     updateAt = models.DateTimeField(auto_now=True, auto_created=True)
 
     def __str__(self):
-        return self.semester
+        return str(self.semester)
 
 
 class Discipline(models.Model):
@@ -30,7 +30,7 @@ class Discipline(models.Model):
     updateAt = models.DateTimeField(auto_now=True, auto_created=True)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class Scores(models.Model):
@@ -41,9 +41,5 @@ class Scores(models.Model):
     createAt = models.DateTimeField(auto_now_add=True, auto_created=True)
     updateAt = models.DateTimeField(auto_now=True, auto_created=True)
 
-    class Meta:
-        verbose_name = "Score"
-        verbose_name_plural = "Scores"
-
     def __str__(self):
-        return f"{self.aluno.user.username} - {self.discipline.name}"
+        return f"{self.score} - {self.aluno}"

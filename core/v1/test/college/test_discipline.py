@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 
 from core.v1.mocks.api_routes_mock import ApiRouteMocks
-from core.v1.mocks.data_mock import PayLoadMocks
+from core.v1.mocks.data_mock import DataMocks
 from core.v1.models.auth_models import Student, Teacher
 from core.v1.models.college_models import Discipline, Semester
 
@@ -13,16 +13,16 @@ class TestDisciplineLeftByStudentApi(APITestCase):
     discpline_url = ApiRouteMocks().url_api_discipline_left_student
 
     def setUp(self):
-        data_student = PayLoadMocks.data_student
+        data_student = DataMocks.data_student
         response = self.client.post(ApiRouteMocks().url_signup_student, data_student, format="json")
-        data = PayLoadMocks.data_user_student
+        data = DataMocks.data_user_student
         response = self.client.post(ApiRouteMocks().url_api_token, data, format="json")
         token = response.data["access"]
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
 
     def test_get_discpline_left_by_sudent_success(self):
-        client.post(ApiRouteMocks().url_signup_teacher, PayLoadMocks.data_teacher)
-        teacher_instance = Teacher.objects.get(phone=PayLoadMocks.data_teacher["phone"])
+        client.post(ApiRouteMocks().url_signup_teacher, DataMocks.data_teacher)
+        teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
         Semester.objects.create(id=1, semester="semester_1")
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
@@ -46,16 +46,16 @@ class TestDisciplineLeftByStudentApi(APITestCase):
 
 class TestDisciplineByStudentApi(APITestCase):
     def setUp(self):
-        data_student = PayLoadMocks.data_student
+        data_student = DataMocks.data_student
         response = self.client.post(ApiRouteMocks().url_signup_student, data_student, format="json")
-        data = PayLoadMocks.data_user_student
+        data = DataMocks.data_user_student
         response = self.client.post(ApiRouteMocks().url_api_token, data, format="json")
         token = response.data["access"]
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
 
     def test_discipline_by_student_success(self):
-        client.post(ApiRouteMocks().url_signup_teacher, PayLoadMocks.data_teacher)
-        teacher_instance = Teacher.objects.get(phone=PayLoadMocks.data_teacher["phone"])
+        client.post(ApiRouteMocks().url_signup_teacher, DataMocks.data_teacher)
+        teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
         Semester.objects.create(id=1, semester="semester_1")
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
@@ -70,8 +70,8 @@ class TestDisciplineByStudentApi(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_discipline_by_student_fail(self):
-        client.post(ApiRouteMocks().url_signup_teacher, PayLoadMocks.data_teacher)
-        teacher_instance = Teacher.objects.get(phone=PayLoadMocks.data_teacher["phone"])
+        client.post(ApiRouteMocks().url_signup_teacher, DataMocks.data_teacher)
+        teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
         Semester.objects.create(id=1, semester="semester_1")
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
@@ -88,8 +88,8 @@ class TestDisciplineByStudentApi(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_discipline_by_student_fail_forbidden(self):
-        client.post(ApiRouteMocks().url_signup_teacher, PayLoadMocks.data_teacher)
-        teacher_instance = Teacher.objects.get(phone=PayLoadMocks.data_teacher["phone"])
+        client.post(ApiRouteMocks().url_signup_teacher, DataMocks.data_teacher)
+        teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
         Semester.objects.create(id=1, semester="semester_1")
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
@@ -107,17 +107,17 @@ class TestDisciplineByStudentApi(APITestCase):
 
 class TestDisciplineByTeacherApi(APITestCase):
     def setUp(self):
-        data_teacher = PayLoadMocks.data_teacher
-        data_student = PayLoadMocks.data_student
+        data_teacher = DataMocks.data_teacher
+        data_student = DataMocks.data_student
         response = self.client.post(ApiRouteMocks().url_signup_teacher, data_teacher, format="json")
         response = self.client.post(ApiRouteMocks().url_signup_student, data_student, format="json")
-        data = PayLoadMocks.data_user_teacher
+        data = DataMocks.data_user_teacher
         response = self.client.post(ApiRouteMocks().url_api_token, data, format="json")
         token = response.data["access"]
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
 
     def test_discipline_by_teacher_success(self):
-        teacher_instance = Teacher.objects.get(phone=PayLoadMocks.data_teacher["phone"])
+        teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
         Semester.objects.create(id=1, semester="semester_1")
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
@@ -132,8 +132,8 @@ class TestDisciplineByTeacherApi(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_discipline_by_teacher_fail(self):
-        client.post(ApiRouteMocks().url_signup_teacher, PayLoadMocks.data_teacher)
-        teacher_instance = Teacher.objects.get(phone=PayLoadMocks.data_teacher["phone"])
+        client.post(ApiRouteMocks().url_signup_teacher, DataMocks.data_teacher)
+        teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
         Semester.objects.create(id=1, semester="semester_1")
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
@@ -150,8 +150,8 @@ class TestDisciplineByTeacherApi(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_discipline_by_teacher_fail_forbidden(self):
-        client.post(ApiRouteMocks().url_signup_teacher, PayLoadMocks.data_teacher)
-        teacher_instance = Teacher.objects.get(phone=PayLoadMocks.data_teacher["phone"])
+        client.post(ApiRouteMocks().url_signup_teacher, DataMocks.data_teacher)
+        teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
         Semester.objects.create(id=1, semester="semester_1")
         semester_instance = Semester.objects.get(id=1)
         student_instance = Student.objects.get(phone="12345678", name="user")
@@ -169,23 +169,23 @@ class TestDisciplineByTeacherApi(APITestCase):
 
 class TestDisciplineChoseByStudent(APITestCase):
     def setUp(self):
-        data_student = PayLoadMocks.data_student
+        data_student = DataMocks.data_student
         self.client.post(ApiRouteMocks().url_signup_student, data_student, format="json")
-        data = PayLoadMocks.data_user_student
+        data = DataMocks.data_user_student
         response = self.client.post(ApiRouteMocks().url_api_token, data, format="json")
         token = response.data["access"]
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
 
     def test_discipline_chose_by_student_success(self):
-        client.post(ApiRouteMocks().url_signup_teacher, PayLoadMocks.data_teacher)
-        teacher_instance = Teacher.objects.get(phone=PayLoadMocks.data_teacher["phone"])
+        client.post(ApiRouteMocks().url_signup_teacher, DataMocks.data_teacher)
+        teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
         Semester.objects.create(id=1, semester="semester_1")
         semester_instance = Semester.objects.get(id=1)
         Discipline.objects.create(name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
         Discipline.objects.create(name="Matematica", ano="2017", teacher=teacher_instance, semester=semester_instance)
 
         response = self.client.post(
-            ApiRouteMocks().url_api_discipline_chose_by_student, PayLoadMocks.data_discipline_choose, format="json"
+            ApiRouteMocks().url_api_discipline_chose_by_student, DataMocks.data_discipline_choose, format="json"
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -193,8 +193,8 @@ class TestDisciplineChoseByStudent(APITestCase):
 
     def test_discipline_chose_by_student_already_created_fail(self):
         student_instance = Student.objects.get(phone="12345678", name="user")
-        client.post(ApiRouteMocks().url_signup_teacher, PayLoadMocks.data_teacher)
-        teacher_instance = Teacher.objects.get(phone=PayLoadMocks.data_teacher["phone"])
+        client.post(ApiRouteMocks().url_signup_teacher, DataMocks.data_teacher)
+        teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
         Semester.objects.create(id=1, semester="semester_1")
         semester_instance = Semester.objects.get(id=1)
         Discipline.objects.create(name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
@@ -205,15 +205,15 @@ class TestDisciplineChoseByStudent(APITestCase):
         discipline_instance.student.add(student_instance.id)
 
         response = self.client.post(
-            ApiRouteMocks().url_api_discipline_chose_by_student, PayLoadMocks.data_discipline_choose, format="json"
+            ApiRouteMocks().url_api_discipline_chose_by_student, DataMocks.data_discipline_choose, format="json"
         )
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data, {"error": "object alerady exists"})
 
     def test_discipline_chose_by_student_fail_unauthorized(self):
-        client.post(ApiRouteMocks().url_signup_teacher, PayLoadMocks.data_teacher)
-        teacher_instance = Teacher.objects.get(phone=PayLoadMocks.data_teacher["phone"])
+        client.post(ApiRouteMocks().url_signup_teacher, DataMocks.data_teacher)
+        teacher_instance = Teacher.objects.get(phone=DataMocks.data_teacher["phone"])
         Semester.objects.create(id=1, semester="semester_1")
         semester_instance = Semester.objects.get(id=1)
         Discipline.objects.create(name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance)
@@ -221,12 +221,12 @@ class TestDisciplineChoseByStudent(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION="Bearer invalid_token")
 
         response = self.client.post(
-            ApiRouteMocks().url_api_discipline_chose_by_student, PayLoadMocks.data_discipline_choose, format="json"
+            ApiRouteMocks().url_api_discipline_chose_by_student, DataMocks.data_discipline_choose, format="json"
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_discipline_chose_by_student_fail_methodo_not_allowed(self):
         response = self.client.get(
-            ApiRouteMocks().url_api_discipline_chose_by_student, PayLoadMocks.data_discipline_choose, format="json"
+            ApiRouteMocks().url_api_discipline_chose_by_student, DataMocks.data_discipline_choose, format="json"
         )
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)

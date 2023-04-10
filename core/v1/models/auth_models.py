@@ -9,7 +9,7 @@ class User(AbstractUser):
     updateAt = models.DateTimeField(auto_now=True, auto_created=True)
 
     def __str__(self):
-        return self.username
+        return str(self.username)
 
 
 class Student(models.Model):
@@ -18,7 +18,7 @@ class Student(models.Model):
     phone = models.CharField(max_length=12, null=True, blank=True)
 
     def __str__(self):
-        return self.user.username
+        return str(self.name)
 
 
 class Teacher(models.Model):
@@ -26,4 +26,4 @@ class Teacher(models.Model):
     phone = models.CharField(max_length=12, null=True, blank=True)
 
     def __str__(self):
-        return self.user.username
+        return str(self.user)

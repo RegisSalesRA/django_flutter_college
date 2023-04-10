@@ -19,7 +19,7 @@ class StudentSerializerRegister(serializers.ModelSerializer):
         fields = ["username", "password", "password2", "phone", "name"]
         extra_kwargs = {"password": {"write_only": True}}
 
-    def save(self, **kwargs):
+    def save(self):
         user = User(username=self.validated_data["username"])
         password = self.validated_data["password"]
         password2 = self.validated_data["password2"]
@@ -41,7 +41,7 @@ class TeacherSerializerRegister(serializers.ModelSerializer):
         fields = ["username", "phone", "password", "password2"]
         extra_kwargs = {"password": {"write_only": True}}
 
-    def save(self, **kwargs):
+    def save(self):
         user = User(username=self.validated_data["username"])
         password = self.validated_data["password"]
         password2 = self.validated_data["password2"]
