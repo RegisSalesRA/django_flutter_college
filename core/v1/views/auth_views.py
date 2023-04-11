@@ -16,7 +16,7 @@ from core.v1.serializers.serializers_auth import (
 class StudentSignupView(generics.GenericAPIView):
     serializer_class = StudentSerializerRegister
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         try:
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
@@ -25,14 +25,14 @@ class StudentSignupView(generics.GenericAPIView):
                 {"result": "Student account created successfully", "status_code": status.HTTP_201_CREATED},
                 status=status.HTTP_201_CREATED,
             )
-        except Exception as e:
-            return Response(except_error_response(e), status=status.HTTP_400_BAD_REQUEST)
+        except Exception as err_fatal:
+            return Response(except_error_response(err_fatal), status=status.HTTP_400_BAD_REQUEST)
 
 
 class TeacherSignupView(generics.GenericAPIView):
     serializer_class = TeacherSerializerRegister
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         try:
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
@@ -41,8 +41,8 @@ class TeacherSignupView(generics.GenericAPIView):
                 {"result": "Teacher account created successfully", "status_code": status.HTTP_201_CREATED},
                 status=status.HTTP_201_CREATED,
             )
-        except Exception as e:
-            return Response(except_error_response(e), status=status.HTTP_400_BAD_REQUEST)
+        except Exception as err_fatal:
+            return Response(except_error_response(err_fatal), status=status.HTTP_400_BAD_REQUEST)
 
 
 class GetUser(APIView):

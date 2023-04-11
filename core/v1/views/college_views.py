@@ -52,10 +52,11 @@ class DisciplineListLeftStudent(generics.ListAPIView):
             queryset = Discipline.objects.exclude(id__in=current_student_discipline)
             if queryset is not None:
                 return queryset
+            return None
 
-        except Exception as e:
-            print(e)
-            return str(e)
+        except Exception as err_error:
+            print(err_error)
+            return str(err_error)
 
 
 # Semester
@@ -92,7 +93,7 @@ class ScoresRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 class InsertScoreToStudent(APIView):
     permission_classes = [IsAuthenticated, TeacherUser]
 
-    def get(self, request):
+    def get(self):
         queryset = Scores.objects.all()
         serializers = ScoresSerializer(queryset, many=True)
         return Response(serializers.data)
@@ -110,12 +111,13 @@ class InsertScoreToStudent(APIView):
 
             if query_score_filter.exists():
                 return Response({"error": "object alerady exists"}, status=status.HTTP_400_BAD_REQUEST)
-            else:
-                query_score = Scores.objects.create(aluno=querset_student, discipline=queryset_discipline, score=nota)
-                query_score.save()
-                return Response({"success": "create"}, status=status.HTTP_201_CREATED)
-        except Exception as e:
-            print(e)
+
+            query_score = Scores.objects.create(aluno=querset_student, discipline=queryset_discipline, score=nota)
+            query_score.save()
+            return Response({"success": "create"}, status=status.HTTP_201_CREATED)
+
+        except Exception as err_error:
+            print(err_error)
             return Response({"error": "object missing variables"}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -132,9 +134,9 @@ class ChoseDisciplineByStudent(APIView):
 
             if queryset_discipline.student.contains(querset_student):
                 return Response({"error": "object alerady exists"}, status=status.HTTP_400_BAD_REQUEST)
-            else:
-                queryset_discipline.student.add(querset_student)
-                return Response({"success": "create"}, status=status.HTTP_200_OK)
+
+            queryset_discipline.student.add(querset_student)
+            return Response({"success": "create"}, status=status.HTTP_200_OK)
 
         except Exception as wrong_error:
             print(wrong_error)
