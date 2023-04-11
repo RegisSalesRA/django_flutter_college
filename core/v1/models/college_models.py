@@ -22,7 +22,7 @@ class Semester(models.Model):
 class Discipline(models.Model):
     name = models.CharField(max_length=100)
     ano = models.CharField(max_length=4)
-    student = models.ManyToManyField(Student)
+    student = models.ManyToManyField(Student, blank=True)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, blank=False)
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
 
