@@ -1,19 +1,7 @@
-import 'package:client_flutter/presentation/login/login.dart';
 import 'package:flutter/material.dart';
+import 'app/config/app_config.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const AppConfig());
 }
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter Animate Demo',
-      debugShowCheckedModeBanner: false,
-      home: Login(),
-    );
-  }
-}
+ 
