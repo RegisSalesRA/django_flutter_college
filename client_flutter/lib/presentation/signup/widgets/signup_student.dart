@@ -14,6 +14,18 @@ class SignUpStudent extends StatefulWidget {
 }
 
 class _SignUpStudentState extends State<SignUpStudent> {
+  final formKey = GlobalKey<FormState>();
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  Future<void> onSave() async {
+    if (formKey.currentState!.validate()) {
+      print("Validoo");
+    } else {
+      print("Nao valido");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,7 +131,9 @@ class _SignUpStudentState extends State<SignUpStudent> {
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25))),
-                onPressed: () {},
+                onPressed: () {
+                  
+                },
                 child: const Text("Sign Up"),
               ),
             ),

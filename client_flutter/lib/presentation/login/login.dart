@@ -11,6 +11,18 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final formKey = GlobalKey<FormState>();
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  Future<void> onSave() async {
+    if (formKey.currentState!.validate()) {
+      print("Validoo");
+    } else {
+      print("Nao valido");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -63,6 +75,7 @@ class _LoginState extends State<Login> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Form(
+                        key: formKey,
                         child: Column(children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,9 +83,18 @@ class _LoginState extends State<Login> {
                               Text("Username",
                                   style: Theme.of(context).textTheme.headline2),
                               TextFormField(
+                                controller: usernameController,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
                                 decoration: const InputDecoration(
                                     prefixIcon: Icon(Icons.person),
                                     hintText: 'Username'),
+                                validator: (value) {
+                                  if (value == null || value == "") {
+                                    return "Title can not be null or empty";
+                                  }
+                                  return null;
+                                },
                               ),
                             ],
                           ),
@@ -85,12 +107,21 @@ class _LoginState extends State<Login> {
                               Text("Password",
                                   style: Theme.of(context).textTheme.headline2),
                               TextFormField(
+                                controller: passwordController,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
                                 decoration: const InputDecoration(
                                     prefixIcon: Icon(Icons.lock),
                                     suffixIcon: InkWell(
                                       child: Icon(Icons.visibility),
                                     ),
                                     hintText: 'Password'),
+                                validator: (value) {
+                                  if (value == null || value == "") {
+                                    return "Title can not be null or empty";
+                                  }
+                                  return null;
+                                },
                               ),
                             ],
                           ),
@@ -129,7 +160,9 @@ class _LoginState extends State<Login> {
                             style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(25))),
-                            onPressed: () {},
+                            onPressed: () {
+                              onSave();
+                            },
                             child: const Text("Login"),
                           ),
                         ),
