@@ -19,6 +19,9 @@ abstract class ColorsTheme {
 
   static const Color primaryColor = Color(0xFFE9DEFE);
   static const Color secondaryColor = Color(0xFF813DFC);
+  static const Color backgroundColor = Color(0xFF343742);
+  static const Color backgroundContainerColor = Color(0xFF5d5f68);
+  static const Color iconColor = Color(0xFFc8aefd);
   static const Color splashColor = Color(0xFF0e0917);
   static const Color splashColorExtra = Color(0xFF1a1432);
 }

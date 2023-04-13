@@ -28,12 +28,12 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
         child: SingleChildScrollView(
           child: Column(children: [
             Padding(
-              padding: const EdgeInsets.only(top: 10, left: 10),
+              padding: const EdgeInsets.only(top: 20, right: 20),
               child: Align(
-                alignment: Alignment.topLeft,
+                alignment: Alignment.topRight,
                 child: InkWell(
                     onTap: widget.backPageView,
-                    child: const Icon(Icons.arrow_back)),
+                    child: const Icon(Icons.arrow_forward)),
               ),
             ),
             const SizedBox(

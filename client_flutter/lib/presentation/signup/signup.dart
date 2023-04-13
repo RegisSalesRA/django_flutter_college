@@ -1,3 +1,4 @@
+import 'package:client_flutter/presentation/signup/widgets/signup_screen.dart';
 import 'package:client_flutter/presentation/signup/widgets/signup_student.dart';
 import 'package:client_flutter/presentation/signup/widgets/signup_teacher.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +11,12 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  final PageController _pageController = PageController(initialPage: 0);
+  final PageController _pageController = PageController(initialPage: 1);
 
   void goToPage(int pageIndex) {
     _pageController.animateToPage(
       pageIndex,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 900),
       curve: Curves.easeInOut,
     );
   }
@@ -24,25 +25,9 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     final pages = [
       SignUpTeacher(backPageView: () => goToPage(1)),
-      Container(
-        color: Colors.green,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            InkWell(
-              onTap: () => goToPage(0),
-              child: const Icon(Icons.arrow_back),
-            ),
-            const SizedBox(
-              width: 100,
-            ),
-            InkWell(
-              onTap: () => goToPage(2),
-              child: const Icon(Icons.arrow_forward),
-            ),
-          ],
-        ),
+      SignUpScreen(
+        backPageView: () => goToPage(0),
+        forwardPageView: () => goToPage(2),
       ),
       SignUpStudent(backPageView: () => goToPage(1)),
     ];

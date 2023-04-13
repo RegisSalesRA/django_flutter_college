@@ -15,7 +15,7 @@ class AppConfig extends StatelessWidget {
       title: 'Flutter College',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        iconTheme: const IconThemeData(color: ColorsTheme.secondaryColor),
+        iconTheme: const IconThemeData(color: ColorsTheme.iconColor),
         colorScheme:
             ColorScheme.fromSwatch(primarySwatch: ColorsTheme.themeColor)
                 .copyWith(secondary: ColorsTheme.primaryColor),
