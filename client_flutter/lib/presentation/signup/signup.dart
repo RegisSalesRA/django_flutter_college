@@ -1,7 +1,6 @@
+import 'package:client_flutter/presentation/signup/widgets/signup_student.dart';
+import 'package:client_flutter/presentation/signup/widgets/signup_teacher.dart';
 import 'package:flutter/material.dart';
-
-import '../../app/helpers/media_size_helper.dart';
-import '../../app/routes/routes.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -11,111 +10,51 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final PageController _pageController = PageController(initialPage: 0);
+
+  void goToPage(int pageIndex) {
+    _pageController.animateToPage(
+      pageIndex,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuerySize.heightSize(context),
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                'assets/images/register_screen.png',
-              ),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Column(children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 10, left: 10),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: InkWell(
-                    onTap: () => Navigator.pushNamed(context, Routes.initial),
-                    child: const Icon(Icons.arrow_back)),
-              ),
+    final pages = [
+      SignUpTeacher(backPageView: () => goToPage(1)),
+      Container(
+        color: Colors.green,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            InkWell(
+              onTap: () => goToPage(0),
+              child: const Icon(Icons.arrow_back),
             ),
             const SizedBox(
-              height: 150,
+              width: 100,
             ),
-            Form(
-              child: Column(children: [
-                TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: const InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.person,
-                        color: Colors.white,
-                      ),
-                      labelText: 'Username',
-                      labelStyle: TextStyle(color: Colors.white),
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(color: Colors.white)),
-                ),
-                TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: const InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.person,
-                        color: Colors.white,
-                      ),
-                      labelText: 'First Name',
-                      labelStyle: TextStyle(color: Colors.white),
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(color: Colors.white)),
-                ),
-                TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: const InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.person,
-                        color: Colors.white,
-                      ),
-                      labelText: 'Phone',
-                      labelStyle: TextStyle(color: Colors.white),
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(color: Colors.white)),
-                ),
-                TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: const InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.person,
-                        color: Colors.white,
-                      ),
-                      labelText: 'Name',
-                      labelStyle: TextStyle(color: Colors.white),
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(color: Colors.white)),
-                ),
-              ]),
+            InkWell(
+              onTap: () => goToPage(2),
+              child: const Icon(Icons.arrow_forward),
             ),
-            const SizedBox(
-              height: 150,
-            ),
-            SizedBox(
-              width: 350,
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25))),
-                onPressed: () {},
-                child: const Text("Sign Up"),
-              ),
-            ),
-          ]),
+          ],
         ),
       ),
-    ));
+      SignUpStudent(backPageView: () => goToPage(1)),
+    ];
+
+    return SafeArea(
+      child: Scaffold(
+        body: PageView(
+          controller: _pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          children: pages,
+        ),
+      ),
+    );
   }
 }
-
-
-/*
-
-
-
-*/

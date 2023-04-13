@@ -1,6 +1,6 @@
-import 'package:client_flutter/app/colors/colors.dart';
 import 'package:flutter/material.dart';
 
+import '../../app/colors/colors.dart';
 import '../../app/routes/routes.dart';
 
 class Login extends StatefulWidget {
@@ -35,7 +35,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ],
-              ), 
+              ),
               Column(
                 children: [
                   Column(
@@ -71,7 +71,6 @@ class _LoginState extends State<Login> {
                                   style: Theme.of(context).textTheme.headline2),
                               TextFormField(
                                 decoration: const InputDecoration(
-                                    
                                     prefixIcon: Icon(Icons.person),
                                     hintText: 'Username'),
                               ),
@@ -111,12 +110,12 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       const SizedBox(
-                        height: 50,
+                        height: 30,
                       ),
                     ],
                   ),
                 ],
-              ), 
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 15),
                 child: Align(
