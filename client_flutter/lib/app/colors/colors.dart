@@ -22,6 +22,8 @@ abstract class ColorsTheme {
   static Color backgroundColor = Colors.grey.shade300;
   //static const Color backgroundColor = Color(0xFF343742);
   static Color backgroundContainerColor = Colors.grey.shade200;
+  //static Color backgroundContainerSignUp = Colors.blue.shade100;
+  static const Color backgroundContainerSignUp = Color(0xFF356894);
   static const Color iconColor = Color(0xFF85c1cc);
   static const Color splashColor = Color(0xFF0e0917);
   static const Color splashColorExtra = Color(0xFF1a1432);
