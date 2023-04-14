@@ -163,7 +163,10 @@ class _LoginState extends State<Login> {
                             onPressed: () {
                               onSave();
                             },
-                            child: const Text("Login"),
+                            child: const Text(
+                              "Login",
+                              style: TextStyle(fontSize: 18),
+                            ),
                           ),
                         ),
                         const SizedBox(
