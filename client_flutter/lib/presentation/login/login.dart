@@ -17,7 +17,7 @@ class _LoginState extends State<Login> {
 
   Future<void> onSave() async {
     if (formKey.currentState!.validate()) {
-      print("Validoo");
+      await Navigator.pushReplacementNamed(context, Routes.home);
     } else {
       print("Nao valido");
     }
