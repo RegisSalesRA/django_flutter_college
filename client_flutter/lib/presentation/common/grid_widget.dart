@@ -37,7 +37,9 @@ class GridComponent extends StatelessWidget {
               TextSpan(
                   text: text_1,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 18)),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Colors.grey)),
               TextSpan(
                 text: " $text_2",
                 style: Theme.of(context).textTheme.headline2,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 abstract class ColorsTheme {
   static const MaterialColor themeColor = MaterialColor(
-    0xff813DFC,
+    0xff33717e,
     <int, Color>{
       50: Color(0xFF004999), //10%
       100: Color(0xFF004999), //20%
@@ -17,11 +17,13 @@ abstract class ColorsTheme {
     },
   );
 
-  static const Color primaryColor = Color(0xFFE9DEFE);
-  static const Color secondaryColor = Color(0xFF813DFC);
-  static const Color backgroundColor = Color(0xFF343742);
-  static const Color backgroundContainerColor = Color(0xFF5d5f68);
-  static const Color iconColor = Color(0xFFc8aefd);
+  static const Color primaryColor = Color(0xFF85c1cc);
+  static const Color secondaryColor = Color(0xFF33717e);
+  static Color backgroundColor = Colors.grey.shade300;
+  //static const Color backgroundColor = Color(0xFF343742);
+  static Color backgroundContainerColor = Colors.grey.shade200;
+  static const Color iconColor = Color(0xFF85c1cc);
   static const Color splashColor = Color(0xFF0e0917);
   static const Color splashColorExtra = Color(0xFF1a1432);
 }
+//7eb9cb

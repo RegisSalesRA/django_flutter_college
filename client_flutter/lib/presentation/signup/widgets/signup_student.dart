@@ -32,14 +32,7 @@ class _SignUpStudentState extends State<SignUpStudent> {
       resizeToAvoidBottomInset: false,
       body: Container(
         height: MediaQuerySize.heightSize(context),
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              'assets/images/register_screen.png',
-            ),
-            fit: BoxFit.cover,
-          ),
-        ),
+        decoration: const BoxDecoration(),
         child: SingleChildScrollView(
           child: Column(children: [
             Padding(
@@ -51,6 +44,10 @@ class _SignUpStudentState extends State<SignUpStudent> {
                     child: const Icon(Icons.arrow_back)),
               ),
             ),
+            Image.asset(
+              "assets/images/pngegg.png",
+              height: 285,
+            ),
             const SizedBox(
               height: 50,
             ),
@@ -58,8 +55,10 @@ class _SignUpStudentState extends State<SignUpStudent> {
               text: TextSpan(children: [
                 const TextSpan(
                     text: 'Student',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.black)),
                 TextSpan(
                   text: " Signup",
                   style: Theme.of(context).textTheme.headline2,
@@ -72,52 +71,52 @@ class _SignUpStudentState extends State<SignUpStudent> {
             Form(
               child: Column(children: [
                 TextFormField(
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.black),
                   decoration: const InputDecoration(
                       prefixIcon: Icon(
                         Icons.person,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       labelText: 'Username',
-                      labelStyle: TextStyle(color: Colors.white),
+                      labelStyle: TextStyle(color: Colors.black),
                       border: InputBorder.none,
-                      hintStyle: TextStyle(color: Colors.white)),
+                      hintStyle: TextStyle(color: Colors.black)),
                 ),
                 TextFormField(
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.black),
                   decoration: const InputDecoration(
                       prefixIcon: Icon(
                         Icons.person,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       labelText: 'First Name',
-                      labelStyle: TextStyle(color: Colors.white),
+                      labelStyle: TextStyle(color: Colors.black),
                       border: InputBorder.none,
-                      hintStyle: TextStyle(color: Colors.white)),
+                      hintStyle: TextStyle(color: Colors.black)),
                 ),
                 TextFormField(
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.black),
                   decoration: const InputDecoration(
                       prefixIcon: Icon(
                         Icons.person,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       labelText: 'Phone',
-                      labelStyle: TextStyle(color: Colors.white),
+                      labelStyle: TextStyle(color: Colors.black),
                       border: InputBorder.none,
-                      hintStyle: TextStyle(color: Colors.white)),
+                      hintStyle: TextStyle(color: Colors.black)),
                 ),
                 TextFormField(
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.black),
                   decoration: const InputDecoration(
                       prefixIcon: Icon(
                         Icons.person,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       labelText: 'Name',
-                      labelStyle: TextStyle(color: Colors.white),
+                      labelStyle: TextStyle(color: Colors.black),
                       border: InputBorder.none,
-                      hintStyle: TextStyle(color: Colors.white)),
+                      hintStyle: TextStyle(color: Colors.black)),
                 ),
               ]),
             ),
@@ -131,9 +130,7 @@ class _SignUpStudentState extends State<SignUpStudent> {
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25))),
-                onPressed: () {
-                  
-                },
+                onPressed: () {},
                 child: const Text("Sign Up"),
               ),
             ),
