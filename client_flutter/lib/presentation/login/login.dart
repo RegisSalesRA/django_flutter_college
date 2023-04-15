@@ -31,22 +31,18 @@ class _LoginState extends State<Login> {
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
           child: SingleChildScrollView(
             child: Column(children: [
-              Column(
-                children: [
-                  Container(
-                    height: 200,
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                      image: DecorationImage(
-                        image: AssetImage(
-                          'assets/images/image_login.jpg',
-                        ),
-                        fit: BoxFit.cover,
-                      ),
+              Container(
+                height: 200,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  image: DecorationImage(
+                    image: AssetImage(
+                      'assets/images/image_login.jpg',
                     ),
+                    fit: BoxFit.cover,
                   ),
-                ],
+                ),
               ),
               Column(
                 children: [

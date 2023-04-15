@@ -1,4 +1,5 @@
 import 'package:client_flutter/presentation/common/grid_widget.dart';
+import 'package:client_flutter/presentation/home/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/colors/colors.dart';
@@ -15,10 +16,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const DrawerWidget(),
       appBar: AppBar(
           backgroundColor: ColorsTheme.secondaryColor,
           elevation: 0,
-          title: const Text("Ola usuario")),
+          centerTitle: true,
+          title: const Text("Home Screen")),
       body: Container(
         height: MediaQuerySize.heigthSizeCustom(context),
         decoration: const BoxDecoration(
@@ -40,19 +43,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   GridComponent(
-                    icon: const Icon(Icons.percent),
+                    icon: const Icon(
+                      Icons.event_available_sharp,
+                      size: 110,
+                    ),
                     voidCall: () {},
-                    text_1: "OLA",
-                    text_2: "OLA",
+                    text_1: "Current",
+                    text_2: "Disciplines",
                   ),
                   const SizedBox(
                     width: 15,
                   ),
                   GridComponent(
-                    icon: const Icon(Icons.percent),
+                    icon: const Icon(
+                      Icons.event_sharp,
+                      size: 110,
+                    ),
                     voidCall: () {},
-                    text_1: "OLA",
-                    text_2: "OLA",
+                    text_1: "Avalible",
+                    text_2: "Disciplines",
                   ),
                 ],
               ),
@@ -64,19 +73,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   GridComponent(
-                    icon: const Icon(Icons.percent),
+                    icon: const Icon(
+                      Icons.event_busy_outlined,
+                      size: 110,
+                    ),
                     voidCall: () {},
-                    text_1: "OLA",
-                    text_2: "OLA",
+                    text_1: "Remove",
+                    text_2: "Discipline",
                   ),
                   const SizedBox(
                     width: 15,
                   ),
                   GridComponent(
-                    icon: const Icon(Icons.percent),
+                    icon: const Icon(
+                      Icons.history,
+                      size: 110,
+                    ),
                     voidCall: () {},
-                    text_1: "OLA",
-                    text_2: "OLA",
+                    text_1: "Discipline",
+                    text_2: "Scores",
                   ),
                 ],
               ),
