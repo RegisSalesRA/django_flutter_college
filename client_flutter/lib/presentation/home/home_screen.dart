@@ -1,3 +1,4 @@
+import 'package:client_flutter/app/routes/routes.dart';
 import 'package:client_flutter/presentation/common/grid_widget.dart';
 import 'package:client_flutter/presentation/home/widgets/drawer.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       Icons.event_available_sharp,
                       size: 110,
                     ),
-                    voidCall: () {},
+                    voidCall: () {
+                      Navigator.pushNamed(context, Routes.currentDiscipline);
+                    },
                     text_1: "Current",
                     text_2: "Disciplines",
                   ),
@@ -59,7 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       Icons.event_sharp,
                       size: 110,
                     ),
-                    voidCall: () {},
+                    voidCall: () {
+                      Navigator.pushNamed(context, Routes.availibleDiscipline);
+                    },
                     text_1: "Avalible",
                     text_2: "Disciplines",
                   ),
@@ -74,22 +79,49 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   GridComponent(
                     icon: const Icon(
-                      Icons.event_busy_outlined,
+                      Icons.event_available_sharp,
                       size: 110,
                     ),
-                    voidCall: () {},
-                    text_1: "Remove",
-                    text_2: "Discipline",
+                    voidCall: () {
+                      Navigator.pushNamed(context, Routes.insertScoreScreen);
+                    },
+                    text_1: "Score",
+                    text_2: "Insert",
                   ),
                   const SizedBox(
                     width: 15,
                   ),
                   GridComponent(
                     icon: const Icon(
+                      Icons.event_sharp,
+                      size: 110,
+                    ),
+                    voidCall: () {
+                      Navigator.pushNamed(context, Routes.teacherDiscipline);
+                    },
+                    text_1: "Teacher",
+                    text_2: "Disciplines",
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  GridComponent(
+                    icon: const Icon(
                       Icons.history,
                       size: 110,
                     ),
-                    voidCall: () {},
+                    voidCall: () {
+                      Navigator.pushNamed(context, Routes.scoreDiscipline);
+                    },
                     text_1: "Discipline",
                     text_2: "Scores",
                   ),
