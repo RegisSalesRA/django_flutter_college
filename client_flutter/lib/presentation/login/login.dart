@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/colors/colors.dart';
@@ -20,6 +21,18 @@ class _LoginState extends State<Login> {
       await Navigator.pushReplacementNamed(context, Routes.home);
     } else {
       print("Nao valido");
+    }
+  }
+
+  final dio = Dio();
+
+  Future teacherList() async {
+    try {
+      final response =
+          await dio.get('http://192.168.100.186:8000/api/teacher/');
+      print(response);
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -156,8 +169,10 @@ class _LoginState extends State<Login> {
                             style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(25))),
-                            onPressed: () {
-                              onSave();
+                            onPressed: () async {
+                              await teacherList();
+                              // loginUser();
+                              // onSave();
                             },
                             child: const Text(
                               "Login",
