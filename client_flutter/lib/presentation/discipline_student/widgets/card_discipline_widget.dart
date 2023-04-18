@@ -1,5 +1,7 @@
-
+import 'package:client_flutter/app/colors/colors.dart';
 import 'package:flutter/material.dart';
+
+import '../../common/alert_dialog.dart';
 
 class CardDisciplineWidget extends StatelessWidget {
   const CardDisciplineWidget({
@@ -14,38 +16,35 @@ class CardDisciplineWidget extends StatelessWidget {
       width: double.infinity,
       height: 100,
       decoration: BoxDecoration(
-          color: Colors.green.shade100,
-          borderRadius: const BorderRadius.all(
-              Radius.circular(15))),
+          color: Colors.grey.shade200,
+          borderRadius: const BorderRadius.all(Radius.circular(15))),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Row(
-              crossAxisAlignment:
-                  CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
                   height: 50,
                   width: 50,
                   decoration: const BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(15))),
+                      color: ColorsTheme.primaryColor,
+                      borderRadius: BorderRadius.all(Radius.circular(15))),
                   child: const Icon(
-                      Icons.menu_book_outlined),
+                    Icons.menu_book_outlined,
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(
                   width: 10,
                 ),
                 Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
                     Text(
                       "Disciplina - name",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 20,
@@ -59,13 +58,18 @@ class CardDisciplineWidget extends StatelessWidget {
                   height: 50,
                   width: 50,
                   decoration: const BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(15))),
+                      color: ColorsTheme.primaryColor,
+                      borderRadius: BorderRadius.all(Radius.circular(15))),
                   child: IconButton(
                     icon: const Icon(
-                        Icons.bookmark_remove_outlined),
-                    onPressed: () {},
+                      Icons.bookmark_remove_outlined,
+                      color: Colors.white,
+                    ),
+                    onPressed: () => alertDialog(
+                        context,
+                        'Accept Discipline',
+                        'Check if is the discipline and the professor you want',
+                        print("Funcinou")),
                   ),
                 ),
               ],
