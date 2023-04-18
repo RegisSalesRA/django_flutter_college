@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import '../../common/alert_dialog.dart';
 
 class CardDisciplineWidget extends StatelessWidget {
+  final Widget iconWidget;
   const CardDisciplineWidget({
     Key? key,
+    required this.iconWidget
   }) : super(key: key);
 
   @override
@@ -54,24 +56,8 @@ class CardDisciplineWidget extends StatelessWidget {
                   ],
                 ),
                 Expanded(child: Container()),
-                Container(
-                  height: 50,
-                  width: 50,
-                  decoration: const BoxDecoration(
-                      color: ColorsTheme.primaryColor,
-                      borderRadius: BorderRadius.all(Radius.circular(15))),
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.bookmark_remove_outlined,
-                      color: Colors.white,
-                    ),
-                    onPressed: () => alertDialog(
-                        context,
-                        'Accept Discipline',
-                        'Check if is the discipline and the professor you want',
-                        print("Funcinou")),
-                  ),
-                ),
+                iconWidget,
+              
               ],
             ),
           ]),

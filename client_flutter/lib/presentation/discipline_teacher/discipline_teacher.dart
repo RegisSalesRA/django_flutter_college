@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/colors/colors.dart';
 import '../../app/helpers/media_size_helper.dart';
+import '../common/alert_dialog.dart';
 
 class TeacherDisciplinesScreen extends StatefulWidget {
   const TeacherDisciplinesScreen({super.key});
@@ -44,28 +45,40 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
                   TextField(
                       //    controller: widget.textController,
                       //    onChanged: widget.onChanged,
-                      style: const TextStyle(color: ColorsTheme.primaryColor),
+                      style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
-                        hintStyle: const TextStyle(color: Colors.black),
+                        hintStyle: const TextStyle(color: Colors.white),
                         contentPadding:
                             const EdgeInsets.symmetric(vertical: 15.0),
                         fillColor: ColorsTheme.primaryColor,
                         filled: true,
                         border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(20.0),
                         ),
-                        hintText: 'Search notes',
-                        prefixIcon: const Icon(
-                          Icons.search,
-                          size: 30.0,
-                        ),
+                        hintText: 'Search Discipline',
+                        prefixIcon: const Icon(Icons.search,
+                            size: 30.0, color: Colors.white),
                       )),
                   ListView.builder(
                       shrinkWrap: true,
                       itemCount: 10,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: ((context, index) {
-                        return const CardDisciplineWidget();
+                        return CardDisciplineWidget(
+                          iconWidget: Container(
+                            height: 50,
+                            width: 50,
+                            decoration: const BoxDecoration(
+                                color: ColorsTheme.primaryColor,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15))),
+                            child: const Icon(
+                              Icons.assignment_outlined,
+                              color: Colors.white,
+                            ),
+                          ),
+                        );
                       }))
                 ],
               ),

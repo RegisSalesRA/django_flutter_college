@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/colors/colors.dart';
 import '../../app/helpers/media_size_helper.dart';
+import '../common/alert_dialog.dart';
 
 class ScoresDisciplinesScreen extends StatefulWidget {
   const ScoresDisciplinesScreen({super.key});
@@ -64,7 +65,19 @@ class _ScoresDisciplinesScreenState extends State<ScoresDisciplinesScreen> {
                       itemCount: 10,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: ((context, index) {
-                        return const CardDisciplineWidget();
+                        return CardDisciplineWidget(
+                          iconWidget: Container(
+                            height: 50,
+                            width: 50,
+                            decoration: const BoxDecoration(
+                                color: ColorsTheme.primaryColor,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15))),
+                            child: const Center(
+                              child: Text("10.0"),
+                            ),
+                          ),
+                        );
                       }))
                 ],
               ),
