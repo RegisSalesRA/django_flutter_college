@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../app/colors/colors.dart';
-
 class GridComponent extends StatelessWidget {
   final VoidCallback voidCall;
-  final Icon icon;
+  final String nameImage;
   final String text_1;
   final String text_2;
   const GridComponent(
       {Key? key,
       required this.voidCall,
-      required this.icon,
+      required this.nameImage,
       required this.text_1,
       required this.text_2})
       : super(key: key);
@@ -25,9 +23,11 @@ class GridComponent extends StatelessWidget {
             height: 170,
             width: 170,
             decoration: BoxDecoration(
-                color: ColorsTheme.backgroundContainerColor,
-                borderRadius: BorderRadius.circular(15)),
-            child: icon,
+              image: DecorationImage(
+                image: AssetImage('assets/images/$nameImage'),
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           const SizedBox(
             height: 5,

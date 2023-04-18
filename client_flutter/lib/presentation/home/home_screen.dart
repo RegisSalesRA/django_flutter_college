@@ -44,10 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   GridComponent(
-                    icon: const Icon(
-                      Icons.event_available_sharp,
-                      size: 110,
-                    ),
+                    nameImage: "teacher_register.png",
                     voidCall: () {
                       Navigator.pushNamed(context, Routes.currentDiscipline);
                     },
@@ -58,10 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 15,
                   ),
                   GridComponent(
-                    icon: const Icon(
-                      Icons.event_sharp,
-                      size: 110,
-                    ),
+                    nameImage: "teacher_register.png",
                     voidCall: () {
                       Navigator.pushNamed(context, Routes.availibleDiscipline);
                     },
@@ -78,10 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   GridComponent(
-                    icon: const Icon(
-                      Icons.event_available_sharp,
-                      size: 110,
-                    ),
+                    nameImage: "teacher_register.png",
                     voidCall: () {
                       Navigator.pushNamed(context, Routes.insertScoreScreen);
                     },
@@ -92,10 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 15,
                   ),
                   GridComponent(
-                    icon: const Icon(
-                      Icons.event_sharp,
-                      size: 110,
-                    ),
+                    nameImage: "teacher_register.png",
                     voidCall: () {
                       Navigator.pushNamed(context, Routes.teacherDiscipline);
                     },
@@ -115,10 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 30,
                   ),
                   GridComponent(
-                    icon: const Icon(
-                      Icons.history,
-                      size: 110,
-                    ),
+                    nameImage: "teacher_register.png",
                     voidCall: () {
                       Navigator.pushNamed(context, Routes.scoreDiscipline);
                     },

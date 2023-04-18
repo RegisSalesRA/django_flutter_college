@@ -1,7 +1,7 @@
+import 'package:client_flutter/app/colors/colors.dart';
+import 'package:client_flutter/app/helpers/media_size_helper.dart';
 import 'package:flutter/material.dart';
 
-import '../../../app/colors/colors.dart';
-import '../../../app/helpers/media_size_helper.dart';
 import '../../../app/routes/routes.dart';
 import '../../common/grid_widget.dart';
 
@@ -21,59 +21,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: ColorsTheme.secondaryColor,
         elevation: 0,
         centerTitle: true,
+        backgroundColor: Colors.white10,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_upward,
-            color: Colors.white,
+            color: ColorsTheme.secondaryColor,
           ),
           onPressed: () => Navigator.pushNamed(context, Routes.initial),
         ),
         title: const Text(
           "Sign-up Page",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: ColorsTheme.secondaryColor),
         ),
       ),
-      body: Container(
+      body: SizedBox(
         height: MediaQuerySize.heigthSizeCustom(context),
-        decoration: const BoxDecoration(
-          color: ColorsTheme.secondaryColor,
-        ),
-        child: Container(
-          width: double.infinity,
-          margin: EdgeInsets.only(
-              top: MediaQuerySize.heigthSizeCustom(context) * 0.10),
-          height: MediaQuerySize.heigthSizeCustom(context) * 0.90,
-          decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              GridComponent(
-                voidCall: widget.forwardPageView,
-                icon: const Icon(
-                  Icons.school_outlined,
-                  size: 110,
-                ),
-                text_1: "Register",
-                text_2: "Student",
-              ),
-              GridComponent(
-                voidCall: widget.backPageView,
-                icon: const Icon(
-                  Icons.person_outlined,
-                  size: 110,
-                ),
-                text_1: "Register",
-                text_2: "Teacher",
-              ),
-            ],
-          ),
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            GridComponent(
+              voidCall: widget.forwardPageView,
+              nameImage: "student_register.png",
+              text_1: "Register",
+              text_2: "Student",
+            ),
+            GridComponent(
+              voidCall: widget.backPageView,
+              nameImage: "teacher_register.png",
+              text_1: "Register",
+              text_2: "Teacher",
+            ),
+          ],
         ),
       ),
     );
