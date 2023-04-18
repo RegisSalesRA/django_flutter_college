@@ -14,8 +14,21 @@ dependencies:
   flutter:
     sdk: flutter
 
+  ## STATE MANAGEMENT
+  provider: ^6.0.5
+
+  ## UTILS 
+  faker: ^2.0.0
+  equatable: ^2.0.5
+  shimmer: ^2.0.0
+  dio: ^4.0.6
+  flutter_secure_storage: ^8.0.0
+
+  ## UI
+  lottie: ^1.4.2
   flutter_animate: ^4.1.1+1
   cupertino_icons: ^1.0.2
+
 
 dev_dependencies:
   flutter_test:
