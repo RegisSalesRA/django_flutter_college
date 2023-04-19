@@ -1,27 +1,54 @@
-import 'package:client_flutter/app/colors/colors.dart';
-import 'package:client_flutter/app/config/themes/text_theme.config.dart';
+// ignore_for_file: avoid_unnecessary_containers
+
+import 'package:client_flutter/app/config/themes/theme_data.dart';
+import 'package:client_flutter/presentation/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../data/data/storage_data.dart';
+import '../../presentation/login/login.dart';
 import '../routes/routes.dart';
 
-class AppConfig extends StatelessWidget {
+class AppConfig extends StatefulWidget {
   const AppConfig({Key? key}) : super(key: key);
 
+  @override
+  State<AppConfig> createState() => _AppConfigState();
+}
+
+class _AppConfigState extends State<AppConfig> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+
+    Future<String?> token = readSecureData('token');
+
     return MaterialApp(
       title: 'Flutter College',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        iconTheme: const IconThemeData(color: ColorsTheme.iconColor),
-        colorScheme:
-            ColorScheme.fromSwatch(primarySwatch: ColorsTheme.themeColor)
-                .copyWith(secondary: ColorsTheme.primaryColor),
-        textTheme: textThemeConfig(),
+      theme: themeDataMethod(),
+      home: FutureBuilder<String?>(
+        future: token,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              break;
+            case ConnectionState.active:
+              break;
+            case ConnectionState.waiting:
+              return Container(
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            case ConnectionState.done:
+              if (snapshot.hasData && !snapshot.hasError) {
+                return const HomeScreen();
+              }
+          }
+          return const Login();
+        },
       ),
-      initialRoute: Routes.initial,
       routes: Routes.list,
       navigatorKey: Routes.navigatorKey,
     );

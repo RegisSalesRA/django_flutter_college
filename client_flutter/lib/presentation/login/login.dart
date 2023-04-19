@@ -1,8 +1,9 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../app/colors/colors.dart';
 import '../../app/routes/routes.dart';
+import '../../data/data/login_data.dart';
+import '../../data/data/storage_data.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -15,24 +16,18 @@ class _LoginState extends State<Login> {
   final formKey = GlobalKey<FormState>();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  final storage = const FlutterSecureStorage();
 
-  Future<void> onSave() async {
+  StorageItem valueExcept = StorageItem('token', 'token from django');
+
+  Future onSave() async {
     if (formKey.currentState!.validate()) {
-      await Navigator.pushReplacementNamed(context, Routes.home);
+      bool result = await loginUser();
+      if (result == true) {
+        Navigator.pushReplacementNamed(context, Routes.home);
+      }
     } else {
-      print("Nao valido");
-    }
-  }
-
-  final dio = Dio();
-
-  Future teacherList() async {
-    try {
-      final response =
-          await dio.get('http://192.168.100.186:8000/api/teacher/');
-      print(response);
-    } catch (e) {
-      print(e);
+      print("Error");
     }
   }
 
@@ -170,9 +165,8 @@ class _LoginState extends State<Login> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(25))),
                             onPressed: () async {
-                              // teacherList();
-                              // loginUser();
-                              onSave();
+                              await onSave();
+                              //onSave();
                             },
                             child: const Text(
                               "Login",

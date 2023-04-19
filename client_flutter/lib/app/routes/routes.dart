@@ -12,7 +12,7 @@ import '../../presentation/login/login.dart';
 class Routes {
   static Map<String, Widget Function(BuildContext)> list =
       <String, WidgetBuilder>{
-    '/': (context) => const Login(),
+    '/login': (context) => const Login(),
     '/register': (context) => const SignUp(),
     '/home': (context) => const HomeScreen(),
     '/currentDiscipline': (context) => const CurrentDisciplinesScreen(),
@@ -22,7 +22,7 @@ class Routes {
     '/insertScoreScreen': (context) => const InsertScoreScreen(),
   };
 
-  static String initial = '/';
+  static String initial = '/login';
   static String register = '/register';
   static String home = '/home';
   static String currentDiscipline = '/currentDiscipline';

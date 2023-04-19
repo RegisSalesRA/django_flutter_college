@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/routes/routes.dart';
+import '../../../data/data/storage_data.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({
@@ -44,7 +45,9 @@ class DrawerWidget extends StatelessWidget {
                 leading: const Icon(Icons.logout),
                 title: const Text('Log Out'),
                 onTap: () async {
-                  await Navigator.pushReplacementNamed(context, Routes.initial);
+                  Navigator.pushReplacementNamed(context, Routes.initial);
+                  String? token = await readSecureData('token');
+                  await deleteSecureData(StorageItem('token', token!));
                 },
               ),
               const Divider(
