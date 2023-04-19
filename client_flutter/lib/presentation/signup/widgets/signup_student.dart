@@ -20,12 +20,25 @@ class _SignUpStudentState extends State<SignUpStudent> with ValidationMixin {
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
   final password2Controller = TextEditingController();
+  final ValueNotifier<bool> _confirmPassword = ValueNotifier<bool>(false);
+  final ValueNotifier<bool> _confirm2Password = ValueNotifier<bool>(false);
+
   Future<void> onSave() async {
     if (formKey.currentState!.validate()) {
       print("Validoo");
     } else {
       print("Nao valido");
     }
+  }
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    nameController.dispose();
+    phoneController.dispose();
+    passwordController.dispose();
+    password2Controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -87,34 +100,54 @@ class _SignUpStudentState extends State<SignUpStudent> with ValidationMixin {
                   validator: isPhoneNumberValid,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: TextFormField(
-                  controller: passwordController,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: const InputDecoration(
-                      suffixIcon: InkWell(
-                        child: Icon(Icons.visibility),
-                      ),
-                      prefixIcon: Icon(Icons.lock),
-                      hintText: 'Password'),
-                  validator: passwordValidateLength,
-                ),
+              ValueListenableBuilder<bool>(
+                valueListenable: _confirmPassword,
+                builder: (context, isLoading, child) {
+                  return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: TextFormField(
+                        controller: passwordController,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        obscureText: _confirmPassword.value,
+                        decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                                onPressed: () {
+                                  _confirmPassword.value =
+                                      !_confirmPassword.value;
+                                },
+                                icon: Icon(_confirmPassword.value
+                                    ? Icons.visibility_off
+                                    : Icons.visibility)),
+                            prefixIcon: const Icon(Icons.lock),
+                            hintText: 'Password'),
+                        validator: passwordValidateLength,
+                      ));
+                },
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: TextFormField(
-                  controller: password2Controller,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: const InputDecoration(
-                      suffixIcon: InkWell(
-                        child: Icon(Icons.visibility),
-                      ),
-                      prefixIcon: Icon(Icons.lock_outline_rounded),
-                      hintText: 'Confirm Password'),
-                  validator: (value) =>
-                      validationMatchingPassword(value, passwordController),
-                ),
+              ValueListenableBuilder<bool>(
+                valueListenable: _confirm2Password,
+                builder: (context, isLoading, child) {
+                  return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: TextFormField(
+                        controller: password2Controller,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        obscureText: _confirm2Password.value,
+                        decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                                onPressed: () {
+                                  _confirm2Password.value =
+                                      !_confirm2Password.value;
+                                },
+                                icon: Icon(_confirm2Password.value
+                                    ? Icons.visibility_off
+                                    : Icons.visibility)),
+                            prefixIcon: const Icon(Icons.lock_outline_rounded),
+                            hintText: 'Confirm Password'),
+                        validator: (value) => validationMatchingPassword(
+                            value, passwordController),
+                      ));
+                },
               ),
             ]),
           ),
