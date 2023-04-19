@@ -10,7 +10,7 @@ class SignUpTeacher extends StatefulWidget {
   State<SignUpTeacher> createState() => _SignUpTeacherState();
 }
 
-class _SignUpTeacherState extends State<SignUpTeacher> {
+class _SignUpTeacherState extends State<SignUpTeacher> with ValidationMixin {
   final formKey = GlobalKey<FormState>();
   final usernameController = TextEditingController();
   final phoneController = TextEditingController();
@@ -68,12 +68,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.person), hintText: 'Username'),
-                  validator: (value) {
-                    if (value == null || value == "") {
-                      return "Title can not be null or empty";
-                    }
-                    return null;
-                  },
+                  validator: inputCanNotBeEmptyOrNull,
                 ),
               ),
               Padding(
@@ -83,12 +78,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.phone), hintText: 'Phone'),
-                  validator: (value) {
-                    if (value == null || value == "") {
-                      return "Title can not be null or empty";
-                    }
-                    return null;
-                  },
+                  validator: isPhoneNumberValid,
                 ),
               ),
               Padding(
@@ -102,12 +92,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                       ),
                       prefixIcon: Icon(Icons.lock),
                       hintText: 'Password'),
-                  validator: (value) {
-                    if (value == null || value == "") {
-                      return "Title can not be null or empty";
-                    }
-                    return null;
-                  },
+                  validator: passwordValidateLength,
                 ),
               ),
               Padding(
@@ -121,12 +106,8 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                       ),
                       prefixIcon: Icon(Icons.lock_outline_rounded),
                       hintText: 'Confirm Password'),
-                  validator: (value) {
-                    if (value == null || value == "") {
-                      return "Title can not be null or empty";
-                    }
-                    return null;
-                  },
+                  validator: (value) =>
+                      validationMatchingPassword(value, passwordController),
                 ),
               ),
             ]),

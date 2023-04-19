@@ -3,3 +3,4 @@ export './config/config.dart';
 export './constant/constant.dart';
 export './helpers/helpers.dart';
 export './routes/routes.dart';
+export './validators/validators.dart';

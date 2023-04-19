@@ -1,3 +1,4 @@
+import 'package:client_flutter/app/app.dart';
 import 'package:client_flutter/presentation/signup/widgets/signup_screen.dart';
 import 'package:client_flutter/presentation/signup/widgets/signup_student.dart';
 import 'package:client_flutter/presentation/signup/widgets/signup_teacher.dart';
@@ -10,7 +11,7 @@ class SignUp extends StatefulWidget {
   State<SignUp> createState() => _SignUpState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignUpState extends State<SignUp>  {
   final PageController _pageController = PageController(initialPage: 1);
 
   void goToPage(int pageIndex) {

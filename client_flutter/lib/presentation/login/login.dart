@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../app/app.dart';
-import '../../data/data/login_data.dart';
 import '../../data/data/storage_data.dart';
 
 class Login extends StatefulWidget {
@@ -11,7 +10,7 @@ class Login extends StatefulWidget {
   State<Login> createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginState extends State<Login> with ValidationMixin {
   final formKey = GlobalKey<FormState>();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -21,10 +20,10 @@ class _LoginState extends State<Login> {
 
   Future onSave() async {
     if (formKey.currentState!.validate()) {
-      bool result = await loginUser();
-      if (result == true) {
-        Navigator.pushReplacementNamed(context, Routes.home);
-      }
+      // bool result = await loginUser();
+      // if (result == true) {
+      //   Navigator.pushReplacementNamed(context, Routes.home);
+      print("DAdos");
     } else {
       print("Error");
     }
@@ -92,12 +91,7 @@ class _LoginState extends State<Login> {
                                 decoration: const InputDecoration(
                                     prefixIcon: Icon(Icons.person),
                                     hintText: 'Username'),
-                                validator: (value) {
-                                  if (value == null || value == "") {
-                                    return "Title can not be null or empty";
-                                  }
-                                  return null;
-                                },
+                                validator: inputCanNotBeEmptyOrNull,
                               ),
                             ],
                           ),
@@ -119,12 +113,7 @@ class _LoginState extends State<Login> {
                                       child: Icon(Icons.visibility),
                                     ),
                                     hintText: 'Password'),
-                                validator: (value) {
-                                  if (value == null || value == "") {
-                                    return "Title can not be null or empty";
-                                  }
-                                  return null;
-                                },
+                                validator: passwordValidateLength,
                               ),
                             ],
                           ),
