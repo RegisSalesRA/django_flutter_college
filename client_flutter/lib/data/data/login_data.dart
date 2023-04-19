@@ -22,11 +22,3 @@ Future<bool> loginUser() async {
   return false;
 }
 
-teacherList() async {
-  try {
-    final response = await dio.get('$baseUrl:8000/api/teacher/');
-    print(response);
-  } catch (e) {
-    print(e);
-  }
-}

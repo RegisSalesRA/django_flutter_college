@@ -1,5 +1,5 @@
+import 'package:client_flutter/data/repository/register_data_repository.dart';
 import 'package:flutter/material.dart';
-
 import '../../../app/app.dart';
 
 class SignUpTeacher extends StatefulWidget {
@@ -11,29 +11,7 @@ class SignUpTeacher extends StatefulWidget {
 }
 
 class _SignUpTeacherState extends State<SignUpTeacher> with ValidationMixin {
-  final formKey = GlobalKey<FormState>();
-  final usernameController = TextEditingController();
-  final phoneController = TextEditingController();
-  final passwordController = TextEditingController();
-  final password2Controller = TextEditingController();
-  final ValueNotifier<bool> _confirmPassword = ValueNotifier<bool>(false);
-  final ValueNotifier<bool> _confirm2Password = ValueNotifier<bool>(false);
-  Future<void> onSave() async {
-    if (formKey.currentState!.validate()) {
-      print("Validoo");
-    } else {
-      print("Nao valido");
-    }
-  }
-
-  @override
-  void dispose() {
-    usernameController.dispose();
-    phoneController.dispose();
-    passwordController.dispose();
-    password2Controller.dispose();
-    super.dispose();
-  }
+  final registerData = RegisterDataRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -69,13 +47,12 @@ class _SignUpTeacherState extends State<SignUpTeacher> with ValidationMixin {
             height: 100,
           ),
           Form(
-            key: formKey,
+            key: registerData.formKeyTeacher,
             child: Column(children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: TextFormField(
-                  controller: usernameController,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: registerData.usernameController,
                   decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.person), hintText: 'Username'),
                   validator: inputCanNotBeEmptyOrNull,
@@ -84,29 +61,27 @@ class _SignUpTeacherState extends State<SignUpTeacher> with ValidationMixin {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: TextFormField(
-                  controller: phoneController,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: registerData.phoneController,
                   decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.phone), hintText: 'Phone'),
                   validator: isPhoneNumberValid,
                 ),
               ),
               ValueListenableBuilder<bool>(
-                valueListenable: _confirmPassword,
+                valueListenable: registerData.confirmPassword,
                 builder: (context, isLoading, child) {
                   return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: TextFormField(
-                        controller: passwordController,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        obscureText: _confirmPassword.value,
+                        controller: registerData.passwordController,
+                        obscureText: registerData.confirmPassword.value,
                         decoration: InputDecoration(
                             suffixIcon: IconButton(
                                 onPressed: () {
-                                  _confirmPassword.value =
-                                      !_confirmPassword.value;
+                                  registerData.confirmPassword.value =
+                                      !registerData.confirmPassword.value;
                                 },
-                                icon: Icon(_confirmPassword.value
+                                icon: Icon(registerData.confirmPassword.value
                                     ? Icons.visibility_off
                                     : Icons.visibility)),
                             prefixIcon: const Icon(Icons.lock),
@@ -116,51 +91,59 @@ class _SignUpTeacherState extends State<SignUpTeacher> with ValidationMixin {
                 },
               ),
               ValueListenableBuilder<bool>(
-                valueListenable: _confirm2Password,
+                valueListenable: registerData.confirm2Password,
                 builder: (context, isLoading, child) {
                   return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: TextFormField(
-                        controller: password2Controller,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        obscureText: _confirm2Password.value,
+                        controller: registerData.password2Controller,
+                        obscureText: registerData.confirm2Password.value,
                         decoration: InputDecoration(
                             suffixIcon: IconButton(
                                 onPressed: () {
-                                  _confirm2Password.value =
-                                      !_confirm2Password.value;
+                                  registerData.confirm2Password.value =
+                                      !registerData.confirm2Password.value;
                                 },
-                                icon: Icon(_confirm2Password.value
+                                icon: Icon(registerData.confirm2Password.value
                                     ? Icons.visibility_off
                                     : Icons.visibility)),
                             prefixIcon: const Icon(Icons.lock_outline_rounded),
                             hintText: 'Confirm Password'),
                         validator: (value) => validationMatchingPassword(
-                            value, passwordController),
+                            value, registerData.passwordController),
                       ));
                 },
               ),
             ]),
           ),
           const SizedBox(
-            height: 175,
+            height: 120,
           ),
-          SizedBox(
-            width: 350,
-            height: 50,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25))),
-              onPressed: () {
-                onSave();
-              },
-              child: const Text(
-                "Sign Up",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-            ),
-          ),
+          ValueListenableBuilder<bool>(
+              valueListenable: registerData.isLoading,
+              builder: (context, isLoading, child) {
+                return SizedBox(
+                  width: 350,
+                  height: 50,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25))),
+                    onPressed: registerData.isLoading.value
+                        ? null
+                        : () {
+                            registerData.onSaveTeacher();
+                          },
+                    child: registerData.isLoading.value
+                        ? const CircularProgressIndicator()
+                        : const Text(
+                            "Register Teacher",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                  ),
+                );
+              }),
         ]),
       ),
     );

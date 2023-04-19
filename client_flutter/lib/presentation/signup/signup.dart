@@ -1,8 +1,9 @@
-import 'package:client_flutter/app/app.dart';
 import 'package:client_flutter/presentation/signup/widgets/signup_screen.dart';
 import 'package:client_flutter/presentation/signup/widgets/signup_student.dart';
 import 'package:client_flutter/presentation/signup/widgets/signup_teacher.dart';
 import 'package:flutter/material.dart';
+
+import '../../data/repository/register_data_repository.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -11,13 +12,14 @@ class SignUp extends StatefulWidget {
   State<SignUp> createState() => _SignUpState();
 }
 
-class _SignUpState extends State<SignUp>  {
+class _SignUpState extends State<SignUp> {
   final PageController _pageController = PageController(initialPage: 1);
-
+  final registerData = RegisterDataRepository();
   void goToPage(int pageIndex) {
+    registerData.cleanFields();
     _pageController.animateToPage(
       pageIndex,
-      duration: const Duration(milliseconds: 900),
+      duration: const Duration(milliseconds: 600),
       curve: Curves.easeInOut,
     );
   }
