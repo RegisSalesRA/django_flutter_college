@@ -1,8 +1,5 @@
-import 'package:client_flutter/app/colors/colors.dart';
-import 'package:client_flutter/app/helpers/media_size_helper.dart';
 import 'package:flutter/material.dart';
-
-import '../../../app/routes/routes.dart';
+import '../../../app/app.dart';
 import '../../common/grid_widget.dart';
 
 class SignUpScreen extends StatefulWidget {

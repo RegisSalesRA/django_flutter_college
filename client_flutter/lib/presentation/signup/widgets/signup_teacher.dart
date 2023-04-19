@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../app/colors/colors.dart';
+import '../../../app/app.dart';
 
 class SignUpTeacher extends StatefulWidget {
   final VoidCallback backPageView;

@@ -1,7 +1,8 @@
-import 'package:client_flutter/app/colors/colors.dart';
+
 import 'package:flutter/material.dart';
 
-import '../../common/alert_dialog.dart';
+import '../../../app/app.dart';
+
 
 class CardDisciplineWidget extends StatelessWidget {
   final Widget iconWidget;

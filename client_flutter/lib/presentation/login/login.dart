@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../../app/colors/colors.dart';
-import '../../app/routes/routes.dart';
+import '../../app/app.dart';
 import '../../data/data/login_data.dart';
 import '../../data/data/storage_data.dart';
 

@@ -1,8 +1,6 @@
 import 'package:client_flutter/presentation/discipline_student/widgets/card_discipline_widget.dart';
 import 'package:flutter/material.dart';
-
-import '../../app/colors/colors.dart';
-import '../../app/helpers/media_size_helper.dart';
+import '../../app/app.dart';
 import '../common/alert_dialog.dart';
 
 class CurrentDisciplinesScreen extends StatefulWidget {
