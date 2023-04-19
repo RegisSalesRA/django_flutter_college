@@ -21,4 +21,3 @@ Future<bool> loginUser() async {
   }
   return false;
 }
-

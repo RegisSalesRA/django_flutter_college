@@ -1,7 +1,18 @@
+import 'package:client_flutter/data/data/storage_data.dart';
+
 import '../../app/app.dart';
+import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
 
 final dio = Dio();
+final token = readSecureData('token');
+
+final defaultHeaders = ({
+  "Content-Type": "application/json",
+  'accept': 'application/json',
+  'Authorization': 'Bearer $token',
+});
+
 
 Future registerTeacher(data) async {
   try {
@@ -19,8 +30,11 @@ Future registerTeacher(data) async {
     if (response.statusCode == 400) {
       return exceptErrorResponse(response.data);
     }
-  } catch (e) {
-    print(e);
+  } on DioError catch (error) {
+    debugPrint('Dio error: $error');
+    return error.response?.data ?? {};
+  } catch (error) {
+    debugPrint('error: $error');
   }
 }
 

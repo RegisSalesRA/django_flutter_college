@@ -24,7 +24,6 @@ class RegisterDataRepository {
 
   void cleanFields() {
     usernameController.clear();
-
     nameController.clear();
     phoneController.clear();
     passwordController.clear();
