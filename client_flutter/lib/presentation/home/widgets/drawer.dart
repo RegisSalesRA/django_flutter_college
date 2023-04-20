@@ -1,60 +1,89 @@
+import 'package:client_flutter/app/app.dart';
 import 'package:flutter/material.dart';
 
-import '../../../app/routes/routes.dart';
 import '../../../data/data/storage_data.dart';
 
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({
-    Key? key,
-  }) : super(key: key);
+  var userData;
+  DrawerWidget({Key? key, this.userData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Column(
-            children: [
-              const UserAccountsDrawerHeader(
-                accountName: Text('John Doe'),
-                accountEmail: Text('johndoe@example.com'),
-                currentAccountPicture: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child: Text('JD'),
-                ),
+          SizedBox(
+            height: 150,
+            child: DrawerHeader(
+              decoration: const BoxDecoration(
+                color: ColorsTheme.primaryColor,
               ),
-              ListTile(
-                leading: const Icon(Icons.settings),
-                title: const Text('My Account'),
-                onTap: () {},
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Center(
+                    child: Text(
+                      "Welcome",
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  Row(
+                    children: [
+                      const Text(
+                        "User - ",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        userData.user.toString(),
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      const Text(
+                        "Name - ",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        userData.name.toString(),
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              const Divider(
-                thickness: 1,
-                color: Colors.grey,
-              ),
-              ListTile(
-                leading: const Icon(Icons.edit),
-                title: const Text('About Us'),
-                onTap: () {},
-              ),
-              const Divider(
-                thickness: 1,
-                color: Colors.grey,
-              ),
-              ListTile(
-                leading: const Icon(Icons.logout),
-                title: const Text('Log Out'),
-                onTap: () async {
-                  Navigator.pushReplacementNamed(context, Routes.initial);
-                  String? token = await readSecureData('token');
-                  await deleteSecureData(StorageItem('token', token!));
-                },
-              ),
-              const Divider(
-                thickness: 1,
-                color: Colors.grey,
-              ),
-            ],
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: const Text('Configurações'),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: const Text('Logout'),
+            onTap: () async {
+              Navigator.pushReplacementNamed(context, Routes.initial);
+              String? token = await readSecureData('token');
+              await deleteSecureData(StorageItem('token', token!));
+            },
           ),
         ],
       ),
