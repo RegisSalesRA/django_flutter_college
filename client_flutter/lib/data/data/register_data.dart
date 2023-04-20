@@ -13,7 +13,6 @@ final defaultHeaders = ({
   'Authorization': 'Bearer $token',
 });
 
-
 Future registerTeacher(data) async {
   try {
     final response = await dio.request(
@@ -59,16 +58,22 @@ Future registerStudent(data) async {
   }
 }
 
-Map<String, dynamic> exceptErrorResponse(dynamic err) {
+exceptErrorResponse(dynamic err) {
   var data = err;
 
-  if (data['detail'].containsKey('username')) {
+  if (data['detail'] is String) {
+    var errData = {'error': data['detail'], 'status_code': data['status_code']};
+    return errData;
+  }
+
+  if (data['detail']?.containsKey('username') == true) {
     var errData = {
       'error': data['detail']["username"][0],
       'status_code': data['status_code']
     };
     return errData;
   }
+
   if (data.containsKey('detail')) {
     var errData = {'error': data['detail'], 'status_code': data['status_code']};
     return errData;

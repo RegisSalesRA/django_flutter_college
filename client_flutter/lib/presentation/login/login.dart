@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../app/app.dart';
-import '../../data/data/login_data.dart';
-import '../../data/data/storage_data.dart';
+import '../../data/repository/login_data_repository.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -12,24 +10,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> with ValidationMixin {
-  final formKey = GlobalKey<FormState>();
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
-  final storage = const FlutterSecureStorage();
-
-  StorageItem valueExcept = StorageItem('token', 'token from django');
-
-  Future onSave() async {
-    if (formKey.currentState!.validate()) {
-      bool result = await loginUser();
-      if (result == true) {
-        Navigator.pushReplacementNamed(context, Routes.home);
-        print("DAdos");
-      } else {
-        print("Error");
-      }
-    }
-  }
+  final loginData = LoginRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +60,7 @@ class _LoginState extends State<Login> with ValidationMixin {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Form(
-                        key: formKey,
+                        key: loginData.formKeyLogin,
                         child: Column(children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +68,7 @@ class _LoginState extends State<Login> with ValidationMixin {
                               Text("Username",
                                   style: Theme.of(context).textTheme.headline2),
                               TextFormField(
-                                controller: usernameController,
+                                controller: loginData.usernameController,
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 decoration: const InputDecoration(
@@ -100,26 +81,28 @@ class _LoginState extends State<Login> with ValidationMixin {
                           const SizedBox(
                             height: 10,
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Password",
-                                  style: Theme.of(context).textTheme.headline2),
-                              TextFormField(
-                                controller: passwordController,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                decoration: const InputDecoration(
-                                    prefixIcon: Icon(Icons.lock),
-                                    suffixIcon: InkWell(
-                                      child: Icon(Icons.visibility),
-                                    ),
-                                    hintText: 'Password'),
-                                validator: passwordValidateLength,
-                              ),
-                            ],
-                          ),
                         ]),
+                      ),
+                      ValueListenableBuilder<bool>(
+                        valueListenable: loginData.confirmPassword,
+                        builder: (context, isLoading, child) {
+                          return TextFormField(
+                            controller: loginData.passwordController,
+                            obscureText: loginData.confirmPassword.value,
+                            decoration: InputDecoration(
+                                suffixIcon: IconButton(
+                                    onPressed: () {
+                                      loginData.confirmPassword.value =
+                                          !loginData.confirmPassword.value;
+                                    },
+                                    icon: Icon(loginData.confirmPassword.value
+                                        ? Icons.visibility_off
+                                        : Icons.visibility)),
+                                prefixIcon: const Icon(Icons.lock),
+                                hintText: 'Password'),
+                            validator: passwordValidateLength,
+                          );
+                        },
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
@@ -147,23 +130,36 @@ class _LoginState extends State<Login> with ValidationMixin {
                     alignment: Alignment.center,
                     child: Column(
                       children: [
-                        SizedBox(
-                          width: 350,
-                          height: 50,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25))),
-                            onPressed: () async {
-                              await onSave();
-                              //onSave();
-                            },
-                            child: const Text(
-                              "Login",
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ),
-                        ),
+                        ValueListenableBuilder<bool>(
+                            valueListenable: loginData.isLoading,
+                            builder: (context, isLoading, child) {
+                              return SizedBox(
+                                width: 350,
+                                height: 50,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25))),
+                                  onPressed: loginData.isLoading.value
+                                      ? null
+                                      : () async {
+                                          FocusScope.of(context).unfocus();
+                                          FocusScope.of(context)
+                                              .requestFocus(FocusNode());
+                                          loginData.onSave(context);
+                                        },
+                                  child: loginData.isLoading.value
+                                      ? const CircularProgressIndicator()
+                                      : const Text(
+                                          "Login",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18),
+                                        ),
+                                ),
+                              );
+                            }),
                         const SizedBox(
                           height: 15,
                         ),
@@ -172,8 +168,8 @@ class _LoginState extends State<Login> with ValidationMixin {
                           children: [
                             const Text("Don't have an account ? "),
                             InkWell(
-                              onTap: () =>
-                                  Navigator.pushNamed(context, Routes.register),
+                              onTap: () => Navigator.pushReplacementNamed(
+                                  context, Routes.register),
                               child: const Text(
                                 "Sign up",
                                 style: TextStyle(

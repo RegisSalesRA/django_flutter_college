@@ -26,7 +26,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Icons.arrow_upward,
             color: ColorsTheme.secondaryColor,
           ),
-          onPressed: () => Navigator.pushNamed(context, Routes.initial),
+          onPressed: () =>
+              Navigator.pushReplacementNamed(context, Routes.initial),
         ),
         title: const Text(
           "Sign-up Page",

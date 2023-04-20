@@ -14,9 +14,9 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final PageController _pageController = PageController(initialPage: 1);
-  final registerData = RegisterDataRepository();
+  final _registerData = RegisterDataRepository();
   void goToPage(int pageIndex) {
-    registerData.cleanFields();
+    _registerData.cleanFields();
     _pageController.animateToPage(
       pageIndex,
       duration: const Duration(milliseconds: 600),
