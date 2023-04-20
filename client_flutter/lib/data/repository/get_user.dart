@@ -9,13 +9,11 @@ class GetCurrentUserProvider with ChangeNotifier {
   Future<dynamic> functionGetCurrentUserLogged() async {
     var request = await getCurrentUser();
     currentStudent = UserModel.fromJson(request);
-    print("chamando tu aqui");
     notifyListeners();
   }
 
   Future<void> init() async {
     await functionGetCurrentUserLogged();
     notifyListeners();
-    print('MyProvider initialized');
   }
 }
