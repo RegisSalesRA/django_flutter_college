@@ -1,21 +1,22 @@
 import 'package:client_flutter/presentation/discipline_student/widgets/card_discipline_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 import '../../app/app.dart';
-import '../../data/repository/discipline_repository.dart';
-import 'discipline_student_by_teacher.dart';
 
-class TeacherDisciplinesScreen extends StatefulWidget {
-  const TeacherDisciplinesScreen({super.key});
+class DisciplineStudentByTeacher extends StatefulWidget {
+  final String disciplineName;
+  final List studentList;
+  const DisciplineStudentByTeacher(
+      {super.key, required this.studentList, required this.disciplineName});
 
   @override
-  State<TeacherDisciplinesScreen> createState() =>
-      _TeacherDisciplinesScreenState();
+  State<DisciplineStudentByTeacher> createState() =>
+      _DisciplineStudentByTeacherState();
 }
 
-class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
+class _DisciplineStudentByTeacherState
+    extends State<DisciplineStudentByTeacher> {
   String dateTimeFormat(data) {
     final formattedDate = DateFormat.yMMMEd().format(data);
     return formattedDate;
@@ -23,7 +24,6 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final disciplineList = Provider.of<DisciplineProvider>(context);
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
@@ -32,9 +32,9 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white10,
-        title: const Text(
-          "Discipline Teacher",
-          style: TextStyle(color: ColorsTheme.secondaryColor),
+        title: Text(
+          "${widget.disciplineName} Students",
+          style: const TextStyle(color: ColorsTheme.secondaryColor),
         ),
       ),
       body: Container(
@@ -47,11 +47,6 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  ElevatedButton(
-                      onPressed: () async {
-                        await disciplineList.getDisciplineByTeacherList();
-                      },
-                      child: const Text("Ola")),
                   const SizedBox(
                     height: 10,
                   ),
@@ -75,43 +70,19 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
                       )),
                   ListView.builder(
                       shrinkWrap: true,
-                      itemCount: disciplineList.disciplineTeacher.length,
+                      itemCount: widget.studentList.length,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: ((context, index) {
                         return CardDisciplineWidget(
                           iconChose: const Icon(
-                            Icons.menu_book_outlined,
+                            Icons.person,
                             size: 35,
                             color: ColorsTheme.primaryColor,
                           ),
-                          discipline:
-                              disciplineList.disciplineTeacher[index].name,
-                          name: disciplineList
-                              .disciplineTeacher[index].teacher.phone,
-                          argsExtra:
-                              "Created at - ${dateTimeFormat(disciplineList.disciplineTeacher[index].createAt)}",
-                          iconWidget: Container(
-                            height: 50,
-                            width: 50,
-                            decoration: const BoxDecoration(
-                                color: ColorsTheme.primaryColor,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15))),
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        DisciplineStudentByTeacher(
-                                          disciplineName: disciplineList
-                                              .disciplineTeacher[index].name,
-                                          studentList: disciplineList
-                                              .disciplineTeacher[index].student,
-                                        )));
-                              },
-                              icon: const Icon(Icons.assignment_outlined),
-                              color: Colors.white,
-                            ),
-                          ),
+                          discipline: widget.studentList[index].name,
+                          name: widget.studentList[index].phone,
+                          argsExtra: '',
+                          iconWidget: const SizedBox(),
                         );
                       }))
                 ],

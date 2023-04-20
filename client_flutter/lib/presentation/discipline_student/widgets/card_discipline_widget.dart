@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import '../../../app/app.dart';
 
 class CardDisciplineWidget extends StatelessWidget {
   final String name;
   final String discipline;
-  final String date;
+  final String argsExtra;
   final Widget iconWidget;
+  final Icon iconChose;
   const CardDisciplineWidget(
       {Key? key,
       required this.iconWidget,
       required this.name,
       required this.discipline,
-      required this.date})
+      required this.iconChose,
+      required this.argsExtra})
       : super(key: key);
 
   @override
@@ -24,46 +25,40 @@ class CardDisciplineWidget extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.grey.shade200,
           borderRadius: const BorderRadius.all(Radius.circular(20))),
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  height: 45,
-                  width: 45,
-                  decoration: const BoxDecoration(
-                      color: ColorsTheme.primaryColor,
-                      borderRadius: BorderRadius.all(Radius.circular(40))),
-                  child: const Icon(
-                    Icons.menu_book_outlined,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Discipline - $discipline",
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text("Teacher - $name"),
-                    Text("Created at - $date")
-                  ],
-                ),
-                Expanded(child: Container()),
-                iconWidget,
-              ],
-            ),
-          ]),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          iconChose,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                discipline,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(name),
+              Text(argsExtra)
+            ],
+          ),
+          const SizedBox(),
+          iconWidget
+        ],
+      ),
     );
   }
 }
+
+
+/*
+
+
+          
+
+          
+
+*/
