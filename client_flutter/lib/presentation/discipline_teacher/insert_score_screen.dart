@@ -63,27 +63,7 @@ class _InsertScoreScreenState extends State<InsertScoreScreen> {
                       itemCount: 10,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: ((context, index) {
-                        return CardDisciplineWidget(
-                          iconWidget: Container(
-                            height: 50,
-                            width: 50,
-                            decoration: const BoxDecoration(
-                                color: ColorsTheme.primaryColor,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15))),
-                            child: IconButton(
-                              icon: const Icon(
-                                Icons.assessment_outlined,
-                                color: Colors.white,
-                              ),
-                              onPressed: () => alertDialog(
-                                  context,
-                                  'Insert Score',
-                                  'Check if is the correct student before Accept',
-                                  print("Funcinou")),
-                            ),
-                          ),
-                        );
+                        return const Text("Ola");
                       }))
                 ],
               ),

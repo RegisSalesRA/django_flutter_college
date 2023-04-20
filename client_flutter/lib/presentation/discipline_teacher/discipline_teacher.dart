@@ -1,8 +1,10 @@
 import 'package:client_flutter/presentation/discipline_student/widgets/card_discipline_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../app/app.dart';
-
+import '../../data/repository/discipline_repository.dart';
 
 class TeacherDisciplinesScreen extends StatefulWidget {
   const TeacherDisciplinesScreen({super.key});
@@ -13,8 +15,14 @@ class TeacherDisciplinesScreen extends StatefulWidget {
 }
 
 class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
+  String dateTimeFormat(data) {
+    final formattedDate = DateFormat.yMMMEd().format(data);
+    return formattedDate;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final disciplineList = Provider.of<DisciplineProvider>(context);
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
@@ -38,6 +46,11 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  ElevatedButton(
+                      onPressed: () async {
+                        await disciplineList.getDisciplineByTeacherList();
+                      },
+                      child: const Text("Ola")),
                   const SizedBox(
                     height: 10,
                   ),
@@ -61,10 +74,16 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
                       )),
                   ListView.builder(
                       shrinkWrap: true,
-                      itemCount: 10,
+                      itemCount: disciplineList.disciplineTeacher.length,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: ((context, index) {
                         return CardDisciplineWidget(
+                          discipline:
+                              disciplineList.disciplineTeacher[index].name,
+                          name: disciplineList
+                              .disciplineTeacher[index].teacher.phone,
+                          date: dateTimeFormat(
+                              disciplineList.disciplineTeacher[index].createAt),
                           iconWidget: Container(
                             height: 50,
                             width: 50,

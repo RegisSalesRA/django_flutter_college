@@ -63,19 +63,7 @@ class _ScoresDisciplinesScreenState extends State<ScoresDisciplinesScreen> {
                       itemCount: 10,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: ((context, index) {
-                        return CardDisciplineWidget(
-                          iconWidget: Container(
-                            height: 50,
-                            width: 50,
-                            decoration: const BoxDecoration(
-                                color: ColorsTheme.primaryColor,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15))),
-                            child: const Center(
-                              child: Text("10.0"),
-                            ),
-                          ),
-                        );
+                        return Text("Ola");
                       }))
                 ],
               ),

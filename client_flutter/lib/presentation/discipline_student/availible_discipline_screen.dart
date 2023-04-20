@@ -65,24 +65,7 @@ class _AvailibleDisciplinesScreenState
                       itemCount: 10,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: ((context, index) {
-                        return   CardDisciplineWidget(iconWidget:   Container(
-                  height: 50,
-                  width: 50,
-                  decoration: const BoxDecoration(
-                      color: ColorsTheme.primaryColor,
-                      borderRadius: BorderRadius.all(Radius.circular(15))),
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.bookmark_add_outlined,
-                      color: Colors.white,
-                    ),
-                    onPressed: () => alertDialog(
-                        context,
-                        'Accept Discipline',
-                        'Check if is the discipline and the professor you want',
-                        print("Funcinou")),
-                  ),
-                ),);
+                        return   Text("Ola");
                       }))
                 ],
               ),

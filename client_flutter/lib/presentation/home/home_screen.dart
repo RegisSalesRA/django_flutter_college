@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../app/app.dart';
-import '../../data/repository/get_user.dart';
+import '../../data/repository/get_user_repository.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,7 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<GetCurrentUserProvider>(context);
-
     return Scaffold(
         drawer: DrawerWidget(
           userData: Provider.of<GetCurrentUserProvider>(context).currentStudent,
