@@ -3,6 +3,7 @@ import 'package:client_flutter/presentation/home/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/app.dart';
+import '../../data/data/get_user.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -41,6 +42,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 topLeft: Radius.circular(20), topRight: Radius.circular(20))),
         child: SingleChildScrollView(
           child: Column(children: [
+            ElevatedButton(
+                onPressed: () async {
+                  await getCurrentUser();
+                },
+                child: const Text("BUSCAR API USER")),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Row(
