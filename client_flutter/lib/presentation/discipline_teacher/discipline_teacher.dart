@@ -21,6 +21,20 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
     return formattedDate;
   }
 
+  bool _initialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Provider.of<DisciplineProvider>(context, listen: false)
+          .getDisciplineByTeacherList();
+      setState(() {
+        _initialized = true;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final disciplineList = Provider.of<DisciplineProvider>(context);
@@ -47,11 +61,6 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  ElevatedButton(
-                      onPressed: () async {
-                        await disciplineList.getDisciplineByTeacherList();
-                      },
-                      child: const Text("Ola")),
                   const SizedBox(
                     height: 10,
                   ),
@@ -73,47 +82,64 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
                         prefixIcon: const Icon(Icons.search,
                             size: 30.0, color: Colors.white),
                       )),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: disciplineList.disciplineTeacher.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: ((context, index) {
-                        return CardDisciplineWidget(
-                          iconChose: const Icon(
-                            Icons.menu_book_outlined,
-                            size: 35,
-                            color: ColorsTheme.primaryColor,
-                          ),
-                          discipline:
-                              disciplineList.disciplineTeacher[index].name,
-                          name: disciplineList
-                              .disciplineTeacher[index].teacher.phone,
-                          argsExtra:
-                              "Created at - ${dateTimeFormat(disciplineList.disciplineTeacher[index].createAt)}",
-                          iconWidget: Container(
-                            height: 50,
-                            width: 50,
-                            decoration: const BoxDecoration(
-                                color: ColorsTheme.primaryColor,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15))),
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        DisciplineStudentByTeacher(
-                                          disciplineName: disciplineList
-                                              .disciplineTeacher[index].name,
-                                          studentList: disciplineList
-                                              .disciplineTeacher[index].student,
-                                        )));
-                              },
-                              icon: const Icon(Icons.assignment_outlined),
-                              color: Colors.white,
+                  if (disciplineList.disciplineTeacher.isNotEmpty) ...{
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: disciplineList.disciplineTeacher.length,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: ((context, index) {
+                          return CardDisciplineWidget(
+                            iconChose: const Icon(
+                              Icons.menu_book_outlined,
+                              size: 35,
+                              color: ColorsTheme.primaryColor,
                             ),
+                            discipline:
+                                disciplineList.disciplineTeacher[index].name,
+                            name: disciplineList
+                                .disciplineTeacher[index].teacher.phone,
+                            argsExtra:
+                                "Created at - ${dateTimeFormat(disciplineList.disciplineTeacher[index].createAt)}",
+                            iconWidget: Container(
+                              height: 50,
+                              width: 50,
+                              decoration: const BoxDecoration(
+                                  color: ColorsTheme.primaryColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15))),
+                              child: IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          DisciplineStudentByTeacher(
+                                            disciplineName: disciplineList
+                                                .disciplineTeacher[index].name,
+                                            studentList: disciplineList
+                                                .disciplineTeacher[index]
+                                                .student,
+                                          )));
+                                },
+                                icon: const Icon(Icons.assignment_outlined),
+                                color: Colors.white,
+                              ),
+                            ),
+                          );
+                        }))
+                  },
+                  if (disciplineList.disciplineTeacher.isEmpty) ...{
+                    SizedBox(
+                      height: MediaQuerySize.heigthSizeCustom(context) * 0.70,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Center(
+                            child: Text("No discipline!"),
                           ),
-                        );
-                      }))
+                        ],
+                      ),
+                    )
+                  }
                 ],
               ),
             ),

@@ -68,23 +68,39 @@ class _DisciplineStudentByTeacherState
                         prefixIcon: const Icon(Icons.search,
                             size: 30.0, color: Colors.white),
                       )),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: widget.studentList.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: ((context, index) {
-                        return CardDisciplineWidget(
-                          iconChose: const Icon(
-                            Icons.person,
-                            size: 35,
-                            color: ColorsTheme.primaryColor,
+                  if (widget.studentList.isNotEmpty) ...{
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: widget.studentList.length,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: ((context, index) {
+                          return CardDisciplineWidget(
+                            iconChose: const Icon(
+                              Icons.person,
+                              size: 35,
+                              color: ColorsTheme.primaryColor,
+                            ),
+                            discipline: widget.studentList[index].name,
+                            name: widget.studentList[index].phone,
+                            argsExtra: '',
+                            iconWidget: const SizedBox(),
+                          );
+                        }))
+                  },
+                  if (widget.studentList.isEmpty) ...{
+                    SizedBox(
+                      height: MediaQuerySize.heigthSizeCustom(context) * 0.70,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Center(
+                            child: Text("No student registed!"),
                           ),
-                          discipline: widget.studentList[index].name,
-                          name: widget.studentList[index].phone,
-                          argsExtra: '',
-                          iconWidget: const SizedBox(),
-                        );
-                      }))
+                        ],
+                      ),
+                    )
+                  }
                 ],
               ),
             ),
