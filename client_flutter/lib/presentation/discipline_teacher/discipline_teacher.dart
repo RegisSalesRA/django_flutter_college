@@ -112,6 +112,8 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
                                           DisciplineStudentByTeacher(
+                                            idDiscipline: disciplineList
+                                                .disciplineTeacher[index].id,
                                             disciplineName: disciplineList
                                                 .disciplineTeacher[index].name,
                                             studentList: disciplineList

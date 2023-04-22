@@ -65,6 +65,10 @@ exceptErrorResponse(dynamic err) {
     var errData = {'error': data['detail'], 'status_code': data['status_code']};
     return errData;
   }
+  if (data['error'] is String) {
+    var errData = {'error': data['error'], 'status_code': data['status_code']};
+    return errData;
+  }
 
   if (data['detail']?.containsKey('username') == true) {
     var errData = {

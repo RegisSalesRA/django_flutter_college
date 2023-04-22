@@ -117,20 +117,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            GridComponent(
-                              nameImage: "insert_score.png",
-                              voidCall: () {
-                                Navigator.pushNamed(
-                                    context, Routes.insertScoreScreen);
-                              },
-                              text_1: "Score",
-                              text_2: "Insert",
-                            ),
                             const SizedBox(
-                              width: 15,
+                              width: 30,
                             ),
                             GridComponent(
                               nameImage: "teacher_disciplines.png",

@@ -1,8 +1,7 @@
-import 'package:client_flutter/presentation/discipline_student/widgets/card_discipline_widget.dart';
+ 
 import 'package:flutter/material.dart';
 
-import '../../app/app.dart';
-import '../common/alert_dialog.dart';
+import '../../app/app.dart'; 
 
 class AvailibleDisciplinesScreen extends StatefulWidget {
   const AvailibleDisciplinesScreen({super.key});
