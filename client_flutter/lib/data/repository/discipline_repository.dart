@@ -81,7 +81,9 @@ class DisciplineProvider with ChangeNotifier {
       Map<String, dynamic> map1 = Teacher(
               id: item.id, name: item.name, phone: item.phone, user: item.user)
           .toJson();
-      var scoreValues = scores.firstWhere((score) => score.aluno.id == item.id,
+      var scoreValues = scores.firstWhere(
+          (score) =>
+              score.aluno.id == item.id && score.discipline.id == idDiscipline,
           orElse: () => null);
 
       if (scoreValues == null) {
