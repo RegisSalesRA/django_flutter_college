@@ -50,7 +50,7 @@ class _DisciplineStudentByTeacherState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Provider.of<DisciplineProvider>(context, listen: false)
-          .getScoreRepository();
+          .getScoreRepository(widget.idDiscipline);
       setState(() {
         _initialized = true;
       });
@@ -83,13 +83,10 @@ class _DisciplineStudentByTeacherState
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  
                   const SizedBox(
                     height: 10,
                   ),
                   TextField(
-                      //    controller: widget.textController,
-                      //    onChanged: widget.onChanged,
                       style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                         hintStyle: const TextStyle(color: Colors.white),
@@ -144,7 +141,8 @@ class _DisciplineStudentByTeacherState
                                     await disciplineList
                                         .insertScoreToStudentProvider(data);
                                     Navigator.of(context).pop();
-                                    await disciplineList.getScoreRepository();
+                                    await disciplineList.getScoreRepository(
+                                        widget.idDiscipline);
                                   }, true, scoreController),
                                   icon: const Icon(
                                       Icons.insert_chart_outlined_sharp),

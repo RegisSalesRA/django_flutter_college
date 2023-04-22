@@ -48,7 +48,7 @@ class DisciplineProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future getScoreRepository() async {
+  Future getScoreRepository(idDiscipline) async {
     studentScore.clear();
     scores.clear();
     disciplineTeacherStudentsScore.clear();
@@ -60,7 +60,13 @@ class DisciplineProvider with ChangeNotifier {
       var itemFromJson = ScoreModel.fromJson(item);
       scores.add(itemFromJson);
     }
-    var disciplineTeacherStudentsScore2 = disciplineTeacher.fold<List<dynamic>>(
+
+    var filterDiciplineById = disciplineTeacher
+        .where((element) => element.id == idDiscipline)
+        .toList();
+
+    var disciplineTeacherStudentsScore2 =
+        filterDiciplineById.fold<List<dynamic>>(
       [],
       (previousValue, item) {
         item.student.forEach((itemSecundario) {
