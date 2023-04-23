@@ -6,13 +6,15 @@ class CardDisciplineWidget extends StatelessWidget {
   final String argsExtra;
   final Widget iconWidget;
   final Icon iconChose;
+  final Color? isColorScore;
   const CardDisciplineWidget(
       {Key? key,
       required this.iconWidget,
       required this.name,
       required this.discipline,
       required this.iconChose,
-      required this.argsExtra})
+      required this.argsExtra,
+      required this.isColorScore})
       : super(key: key);
 
   @override
@@ -42,7 +44,10 @@ class CardDisciplineWidget extends StatelessWidget {
                 height: 20,
               ),
               Text(name),
-              Text(argsExtra)
+              Text(
+                argsExtra,
+                style: TextStyle(color: isColorScore),
+              )
             ],
           ),
           const SizedBox(),

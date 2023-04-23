@@ -124,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: 30,
                             ),
                             GridComponent(
-                              nameImage: "teacher_disciplines.png",
+                              nameImage: "insert_score.png",
                               voidCall: () {
                                 Navigator.pushNamed(
                                     context, Routes.teacherDiscipline);

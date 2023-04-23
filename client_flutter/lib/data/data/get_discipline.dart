@@ -54,7 +54,10 @@ Future insertScoreToStudent(data) async {
     return exceptErrorResponse(response.data);
   }
   if (response.statusCode == 400) {
-    return exceptErrorResponse(response.data);
+    return {
+      'error': "Check if your text field are empty or is a number",
+      'status_code': data['status_code']
+    };
   }
 }
 
