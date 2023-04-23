@@ -32,6 +32,7 @@ class _DisciplineStudentByTeacherState
   TextEditingController scoreController = TextEditingController();
 
   bool _initialized = false;
+  String valueList = "";
 
   @override
   void dispose() {
@@ -82,6 +83,11 @@ class _DisciplineStudentByTeacherState
                         ),
                         TextField(
                             style: const TextStyle(color: Colors.white),
+                            onChanged: (value) {
+                              setState(() {
+                                valueList = value.toLowerCase().toString();
+                              });
+                            },
                             decoration: InputDecoration(
                               hintStyle: const TextStyle(color: Colors.white),
                               contentPadding:
@@ -102,52 +108,60 @@ class _DisciplineStudentByTeacherState
                               itemCount: disciplineList.studentScore.length,
                               physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: ((context, index) {
-                                return CardDisciplineWidget(
-                                  isColorScore: formatScoreColor(disciplineList
-                                      .studentScore[index]["score"]["score"]),
-                                  iconChose: const Icon(
-                                    Icons.person,
-                                    size: 35,
-                                    color: ColorsTheme.primaryColor,
-                                  ),
-                                  discipline:
-                                      "Name - ${disciplineList.studentScore[index]["name"]}",
-                                  name:
-                                      "Phone - ${disciplineList.studentScore[index]["phone"]}",
-                                  argsExtra:
-                                      "Score - ${formatScore(disciplineList.studentScore[index]["score"]["score"]) ?? "no score"}",
-                                  iconWidget: Container(
-                                      height: 50,
-                                      width: 50,
-                                      decoration: const BoxDecoration(
+                                return disciplineList.studentScore[index]
+                                            ["name"]
+                                        .toLowerCase()
+                                        .contains(valueList)
+                                    ? CardDisciplineWidget(
+                                        isColorScore: formatScoreColor(
+                                            disciplineList.studentScore[index]
+                                                ["score"]["score"]),
+                                        iconChose: const Icon(
+                                          Icons.person,
+                                          size: 35,
                                           color: ColorsTheme.primaryColor,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(15))),
-                                      child: IconButton(
-                                        onPressed: () => alertDialog(
-                                            context,
-                                            'Score',
-                                            'Attention after send score you can not do again',
-                                            () async {
-                                          var data = {
-                                            "id_student": disciplineList
-                                                .studentScore[index]["id"],
-                                            "id_discpline": widget.idDiscipline,
-                                            "nota": scoreController.text
-                                          };
-                                          await disciplineList
-                                              .insertScoreToStudentProvider(
-                                                  data);
-                                          Navigator.of(context).pop();
-                                          await disciplineList
-                                              .getScoreRepository(
-                                                  widget.idDiscipline);
-                                        }, true, scoreController),
-                                        icon: const Icon(
-                                            Icons.insert_chart_outlined_sharp),
-                                        color: Colors.white,
-                                      )),
-                                );
+                                        ),
+                                        discipline:
+                                            "Name - ${disciplineList.studentScore[index]["name"]}",
+                                        name:
+                                            "Phone - ${disciplineList.studentScore[index]["phone"]}",
+                                        argsExtra:
+                                            "Score - ${formatScore(disciplineList.studentScore[index]["score"]["score"]) ?? "no score"}",
+                                        iconWidget: Container(
+                                            height: 50,
+                                            width: 50,
+                                            decoration: const BoxDecoration(
+                                                color: ColorsTheme.primaryColor,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(15))),
+                                            child: IconButton(
+                                              onPressed: () => alertDialog(
+                                                  context,
+                                                  'Score',
+                                                  'Attention after send score you can not do again',
+                                                  () async {
+                                                var data = {
+                                                  "id_student": disciplineList
+                                                          .studentScore[index]
+                                                      ["id"],
+                                                  "id_discpline":
+                                                      widget.idDiscipline,
+                                                  "nota": scoreController.text
+                                                };
+                                                await disciplineList
+                                                    .insertScoreToStudentProvider(
+                                                        data);
+                                                Navigator.of(context).pop();
+                                                await disciplineList
+                                                    .getScoreRepository(
+                                                        widget.idDiscipline);
+                                              }, true, scoreController),
+                                              icon: const Icon(Icons
+                                                  .insert_chart_outlined_sharp),
+                                              color: Colors.white,
+                                            )),
+                                      )
+                                    : Container();
                               }))
                         },
                         if (disciplineList.studentScore.isEmpty) ...{
