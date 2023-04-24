@@ -21,7 +21,7 @@ formatScoreColor(value) {
     if (valueDouble >= 7) {
       return Colors.green;
     }
-    if (valueDouble < 6) {
+    if (valueDouble < 7) {
       return Colors.red;
     }
   }
