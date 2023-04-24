@@ -13,32 +13,23 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  final PageController _pageController = PageController(initialPage: 1);
   final _registerData = RegisterDataRepository();
-  void goToPage(int pageIndex) {
-    _registerData.cleanFields();
-    _pageController.animateToPage(
-      pageIndex,
-      duration: const Duration(milliseconds: 600),
-      curve: Curves.easeInOut,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     final pages = [
-      SignUpTeacher(backPageView: () => goToPage(1)),
+      SignUpTeacher(backPageView: () => _registerData.goToPage(1)),
       SignUpScreen(
-        backPageView: () => goToPage(0),
-        forwardPageView: () => goToPage(2),
+        backPageView: () => _registerData.goToPage(0),
+        forwardPageView: () => _registerData.goToPage(2),
       ),
-      SignUpStudent(backPageView: () => goToPage(1)),
+      SignUpStudent(backPageView: () => _registerData.goToPage(1)),
     ];
 
     return SafeArea(
       child: Scaffold(
         body: PageView(
-          controller: _pageController,
+          controller: _registerData.pageController,
           physics: const NeverScrollableScrollPhysics(),
           children: pages,
         ),

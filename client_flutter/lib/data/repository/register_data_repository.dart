@@ -32,6 +32,17 @@ class RegisterDataRepository {
     confirm2Password.value = true;
   }
 
+  final PageController pageController = PageController(initialPage: 1);
+
+  void goToPage(int pageIndex) {
+    cleanFields();
+    pageController.animateToPage(
+      pageIndex,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeInOut,
+    );
+  }
+
   Future<void> onSaveTeacher() async {
     isLoading.value = !isLoading.value;
     if (formKeyTeacher.currentState!.validate()) {

@@ -1,10 +1,9 @@
 import 'package:client_flutter/presentation/discipline_student/widgets/card_discipline_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-
+import 'package:provider/provider.dart'; 
+import '../../data/data.dart';
 import '../../app/app.dart';
-import '../../data/repository/discipline_repository.dart';
 import '../common/alert_dialog.dart';
 
 class DisciplineStudentByTeacher extends StatefulWidget {

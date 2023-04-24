@@ -1,4 +1,3 @@
-import 'package:client_flutter/presentation/discipline_student/widgets/card_discipline_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/app.dart';
@@ -63,7 +62,7 @@ class _ScoresDisciplinesScreenState extends State<ScoresDisciplinesScreen> {
                       itemCount: 10,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: ((context, index) {
-                        return Text("Ola");
+                        return const Text("Ola");
                       }))
                 ],
               ),

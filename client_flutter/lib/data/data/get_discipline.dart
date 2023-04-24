@@ -1,9 +1,6 @@
 import 'package:client_flutter/app/constant/address.dart';
-import 'package:client_flutter/data/data/register_data.dart';
-import 'package:client_flutter/data/data/storage_data.dart';
 import 'package:dio/dio.dart';
-
-final dio = Dio();
+import '../../data/data.dart';
 
 Future getDisciplineByTeacher() async {
   final token = await readSecureData('token');

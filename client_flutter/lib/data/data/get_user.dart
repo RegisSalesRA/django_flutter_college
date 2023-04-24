@@ -1,11 +1,7 @@
-import 'package:client_flutter/data/data/register_data.dart';
-import 'package:client_flutter/data/data/storage_data.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-
 import '../../app/app.dart';
-
-final dio = Dio();
+import '../data/data.dart';
 
 Future getCurrentUser() async {
   final token = await readSecureData('token');

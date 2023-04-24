@@ -1,10 +1,8 @@
-import 'package:client_flutter/data/data/storage_data.dart';
-
 import '../../app/app.dart';
 import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
+import '../data/data.dart';
 
-final dio = Dio();
 final token = readSecureData('token');
 
 final defaultHeaders = ({

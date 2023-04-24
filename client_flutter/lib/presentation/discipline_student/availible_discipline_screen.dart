@@ -1,7 +1,6 @@
- 
 import 'package:flutter/material.dart';
 
-import '../../app/app.dart'; 
+import '../../app/app.dart';
 
 class AvailibleDisciplinesScreen extends StatefulWidget {
   const AvailibleDisciplinesScreen({super.key});
@@ -64,7 +63,7 @@ class _AvailibleDisciplinesScreenState
                       itemCount: 10,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: ((context, index) {
-                        return   Text("Ola");
+                        return const Text("Ola");
                       }))
                 ],
               ),
