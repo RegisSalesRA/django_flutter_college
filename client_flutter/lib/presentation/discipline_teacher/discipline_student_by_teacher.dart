@@ -24,12 +24,12 @@ class DisciplineStudentByTeacher extends StatefulWidget {
 
 class _DisciplineStudentByTeacherState
     extends State<DisciplineStudentByTeacher> {
+  final disciplineRepository = DisciplineProvider();
+
   String dateTimeFormat(data) {
     final formattedDate = DateFormat.yMMMEd().format(data);
     return formattedDate;
   }
-
-  TextEditingController scoreController = TextEditingController();
 
   bool _initialized = false;
   String valueList = "";
@@ -146,16 +146,22 @@ class _DisciplineStudentByTeacherState
                                                       ["id"],
                                                   "id_discpline":
                                                       widget.idDiscipline,
-                                                  "nota": scoreController.text
+                                                  "nota": disciplineRepository
+                                                      .scoreController.text
                                                 };
                                                 await disciplineList
                                                     .insertScoreToStudentProvider(
                                                         data);
+                                                disciplineRepository
+                                                    .cleanFidelds();
                                                 Navigator.of(context).pop();
                                                 await disciplineList
                                                     .getScoreRepository(
                                                         widget.idDiscipline);
-                                              }, true, scoreController),
+                                              },
+                                                  true,
+                                                  disciplineRepository
+                                                      .scoreController),
                                               icon: const Icon(Icons
                                                   .insert_chart_outlined_sharp),
                                               color: Colors.white,

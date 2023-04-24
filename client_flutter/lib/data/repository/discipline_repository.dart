@@ -7,10 +7,22 @@ import '../../domain/model/score_model.dart';
 import '../data/get_discipline.dart';
 
 class DisciplineProvider with ChangeNotifier {
+  static final DisciplineProvider _instance = DisciplineProvider._();
+
+  factory DisciplineProvider() => _instance;
+
+  DisciplineProvider._();
+
   List disciplineTeacher = [];
   List scores = [];
   List disciplineTeacherStudentsScore = [];
   List studentScore = [];
+
+  final scoreController = TextEditingController();
+
+  void cleanFidelds() {
+    scoreController.clear();
+  }
 
   Future getDisciplineByTeacherList() async {
     disciplineTeacher.clear();
@@ -24,7 +36,6 @@ class DisciplineProvider with ChangeNotifier {
 
   Future insertScoreToStudentProvider(data) async {
     var request = await insertScoreToStudent(data);
-
     if (request.containsKey('success')) {
       return Fluttertoast.showToast(
           msg: request["success"].toString(),
@@ -99,7 +110,6 @@ class DisciplineProvider with ChangeNotifier {
       }
       studentScore.add(map1);
     }
-    print(studentScore.length);
     notifyListeners();
   }
 }
