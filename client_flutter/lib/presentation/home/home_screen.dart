@@ -19,7 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Provider.of<GetCurrentUserProvider>(context, listen: false).init();
+      await Provider.of<GetCurrentUserRepository>(context, listen: false)
+          .init();
       setState(() {
         _initialized = true;
       });
@@ -28,10 +29,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<GetCurrentUserProvider>(context);
+    final userProvider = Provider.of<GetCurrentUserRepository>(context);
     return Scaffold(
         drawer: DrawerWidget(
-          userData: Provider.of<GetCurrentUserProvider>(context).currentStudent,
+          userData:
+              Provider.of<GetCurrentUserRepository>(context).currentStudent,
         ),
         appBar: AppBar(
             backgroundColor: Colors.white10,

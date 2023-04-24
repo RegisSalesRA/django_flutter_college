@@ -6,12 +6,12 @@ import '../../domain/model/discipline_teacher_model.dart';
 import '../../domain/model/score_model.dart';
 import '../data/get_discipline.dart';
 
-class DisciplineProvider with ChangeNotifier {
-  static final DisciplineProvider _instance = DisciplineProvider._();
+class DisciplineRepository with ChangeNotifier {
+  static final DisciplineRepository _instance = DisciplineRepository._();
 
-  factory DisciplineProvider() => _instance;
+  factory DisciplineRepository() => _instance;
 
-  DisciplineProvider._();
+  DisciplineRepository._();
 
   List disciplineTeacher = [];
   List scores = [];

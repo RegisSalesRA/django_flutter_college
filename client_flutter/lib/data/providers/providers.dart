@@ -5,6 +5,6 @@ import 'package:provider/single_child_widget.dart';
 import '../repository/discipline_repository.dart';
 
 List<SingleChildWidget> providers = [
-  ChangeNotifierProvider(create: (context) => GetCurrentUserProvider()),
-  ChangeNotifierProvider(create: (context) => DisciplineProvider()),
+  ChangeNotifierProvider(create: (context) => GetCurrentUserRepository()),
+  ChangeNotifierProvider(create: (context) => DisciplineRepository()),
 ];

@@ -27,7 +27,7 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Provider.of<DisciplineProvider>(context, listen: false)
+      await Provider.of<DisciplineRepository>(context, listen: false)
           .getDisciplineByTeacherList();
       setState(() {
         _initialized = true;
@@ -37,7 +37,7 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final disciplineList = Provider.of<DisciplineProvider>(context);
+    final disciplineList = Provider.of<DisciplineRepository>(context);
     return Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(

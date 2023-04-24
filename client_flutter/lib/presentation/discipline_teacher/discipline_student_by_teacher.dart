@@ -24,7 +24,7 @@ class DisciplineStudentByTeacher extends StatefulWidget {
 
 class _DisciplineStudentByTeacherState
     extends State<DisciplineStudentByTeacher> {
-  final disciplineRepository = DisciplineProvider();
+  final disciplineRepository = DisciplineRepository();
 
   String dateTimeFormat(data) {
     final formattedDate = DateFormat.yMMMEd().format(data);
@@ -43,7 +43,7 @@ class _DisciplineStudentByTeacherState
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Provider.of<DisciplineProvider>(context, listen: false)
+      await Provider.of<DisciplineRepository>(context, listen: false)
           .getScoreRepository(widget.idDiscipline);
       setState(() {
         _initialized = true;
@@ -53,7 +53,7 @@ class _DisciplineStudentByTeacherState
 
   @override
   Widget build(BuildContext context) {
-    final disciplineList = Provider.of<DisciplineProvider>(context);
+    final disciplineList = Provider.of<DisciplineRepository>(context);
     return Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(

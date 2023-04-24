@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import '../../domain/model/user_model.dart';
 import '../data/get_user.dart';
 
-class GetCurrentUserProvider with ChangeNotifier {
+class GetCurrentUserRepository with ChangeNotifier {
   dynamic currentStudent;
 
   Future<dynamic> functionGetCurrentUserLogged() async {
