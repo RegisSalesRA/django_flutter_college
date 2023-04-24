@@ -61,6 +61,16 @@ class _SignUpTeacherState extends State<SignUpTeacher> with ValidationMixin {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: TextFormField(
+                  controller: registerData.nameController,
+                  decoration: const InputDecoration(
+                      prefixIcon: Icon(Icons.person_outline_rounded),
+                      hintText: 'Name'),
+                  validator: nameValid,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: TextFormField(
                   controller: registerData.phoneController,
                   decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.phone), hintText: 'Phone'),

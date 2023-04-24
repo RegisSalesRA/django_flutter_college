@@ -19,6 +19,11 @@ class LoginRepository {
   final ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
   final storage = const FlutterSecureStorage();
 
+  clearFields() {
+    usernameController.clear();
+    passwordController.clear();
+  }
+
   Future onSave(context) async {
     isLoading.value = !isLoading.value;
     if (formKeyLogin.currentState!.validate()) {
@@ -30,6 +35,7 @@ class LoginRepository {
 
       if (result!.containsKey('success')) {
         await Future.delayed(const Duration(seconds: 3));
+        clearFields();
         Navigator.pushReplacementNamed(context, Routes.home);
       }
       if (result.containsKey('error')) {
@@ -44,6 +50,7 @@ class LoginRepository {
             fontSize: 16.0);
       }
     }
+
     isLoading.value = !isLoading.value;
   }
 }

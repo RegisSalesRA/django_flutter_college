@@ -39,6 +39,7 @@ class RegisterDataRepository {
         "username": usernameController.text,
         "phone": phoneController.text,
         "password": passwordController.text,
+        "name": nameController.text,
         "password2": password2Controller.text,
       };
       var result = await registerTeacher(data);
