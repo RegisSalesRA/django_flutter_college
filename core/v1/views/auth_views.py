@@ -66,6 +66,7 @@ class GetUser(APIView):
                 "user": str(user),
                 "is_student": user.is_student,
                 "is_teacher": user.is_teacher,
+                "name": str(user.teacher.name),
                 "id_teacher": user.teacher.id,
                 "phone": str(user.teacher.phone),
             }

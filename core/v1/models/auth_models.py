@@ -23,6 +23,7 @@ class Student(models.Model):
 
 class Teacher(models.Model):
     user = models.OneToOneField(User, related_name="teacher", on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
     phone = models.CharField(max_length=12, null=True, blank=True)
 
     def __str__(self):

@@ -35,10 +35,11 @@ class StudentSerializerRegister(serializers.ModelSerializer):
 class TeacherSerializerRegister(serializers.ModelSerializer):
     password2 = serializers.CharField(style={"input_type": "password"}, write_only=True)
     phone = serializers.CharField(max_length=20, style={"input_type": "text"})
+    name = serializers.CharField(max_length=255, style={"input_type": "text"})
 
     class Meta:
         model = User
-        fields = ["username", "phone", "password", "password2"]
+        fields = ["username", "phone", "password", "password2", "name"]
         extra_kwargs = {"password": {"write_only": True}}
 
     def save(self, **kwargs):
@@ -50,7 +51,7 @@ class TeacherSerializerRegister(serializers.ModelSerializer):
         user.set_password(password)
         user.is_teacher = True
         user.save()
-        Teacher.objects.create(user=user, phone=self.validated_data["phone"])
+        Teacher.objects.create(user=user, name=self.validated_data["name"], phone=self.validated_data["phone"])
         return user
 
 
