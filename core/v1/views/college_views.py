@@ -105,9 +105,7 @@ class InsertScoreToStudent(APIView):
             nota = request.data["nota"]
             querset_student = Student.objects.get(id=id_student)
             queryset_discipline = Discipline.objects.get(id=id_discpline)
-            query_score_filter = Scores.objects.filter(
-                aluno=querset_student, discipline=queryset_discipline, score=nota
-            )
+            query_score_filter = Scores.objects.filter(aluno=querset_student, discipline=queryset_discipline)
 
             if query_score_filter.exists():
                 return Response({"error": "object alerady exists"}, status=status.HTTP_400_BAD_REQUEST)
