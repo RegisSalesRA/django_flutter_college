@@ -2,10 +2,11 @@ import 'package:client_flutter/app/app.dart';
 import 'package:flutter/material.dart';
 
 import '../../../data/data.dart';
+import '../../../domain/domain.dart';
 
 class DrawerWidget extends StatelessWidget {
-  var userData;
-  DrawerWidget({Key? key, this.userData}) : super(key: key);
+  final dynamic userData;
+  const DrawerWidget({Key? key, required this.userData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +30,10 @@ class DrawerWidget extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline1,
                     ),
                   ),
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 10),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
                         "User - ",
@@ -40,7 +43,7 @@ class DrawerWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        userData.user.toString(),
+                        userData.user,
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.normal,
@@ -48,25 +51,9 @@ class DrawerWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      const Text(
-                        "Name - ",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        userData.name.toString(),
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ],
-                  ),
+                  const SizedBox(
+                    height: 15,
+                  )
                 ],
               ),
             ),
@@ -74,7 +61,20 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.settings),
             title: const Text('Configurações'),
-            onTap: () {},
+            onTap: () {
+              final userDataGet = UserModel(
+                user: userData.user,
+                id: userData.id,
+                idTeacher: userData.idTeacher,
+                idStudent: userData.idStudent,
+                name: userData.name,
+                isStudent: userData.isStudent,
+                isTeacher: userData.isTeacher,
+                phone: userData.phone,
+              );
+              Navigator.pushNamed(context, Routes.myconfig,
+                  arguments: userDataGet);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.logout),

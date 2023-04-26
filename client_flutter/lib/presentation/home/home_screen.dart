@@ -30,10 +30,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<GetCurrentUserRepository>(context);
+    final currentUserData =
+        Provider.of<GetCurrentUserRepository>(context).currentStudent;
     return Scaffold(
         drawer: DrawerWidget(
-          userData:
-              Provider.of<GetCurrentUserRepository>(context).currentStudent,
+          userData: currentUserData,
         ),
         appBar: AppBar(
             backgroundColor: Colors.white10,
