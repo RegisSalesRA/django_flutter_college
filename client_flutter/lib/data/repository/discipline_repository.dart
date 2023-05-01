@@ -1,9 +1,7 @@
-import 'package:client_flutter/domain/model/teacher_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../../domain/model/discipline_teacher_model.dart';
-import '../../domain/model/score_model.dart';
+import '../../domain/domain.dart';
 import '../data/get_discipline.dart';
 
 class DisciplineRepository with ChangeNotifier {
@@ -14,6 +12,7 @@ class DisciplineRepository with ChangeNotifier {
   DisciplineRepository._();
 
   List disciplineTeacher = [];
+  List disciplineStudent = [];
   List scores = [];
   List disciplineTeacherStudentsScore = [];
   List studentScore = [];
@@ -30,6 +29,16 @@ class DisciplineRepository with ChangeNotifier {
     for (var item in request) {
       var discipline = DisciplineTeacherModel.fromJson(item);
       disciplineTeacher.add(discipline);
+    }
+    notifyListeners();
+  }
+
+  Future getDisciplineByStudentList() async {
+    disciplineStudent.clear();
+    var request = await getDisciplineByStudent();
+    for (var item in request) {
+      var discipline = DisciplineTeacherModel.fromJson(item);
+      disciplineStudent.add(discipline);
     }
     notifyListeners();
   }
@@ -112,4 +121,7 @@ class DisciplineRepository with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  // Student
+
 }

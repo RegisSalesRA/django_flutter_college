@@ -5,17 +5,16 @@ import 'package:provider/provider.dart';
 
 import '../../app/app.dart';
 import '../../data/repository/discipline_repository.dart';
-import 'discipline_student_by_teacher.dart';
 
-class TeacherDisciplinesScreen extends StatefulWidget {
-  const TeacherDisciplinesScreen({super.key});
+class StudentDisciplinesScreen extends StatefulWidget {
+  const StudentDisciplinesScreen({super.key});
 
   @override
-  State<TeacherDisciplinesScreen> createState() =>
-      _TeacherDisciplinesScreenState();
+  State<StudentDisciplinesScreen> createState() =>
+      _StudentDisciplinesScreenState();
 }
 
-class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
+class _StudentDisciplinesScreenState extends State<StudentDisciplinesScreen> {
   String dateTimeFormat(data) {
     final formattedDate = DateFormat.yMMMEd().format(data);
     return formattedDate;
@@ -29,7 +28,7 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Provider.of<DisciplineRepository>(context, listen: false)
-          .getDisciplineByTeacherList();
+          .getDisciplineByStudentList();
       setState(() {
         _initialized = true;
       });
@@ -48,7 +47,7 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
           elevation: 0,
           backgroundColor: Colors.white10,
           title: const Text(
-            "Discipline Teacher",
+            "Discipline Student",
             style: TextStyle(color: ColorsTheme.secondaryColor),
           ),
         ),
@@ -87,15 +86,15 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
                               prefixIcon: const Icon(Icons.search,
                                   size: 30.0, color: Colors.white),
                             )),
-                        if (disciplineList.disciplineTeacher.isNotEmpty) ...{
+                        if (disciplineList.disciplineStudent.isNotEmpty) ...{
                           ListView.builder(
                               shrinkWrap: true,
                               itemCount:
-                                  disciplineList.disciplineTeacher.length,
+                                  disciplineList.disciplineStudent.length,
                               physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: ((context, index) {
                                 return disciplineList
-                                        .disciplineTeacher[index].name
+                                        .disciplineStudent[index].name
                                         .toLowerCase()
                                         .contains(valueList)
                                     ? CardDisciplineWidget(
@@ -106,50 +105,17 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
                                           color: ColorsTheme.primaryColor,
                                         ),
                                         discipline: disciplineList
-                                            .disciplineTeacher[index].name,
-                                        name: "",
+                                            .disciplineStudent[index].name,
+                                        name:
+                                            "Teacher - ${disciplineList.disciplineStudent[index].teacher.name}",
                                         argsExtra:
-                                            "Created at - ${dateTimeFormat(disciplineList.disciplineTeacher[index].createAt)}",
-                                        iconWidget: Container(
-                                          height: 50,
-                                          width: 50,
-                                          decoration: const BoxDecoration(
-                                              color: ColorsTheme.primaryColor,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(15))),
-                                          child: IconButton(
-                                            onPressed: () {
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          DisciplineStudentByTeacher(
-                                                            idDiscipline:
-                                                                disciplineList
-                                                                    .disciplineTeacher[
-                                                                        index]
-                                                                    .id,
-                                                            disciplineName:
-                                                                disciplineList
-                                                                    .disciplineTeacher[
-                                                                        index]
-                                                                    .name,
-                                                            studentList:
-                                                                disciplineList
-                                                                    .disciplineTeacher[
-                                                                        index]
-                                                                    .student,
-                                                          )));
-                                            },
-                                            icon: const Icon(
-                                                Icons.assignment_outlined),
-                                            color: Colors.white,
-                                          ),
-                                        ),
+                                            "Created at - ${dateTimeFormat(disciplineList.disciplineStudent[index].createAt)}",
+                                        iconWidget: Container(),
                                       )
                                     : Container();
                               }))
                         },
-                        if (disciplineList.disciplineTeacher.isEmpty) ...{
+                        if (disciplineList.disciplineStudent.isEmpty) ...{
                           SizedBox(
                             height:
                                 MediaQuerySize.heigthSizeCustom(context) * 0.70,

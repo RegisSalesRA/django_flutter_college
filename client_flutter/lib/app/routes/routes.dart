@@ -1,9 +1,9 @@
-import 'package:client_flutter/presentation/discipline_student/availible_discipline_screen.dart';
-import 'package:client_flutter/presentation/discipline_student/current_discipline_screen.dart';
+import 'package:client_flutter/presentation/discipline_student/availible_discipline_student.dart';
 import 'package:client_flutter/presentation/discipline_student/score_discipline_screen.dart';
 import 'package:client_flutter/presentation/signup/signup.dart';
 import 'package:flutter/material.dart';
 
+import '../../presentation/discipline_student/discipline_student.dart';
 import '../../presentation/discipline_teacher/discipline_teacher.dart';
 
 import '../../presentation/home/config_screen.dart';
@@ -17,10 +17,10 @@ class Routes {
     '/register': (context) => const SignUp(),
     '/home': (context) => const HomeScreen(),
     '/myconfig': (context) => const MyConfigScreen(),
-    '/currentDiscipline': (context) => const CurrentDisciplinesScreen(),
+    '/currentDiscipline': (context) => const StudentDisciplinesScreen(),
     '/availibleDiscipline': (context) => const AvailibleDisciplinesScreen(),
     '/scoreDiscipline': (context) => const ScoresDisciplinesScreen(),
-    '/teacherDiscipline': (context) => const TeacherDisciplinesScreen(), 
+    '/teacherDiscipline': (context) => const TeacherDisciplinesScreen(),
   };
 
   static String initial = '/login';
@@ -29,8 +29,8 @@ class Routes {
   static String currentDiscipline = '/currentDiscipline';
   static String availibleDiscipline = '/availibleDiscipline';
   static String scoreDiscipline = '/scoreDiscipline';
-  static String teacherDiscipline = '/teacherDiscipline'; 
-  static String myconfig = '/myconfig'; 
+  static String teacherDiscipline = '/teacherDiscipline';
+  static String myconfig = '/myconfig';
 
   static GlobalKey<NavigatorState>? navigatorKey = GlobalKey<NavigatorState>();
 }
