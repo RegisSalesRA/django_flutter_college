@@ -136,3 +136,30 @@ Future getScoreApi() async {
     return exceptErrorResponse(response.data);
   }
 }
+
+Future disciplineChosedByStudent(data) async {
+  final token = await readSecureData('token');
+  final defaultHeaders = ({
+    "Content-Type": "application/json",
+    "accept": "application/json",
+    'Authorization': "Bearer $token",
+  });
+
+  final response = await dio.request('$baseUrl/api/discipline_chose/',
+      options: Options(
+        validateStatus: (status) => true,
+        method: 'POST',
+        headers: defaultHeaders,
+      ),
+      data: data);
+  print(response);
+  if (response.statusCode == 200) {
+    return response.data;
+  }
+  if (response.statusCode == 401) {
+    return exceptErrorResponse(response.data);
+  }
+  if (response.statusCode == 400) {
+    return exceptErrorResponse(response.data);
+  }
+}

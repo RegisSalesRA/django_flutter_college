@@ -1,3 +1,4 @@
+import 'package:client_flutter/presentation/common/alert_dialog.dart';
 import 'package:client_flutter/presentation/discipline_student/widgets/card_discipline_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -23,6 +24,7 @@ class _AvailibleDisciplinesScreenState
 
   bool _initialized = false;
   String valueList = "";
+  final TextEditingController _controllerAdsicpline = TextEditingController();
 
   @override
   void initState() {
@@ -113,7 +115,37 @@ class _AvailibleDisciplinesScreenState
                                             "Teacher - ${disciplineList.disciplineStudentAvailible[index].teacher.name}",
                                         argsExtra:
                                             "Created at - ${dateTimeFormat(disciplineList.disciplineStudentAvailible[index].createAt)}",
-                                        iconWidget: Container(),
+                                        iconWidget: Container(
+                                          height: 50,
+                                          width: 50,
+                                          decoration: const BoxDecoration(
+                                              color: ColorsTheme.primaryColor,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15))),
+                                          child: IconButton(
+                                            onPressed: () => alertDialog(
+                                                context,
+                                                'Discipline',
+                                                'Are you sure you want accept this discipline?',
+                                                () async {
+                                              var data = {
+                                                "id_discpline": disciplineList
+                                                    .disciplineStudentAvailible[
+                                                        index]
+                                                    .id
+                                              };
+                                              await disciplineList
+                                                  .disciplineChosedByStudentRepository(
+                                                      data);
+                                              Navigator.of(context).pop();
+                                              await disciplineList
+                                                  .getDisciplineByStudentAvailibleList();
+                                            }, false, _controllerAdsicpline),
+                                            icon: const Icon(Icons
+                                                .insert_chart_outlined_sharp),
+                                            color: Colors.white,
+                                          ),
+                                        ),
                                       )
                                     : Container();
                               }))

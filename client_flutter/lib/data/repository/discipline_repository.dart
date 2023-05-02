@@ -46,16 +46,20 @@ class DisciplineRepository with ChangeNotifier {
 
   Future getDisciplineByStudentAvailibleList() async {
     disciplineStudentAvailible.clear();
+    print("Lista primeira $disciplineStudentAvailible");
     var request = await getDisciplineAvailibleByStudent();
     for (var item in request) {
       var discipline = DisciplineTeacherModel.fromJson(item);
       disciplineStudentAvailible.add(discipline);
     }
+    print("Lista final $disciplineStudentAvailible");
     notifyListeners();
   }
 
   Future insertScoreToStudentProvider(data) async {
     var request = await insertScoreToStudent(data);
+    await getDisciplineByStudentAvailibleList();
+    notifyListeners();
     if (request.containsKey('success')) {
       return Fluttertoast.showToast(
           msg: request["success"].toString(),
@@ -77,6 +81,30 @@ class DisciplineRepository with ChangeNotifier {
           fontSize: 16.0);
     }
     notifyListeners();
+  }
+
+  Future disciplineChosedByStudentRepository(data) async {
+    var request = await disciplineChosedByStudent(data);
+    if (request.containsKey('success')) {
+      return Fluttertoast.showToast(
+          msg: request["success"].toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+    if (request.containsKey('error')) {
+      return Fluttertoast.showToast(
+          msg: request["error"].toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
   }
 
   Future getScoreRepository(idDiscipline) async {
@@ -132,7 +160,4 @@ class DisciplineRepository with ChangeNotifier {
     }
     notifyListeners();
   }
-
-  // Student
-
 }
