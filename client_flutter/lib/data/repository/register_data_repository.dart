@@ -43,7 +43,7 @@ class RegisterDataRepository {
     );
   }
 
-  Future<void> onSaveTeacher() async {
+  Future<void> onSaveTeacherRepository() async {
     isLoading.value = !isLoading.value;
     if (formKeyTeacher.currentState!.validate()) {
       var data = {
@@ -81,7 +81,7 @@ class RegisterDataRepository {
     isLoading.value = !isLoading.value;
   }
 
-  Future<void> onSaveStudent() async {
+  Future<void> onSaveStudentRepository() async {
     isLoading.value = !isLoading.value;
     if (formKeyStudent.currentState!.validate()) {
       var data = {

@@ -1,5 +1,5 @@
-class Semester {
-    Semester({
+class SemesterModel {
+    SemesterModel({
         required this.id,
         required this.updateAt,
         required this.createAt,
@@ -11,7 +11,7 @@ class Semester {
     DateTime createAt;
     String semester;
 
-    factory Semester.fromJson(Map<String, dynamic> json) => Semester(
+    factory SemesterModel.fromJson(Map<String, dynamic> json) => SemesterModel(
         id: json["id"],
         updateAt: DateTime.parse(json["updateAt"]),
         createAt: DateTime.parse(json["createAt"]),

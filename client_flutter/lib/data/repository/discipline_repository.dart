@@ -24,41 +24,41 @@ class DisciplineRepository with ChangeNotifier {
     scoreController.clear();
   }
 
-  Future getDisciplineByTeacherList() async {
+  Future getDisciplineByTeacherRepository() async {
     disciplineTeacher.clear();
     var request = await getDisciplineByTeacher();
     for (var item in request) {
-      var discipline = DisciplineTeacherModel.fromJson(item);
+      var discipline = DisciplineModel.fromJson(item);
       disciplineTeacher.add(discipline);
     }
     notifyListeners();
   }
 
-  Future getDisciplineByStudentList() async {
+  Future getDisciplineByStudentListRepository() async {
     disciplineStudent.clear();
     var request = await getDisciplineByStudent();
     for (var item in request) {
-      var discipline = DisciplineTeacherModel.fromJson(item);
+      var discipline = DisciplineModel.fromJson(item);
       disciplineStudent.add(discipline);
     }
     notifyListeners();
   }
 
-  Future getDisciplineByStudentAvailibleList() async {
+  Future getDisciplineByStudentAvailibleListRepository() async {
     disciplineStudentAvailible.clear();
     print("Lista primeira $disciplineStudentAvailible");
     var request = await getDisciplineAvailibleByStudent();
     for (var item in request) {
-      var discipline = DisciplineTeacherModel.fromJson(item);
+      var discipline = DisciplineModel.fromJson(item);
       disciplineStudentAvailible.add(discipline);
     }
     print("Lista final $disciplineStudentAvailible");
     notifyListeners();
   }
 
-  Future insertScoreToStudentProvider(data) async {
+  Future insertScoreToStudentRepository(data) async {
     var request = await insertScoreToStudent(data);
-    await getDisciplineByStudentAvailibleList();
+    await getDisciplineByStudentAvailibleListRepository();
     notifyListeners();
     if (request.containsKey('success')) {
       return Fluttertoast.showToast(
@@ -112,7 +112,7 @@ class DisciplineRepository with ChangeNotifier {
     scores.clear();
     disciplineTeacherStudentsScore.clear();
 
-    await getDisciplineByTeacherList();
+    await getDisciplineByTeacherRepository();
     var response = await getScoreApi();
 
     for (var item in response) {
@@ -137,7 +137,7 @@ class DisciplineRepository with ChangeNotifier {
     );
 
     for (var item in disciplineTeacherStudentsScore2) {
-      Map<String, dynamic> map1 = Teacher(
+      Map<String, dynamic> map1 = TeacherModel(
               id: item.id, name: item.name, phone: item.phone, user: item.user)
           .toJson();
       var scoreValues = scores.firstWhere(

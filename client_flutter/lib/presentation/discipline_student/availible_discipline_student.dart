@@ -31,7 +31,7 @@ class _AvailibleDisciplinesScreenState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Provider.of<DisciplineRepository>(context, listen: false)
-          .getDisciplineByStudentAvailibleList();
+          .getDisciplineByStudentAvailibleListRepository();
       setState(() {
         _initialized = true;
       });
@@ -139,7 +139,7 @@ class _AvailibleDisciplinesScreenState
                                                       data);
                                               Navigator.of(context).pop();
                                               await disciplineList
-                                                  .getDisciplineByStudentAvailibleList();
+                                                  .getDisciplineByStudentAvailibleListRepository();
                                             }, false, _controllerAdsicpline),
                                             icon: const Icon(Icons
                                                 .insert_chart_outlined_sharp),

@@ -142,7 +142,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> with ValidationMixin {
                     onPressed: registerData.isLoading.value
                         ? null
                         : () {
-                            registerData.onSaveTeacher();
+                            registerData.onSaveTeacherRepository();
                           },
                     child: registerData.isLoading.value
                         ? const CircularProgressIndicator()

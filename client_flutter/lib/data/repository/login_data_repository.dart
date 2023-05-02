@@ -24,7 +24,7 @@ class LoginRepository {
     passwordController.clear();
   }
 
-  Future onSave(context) async {
+  Future loginUserRepository(context) async {
     isLoading.value = !isLoading.value;
     if (formKeyLogin.currentState!.validate()) {
       Map data = {
