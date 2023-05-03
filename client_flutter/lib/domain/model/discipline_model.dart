@@ -1,8 +1,7 @@
-import 'package:client_flutter/domain/model/semester_model.dart';
-import 'package:client_flutter/domain/model/teacher_model.dart';
+import '../domain.dart';
 
-class DisciplineTeacherModel {
-  DisciplineTeacherModel({
+class DisciplineModel {
+  DisciplineModel({
     required this.id,
     required this.updateAt,
     required this.createAt,
@@ -18,21 +17,21 @@ class DisciplineTeacherModel {
   DateTime createAt;
   String name;
   String ano;
-  Teacher teacher;
-  Semester semester;
-  List<Teacher> student;
+  TeacherModel teacher;
+  SemesterModel semester;
+  List<StudentModel> student;
 
-  factory DisciplineTeacherModel.fromJson(Map<String, dynamic> json) =>
-      DisciplineTeacherModel(
+  factory DisciplineModel.fromJson(Map<String, dynamic> json) =>
+      DisciplineModel(
         id: json["id"],
         updateAt: DateTime.parse(json["updateAt"]),
         createAt: DateTime.parse(json["createAt"]),
         name: json["name"],
         ano: json["ano"],
-        teacher: Teacher.fromJson(json["teacher"]),
-        semester: Semester.fromJson(json["semester"]),
-        student:
-            List<Teacher>.from(json["student"].map((x) => Teacher.fromJson(x))),
+        teacher: TeacherModel.fromJson(json["teacher"]),
+        semester: SemesterModel.fromJson(json["semester"]),
+        student: List<StudentModel>.from(
+            json["student"].map((x) => StudentModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

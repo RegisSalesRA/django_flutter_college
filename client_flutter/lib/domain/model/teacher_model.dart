@@ -1,5 +1,5 @@
-class Teacher {
-  Teacher({
+class TeacherModel {
+  TeacherModel({
     required this.id,
     this.name,
     required this.phone,
@@ -11,7 +11,7 @@ class Teacher {
   String phone;
   int user;
 
-  factory Teacher.fromJson(Map<String, dynamic> json) => Teacher(
+  factory TeacherModel.fromJson(Map<String, dynamic> json) => TeacherModel(
         id: json["id"],
         name: json["name"],
         phone: json["phone"] ?? "",

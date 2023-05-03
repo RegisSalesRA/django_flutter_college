@@ -1,39 +1,27 @@
 class StudentModel {
-  int id;
-  String user;
-  bool isStudent;
-  bool isTeacher;
-  int idStudent;
-  String name;
-  String phone;
-
   StudentModel({
     required this.id,
-    required this.user,
-    required this.isStudent,
-    required this.isTeacher,
-    required this.idStudent,
-    required this.name,
+    this.name,
     required this.phone,
+    required this.user,
   });
+
+  int id;
+  String? name;
+  String phone;
+  int user;
 
   factory StudentModel.fromJson(Map<String, dynamic> json) => StudentModel(
         id: json["id"],
-        user: json["user"] ?? "",
-        isStudent: json["is_student"] ?? true,
-        isTeacher: json["is_teacher"] ?? false,
-        idStudent: json["id_student"] ?? 1,
-        name: json["name"] ?? "",
+        name: json["name"],
         phone: json["phone"] ?? "",
+        user: json["user"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "user": user,
-        "is_student": isStudent,
-        "is_teacher": isTeacher,
-        "id_student": idStudent,
         "name": name,
         "phone": phone,
+        "user": user,
       };
 }

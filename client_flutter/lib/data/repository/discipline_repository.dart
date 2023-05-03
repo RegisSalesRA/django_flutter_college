@@ -12,6 +12,7 @@ class DisciplineRepository with ChangeNotifier {
   DisciplineRepository._();
 
   List disciplineTeacher = [];
+  List disciplineStudentAvailible = [];
   List disciplineStudent = [];
   List scores = [];
   List disciplineTeacherStudentsScore = [];
@@ -23,28 +24,42 @@ class DisciplineRepository with ChangeNotifier {
     scoreController.clear();
   }
 
-  Future getDisciplineByTeacherList() async {
+  Future getDisciplineByTeacherRepository() async {
     disciplineTeacher.clear();
     var request = await getDisciplineByTeacher();
     for (var item in request) {
-      var discipline = DisciplineTeacherModel.fromJson(item);
+      var discipline = DisciplineModel.fromJson(item);
       disciplineTeacher.add(discipline);
     }
     notifyListeners();
   }
 
-  Future getDisciplineByStudentList() async {
+  Future getDisciplineByStudentListRepository() async {
     disciplineStudent.clear();
     var request = await getDisciplineByStudent();
     for (var item in request) {
-      var discipline = DisciplineTeacherModel.fromJson(item);
+      var discipline = DisciplineModel.fromJson(item);
       disciplineStudent.add(discipline);
     }
     notifyListeners();
   }
 
-  Future insertScoreToStudentProvider(data) async {
+  Future getDisciplineByStudentAvailibleListRepository() async {
+    disciplineStudentAvailible.clear();
+    print("Lista primeira $disciplineStudentAvailible");
+    var request = await getDisciplineAvailibleByStudent();
+    for (var item in request) {
+      var discipline = DisciplineModel.fromJson(item);
+      disciplineStudentAvailible.add(discipline);
+    }
+    print("Lista final $disciplineStudentAvailible");
+    notifyListeners();
+  }
+
+  Future insertScoreToStudentRepository(data) async {
     var request = await insertScoreToStudent(data);
+    await getDisciplineByStudentAvailibleListRepository();
+    notifyListeners();
     if (request.containsKey('success')) {
       return Fluttertoast.showToast(
           msg: request["success"].toString(),
@@ -68,12 +83,36 @@ class DisciplineRepository with ChangeNotifier {
     notifyListeners();
   }
 
+  Future disciplineChosedByStudentRepository(data) async {
+    var request = await disciplineChosedByStudent(data);
+    if (request.containsKey('success')) {
+      return Fluttertoast.showToast(
+          msg: request["success"].toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+    if (request.containsKey('error')) {
+      return Fluttertoast.showToast(
+          msg: request["error"].toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+  }
+
   Future getScoreRepository(idDiscipline) async {
     studentScore.clear();
     scores.clear();
     disciplineTeacherStudentsScore.clear();
 
-    await getDisciplineByTeacherList();
+    await getDisciplineByTeacherRepository();
     var response = await getScoreApi();
 
     for (var item in response) {
@@ -98,7 +137,7 @@ class DisciplineRepository with ChangeNotifier {
     );
 
     for (var item in disciplineTeacherStudentsScore2) {
-      Map<String, dynamic> map1 = Teacher(
+      Map<String, dynamic> map1 = TeacherModel(
               id: item.id, name: item.name, phone: item.phone, user: item.user)
           .toJson();
       var scoreValues = scores.firstWhere(
@@ -121,7 +160,4 @@ class DisciplineRepository with ChangeNotifier {
     }
     notifyListeners();
   }
-
-  // Student
-
 }

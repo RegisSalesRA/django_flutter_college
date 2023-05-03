@@ -140,7 +140,7 @@ class _SignUpStudentState extends State<SignUpStudent> with ValidationMixin {
                         : () async {
                             FocusScope.of(context).unfocus();
                             FocusScope.of(context).requestFocus(FocusNode());
-                            registerData.onSaveStudent();
+                            registerData.onSaveStudentRepository();
                           },
                     child: registerData.isLoading.value
                         ? const CircularProgressIndicator()

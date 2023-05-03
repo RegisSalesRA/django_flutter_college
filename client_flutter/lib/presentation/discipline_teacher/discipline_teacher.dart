@@ -29,7 +29,7 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Provider.of<DisciplineRepository>(context, listen: false)
-          .getDisciplineByTeacherList();
+          .getDisciplineByTeacherRepository();
       setState(() {
         _initialized = true;
       });

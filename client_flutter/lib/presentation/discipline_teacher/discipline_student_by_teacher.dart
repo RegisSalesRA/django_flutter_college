@@ -149,7 +149,7 @@ class _DisciplineStudentByTeacherState
                                                       .scoreController.text
                                                 };
                                                 await disciplineList
-                                                    .insertScoreToStudentProvider(
+                                                    .insertScoreToStudentRepository(
                                                         data);
                                                 disciplineRepository
                                                     .cleanFidelds();
