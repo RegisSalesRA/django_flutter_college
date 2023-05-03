@@ -90,6 +90,16 @@ class ScoresRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ScoresSerializer
 
 
+class DisciplinyByStudent(generics.ListAPIView):
+    serializer_class = DisciplineSerializer
+    permission_classes = [IsAuthenticated, StudentUser]
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Discipline.objects.filter(student=user.student)
+        return queryset
+
+
 class InsertScoreToStudent(APIView):
     permission_classes = [IsAuthenticated, TeacherUser]
 
@@ -105,12 +115,12 @@ class InsertScoreToStudent(APIView):
             nota = request.data["nota"]
             querset_student = Student.objects.get(id=id_student)
             queryset_discipline = Discipline.objects.get(id=id_discpline)
-            query_score_filter = Scores.objects.filter(aluno=querset_student, discipline=queryset_discipline)
+            query_score_filter = Scores.objects.filter(student=querset_student, discipline=queryset_discipline)
 
             if query_score_filter.exists():
                 return Response({"error": "object alerady exists"}, status=status.HTTP_400_BAD_REQUEST)
 
-            query_score = Scores.objects.create(aluno=querset_student, discipline=queryset_discipline, score=nota)
+            query_score = Scores.objects.create(student=querset_student, discipline=queryset_discipline, score=nota)
             query_score.save()
             return Response({"success": "create"}, status=status.HTTP_201_CREATED)
 
@@ -141,11 +151,12 @@ class ChoseDisciplineByStudent(APIView):
             return Response({"error": "object missing variables"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class DisciplinyByStudent(generics.ListAPIView):
-    serializer_class = DisciplineSerializer
+class ScoreDisciplineByStudent(APIView):
     permission_classes = [IsAuthenticated, StudentUser]
 
-    def get_queryset(self):
-        user = self.request.user
-        queryset = Discipline.objects.filter(student=user.student)
-        return queryset
+    def get(self, request):
+        user = request.user
+        queryset = Scores.objects.filter(student=user.student.id)
+
+        serializers = ScoresSerializer(queryset, many=True)
+        return Response(serializers.data)

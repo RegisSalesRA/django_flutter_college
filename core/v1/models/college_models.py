@@ -34,7 +34,7 @@ class Discipline(models.Model):
 
 
 class Scores(models.Model):
-    aluno = models.ForeignKey(Student, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
     discipline = models.ForeignKey(Discipline, on_delete=models.CASCADE)
     score = models.DecimalField(max_digits=4, decimal_places=2)
 
@@ -42,4 +42,4 @@ class Scores(models.Model):
     updateAt = models.DateTimeField(auto_now=True, auto_created=True)
 
     def __str__(self):
-        return f"{self.score} - {self.aluno}"
+        return f"{self.score} - {self.student}"

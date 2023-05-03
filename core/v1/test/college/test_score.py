@@ -44,7 +44,7 @@ class TestScoreInsertStudenteApi(APITestCase):
             name="Geo", ano="2014", teacher=teacher_instance, semester=semester_instance
         )
         discipline_instance.student.add(student_instance.id)
-        query_score = Scores.objects.create(aluno=student_instance, discipline=discipline_instance, score=10)
+        query_score = Scores.objects.create(student=student_instance, discipline=discipline_instance, score=10)
         query_score.save()
         DataMocks.data_score
 

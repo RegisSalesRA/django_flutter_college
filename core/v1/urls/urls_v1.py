@@ -16,6 +16,7 @@ from core.v1.views.college_views import (
     DisciplineRetrieveUpdateDestroyView,
     DisciplinyByStudent,
     InsertScoreToStudent,
+    ScoreDisciplineByStudent,
     ScoresCreateView,
     ScoresListView,
     ScoresRetrieveUpdateDestroyView,
@@ -34,6 +35,7 @@ urlpatterns = [
     path("score/<int:pk>/", ScoresRetrieveUpdateDestroyView.as_view()),
     path("score_add/", ScoresCreateView.as_view()),
     # College
+    path("discipline_score_student/", ScoreDisciplineByStudent.as_view()),
     path("discipline_student/", DisciplinyByStudent.as_view()),
     path("discipline_chose/", ChoseDisciplineByStudent.as_view()),
     path("discipline_left_student/", DisciplineListLeftStudent.as_view()),
