@@ -1,7 +1,7 @@
 class DataMocks:
     data_student = {
         "username": "userStudent",
-        "name": "user",
+        "name": "userStudent",
         "password": "adminadmin",
         "password2": "adminadmin",
         "phone": "12345678",
@@ -20,7 +20,13 @@ class DataMocks:
         "password": "adminadmin",
     }
 
-    data_teacher = {"username": "userTeacher", "password": "adminadmin", "password2": "adminadmin", "phone": "12345678"}
+    data_teacher = {
+        "username": "userTeacher",
+        "name": "userProf",
+        "password": "adminadmin",
+        "password2": "adminadmin",
+        "phone": "12345678",
+    }
 
     def get_data_teacher(self):
         return self.data_teacher

@@ -47,6 +47,11 @@ class ApiRouteInterface(ABC):
     def url_api_discipline_chose_by_student(self):
         pass
 
+    @property
+    @abstractmethod
+    def url_api_discipline_score_student(self):
+        pass
+
 
 class ApiRouteMocks(ApiRouteInterface):
     @property
@@ -84,3 +89,7 @@ class ApiRouteMocks(ApiRouteInterface):
     @property
     def url_api_discipline_chose_by_student(self):
         return "/api/discipline_chose/"
+
+    @property
+    def url_api_discipline_score_student(self):
+        return "/api/discipline_score_student/"
