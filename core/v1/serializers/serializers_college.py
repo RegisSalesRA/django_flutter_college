@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from core.v1.models.college_models import Discipline, Scores, Semester
 
 
@@ -27,6 +28,13 @@ class ScoresSerializer(serializers.ModelSerializer):
         model = Scores
         fields = "__all__"
         depth = 1
+
+
+class ScoresSerializerStudent(serializers.ModelSerializer):
+    class Meta:
+        model = Scores
+        fields = "__all__"
+        depth = 2
 
 
 class ScoresPostSerializer(serializers.ModelSerializer):

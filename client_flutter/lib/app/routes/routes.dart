@@ -1,5 +1,5 @@
 import 'package:client_flutter/presentation/discipline_student/availible_discipline_student.dart';
-import 'package:client_flutter/presentation/discipline_student/score_discipline_screen.dart';
+import 'package:client_flutter/presentation/discipline_student/score_discipline_student.dart';
 import 'package:client_flutter/presentation/signup/signup.dart';
 import 'package:flutter/material.dart';
 

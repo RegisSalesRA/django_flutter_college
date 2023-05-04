@@ -11,6 +11,7 @@ from core.v1.serializers.serializers_college import (
     DisciplineSerializerPost,
     ScoresPostSerializer,
     ScoresSerializer,
+    ScoresSerializerStudent,
     SemesterSerializer,
 )
 
@@ -158,5 +159,5 @@ class ScoreDisciplineByStudent(APIView):
         user = request.user
         queryset = Scores.objects.filter(student=user.student.id)
 
-        serializers = ScoresSerializer(queryset, many=True)
+        serializers = ScoresSerializerStudent(queryset, many=True)
         return Response(serializers.data)

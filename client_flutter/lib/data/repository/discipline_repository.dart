@@ -13,6 +13,7 @@ class DisciplineRepository with ChangeNotifier {
 
   List disciplineTeacher = [];
   List disciplineStudentAvailible = [];
+  List scoreDisciplineStudentAvailible = [];
   List disciplineStudent = [];
   List scores = [];
   List disciplineTeacherStudentsScore = [];
@@ -40,6 +41,17 @@ class DisciplineRepository with ChangeNotifier {
     for (var item in request) {
       var discipline = DisciplineModel.fromJson(item);
       disciplineStudent.add(discipline);
+    }
+    notifyListeners();
+  }
+
+  Future getScoreDisciplineByStudentListRepository() async {
+    scoreDisciplineStudentAvailible.clear();
+    var request = await getScoreDisciplineByStudent();
+    for (var item in request) {
+      print(item);
+      var discipline = ScoreModel.fromJson(item);
+      scoreDisciplineStudentAvailible.add(discipline);
     }
     notifyListeners();
   }

@@ -56,6 +56,33 @@ Future getDisciplineByStudent() async {
   }
 }
 
+Future getScoreDisciplineByStudent() async {
+  final token = await readSecureData('token');
+  final defaultHeaders = ({
+    "Content-Type": "application/json",
+    "accept": "application/json",
+    'Authorization': "Bearer $token",
+  });
+
+  final response = await dio.request(
+    '$baseUrl/api/discipline_score_student/',
+    options: Options(
+        validateStatus: (status) => true,
+        method: 'GET',
+        headers: defaultHeaders),
+  );
+
+  if (response.statusCode == 200) {
+    return response.data;
+  }
+  if (response.statusCode == 401) {
+    return exceptErrorResponse(response.data);
+  }
+  if (response.statusCode == 400) {
+    return exceptErrorResponse(response.data);
+  }
+}
+
 Future getDisciplineAvailibleByStudent() async {
   final token = await readSecureData('token');
   final defaultHeaders = ({
