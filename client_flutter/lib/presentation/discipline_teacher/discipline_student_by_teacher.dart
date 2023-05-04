@@ -1,7 +1,7 @@
 import 'package:client_flutter/presentation/discipline_student/widgets/card_discipline_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart'; 
+import 'package:provider/provider.dart';
 import '../../data/data.dart';
 import '../../app/app.dart';
 import '../common/alert_dialog.dart';
@@ -126,45 +126,71 @@ class _DisciplineStudentByTeacherState
                                             "Phone - ${disciplineList.studentScore[index]["phone"]}",
                                         argsExtra:
                                             "Score - ${formatScore(disciplineList.studentScore[index]["score"]["score"]) ?? "no score"}",
-                                        iconWidget: Container(
-                                            height: 50,
-                                            width: 50,
-                                            decoration: const BoxDecoration(
-                                                color: ColorsTheme.primaryColor,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(15))),
-                                            child: IconButton(
-                                              onPressed: () => alertDialog(
-                                                  context,
-                                                  'Score',
-                                                  'Attention after send score you can not do again',
-                                                  () async {
-                                                var data = {
-                                                  "id_student": disciplineList
-                                                          .studentScore[index]
-                                                      ["id"],
-                                                  "id_discpline":
-                                                      widget.idDiscipline,
-                                                  "nota": disciplineRepository
-                                                      .scoreController.text
-                                                };
-                                                await disciplineList
-                                                    .insertScoreToStudentRepository(
-                                                        data);
-                                                disciplineRepository
-                                                    .cleanFidelds();
-                                                Navigator.of(context).pop();
-                                                await disciplineList
-                                                    .getScoreRepository(
-                                                        widget.idDiscipline);
-                                              },
-                                                  true,
-                                                  disciplineRepository
-                                                      .scoreController),
-                                              icon: const Icon(Icons
-                                                  .insert_chart_outlined_sharp),
-                                              color: Colors.white,
-                                            )),
+                                        iconWidget: disciplineList
+                                                        .studentScore[index]
+                                                    ["score"]["score"] ==
+                                                null
+                                            ? Container(
+                                                height: 50,
+                                                width: 50,
+                                                decoration: const BoxDecoration(
+                                                    color: ColorsTheme
+                                                        .primaryColor,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                15))),
+                                                child: IconButton(
+                                                  onPressed: () => alertDialog(
+                                                      context,
+                                                      'Score',
+                                                      'Attention after send score you can not do again',
+                                                      () async {
+                                                    var data = {
+                                                      "id_student":
+                                                          disciplineList
+                                                                  .studentScore[
+                                                              index]["id"],
+                                                      "id_discpline":
+                                                          widget.idDiscipline,
+                                                      "nota":
+                                                          disciplineRepository
+                                                              .scoreController
+                                                              .text
+                                                    };
+                                                    await disciplineList
+                                                        .insertScoreToStudentRepository(
+                                                            data);
+                                                    disciplineRepository
+                                                        .cleanFidelds();
+                                                    Navigator.of(context).pop();
+                                                    await disciplineList
+                                                        .getScoreRepository(
+                                                            widget
+                                                                .idDiscipline);
+                                                  },
+                                                      true,
+                                                      disciplineRepository
+                                                          .scoreController),
+                                                  icon: const Icon(Icons.add),
+                                                  color: Colors.white,
+                                                ))
+                                            : Container(
+                                                height: 50,
+                                                width: 50,
+                                                decoration: const BoxDecoration(
+                                                    color: ColorsTheme
+                                                        .primaryColor,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                15))),
+                                                child: const Center(
+                                                    child: Icon(
+                                                  Icons.block,
+                                                  color: Colors.white,
+                                                )),
+                                              ),
                                       )
                                     : Container();
                               }))

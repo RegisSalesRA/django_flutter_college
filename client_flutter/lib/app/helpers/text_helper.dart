@@ -9,7 +9,6 @@ formatScore(value) {
     }
     if (valueDouble != 10) {
       var formeted = (valueDouble / 10.0);
-      print(formeted);
       return formeted;
     }
   }

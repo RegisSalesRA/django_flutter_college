@@ -50,7 +50,7 @@ class _AvailibleDisciplinesScreenState
           elevation: 0,
           backgroundColor: Colors.white10,
           title: const Text(
-            "Discipline Student",
+            "Availible Disciplines",
             style: TextStyle(color: ColorsTheme.secondaryColor),
           ),
         ),
@@ -125,8 +125,8 @@ class _AvailibleDisciplinesScreenState
                                           child: IconButton(
                                             onPressed: () => alertDialog(
                                                 context,
-                                                'Discipline',
-                                                'Are you sure you want accept this discipline?',
+                                                '${disciplineList.disciplineStudentAvailible[index].name}',
+                                                'Are you sure you want accept this discipline? after that you can not back your decision',
                                                 () async {
                                               var data = {
                                                 "id_discpline": disciplineList
@@ -160,7 +160,7 @@ class _AvailibleDisciplinesScreenState
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
                                 Center(
-                                  child: Text("No discipline!"),
+                                  child: Text("No discipline availible!"),
                                 ),
                               ],
                             ),

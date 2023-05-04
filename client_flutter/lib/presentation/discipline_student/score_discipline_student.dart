@@ -100,7 +100,11 @@ class _ScoresDisciplinesScreenState extends State<ScoresDisciplinesScreen> {
                                         .toLowerCase()
                                         .contains(valueList)
                                     ? CardDisciplineWidget(
-                                        isColorScore: null,
+                                        isColorScore: formatScoreColor(
+                                            disciplineList
+                                                .scoreDisciplineStudentAvailible[
+                                                    index]
+                                                .score),
                                         iconChose: const Icon(
                                           Icons.menu_book_outlined,
                                           size: 35,
@@ -114,7 +118,7 @@ class _ScoresDisciplinesScreenState extends State<ScoresDisciplinesScreen> {
                                         name:
                                             "Teacher - ${disciplineList.scoreDisciplineStudentAvailible[index].discipline.teacher.name}",
                                         argsExtra:
-                                            "Score - ${disciplineList.scoreDisciplineStudentAvailible[index].score}",
+                                            "Score - ${formatScore(disciplineList.scoreDisciplineStudentAvailible[index].score)}",
                                         iconWidget: Container(),
                                       )
                                     : Container();

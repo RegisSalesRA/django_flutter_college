@@ -104,19 +104,6 @@ class _LoginState extends State<Login> with ValidationMixin {
                           );
                         },
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 15, horizontal: 5),
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: InkWell(
-                            child: Text(
-                              "Forget password ?",
-                              style: Theme.of(context).textTheme.headline4,
-                            ),
-                          ),
-                        ),
-                      ),
                       const SizedBox(
                         height: 30,
                       ),
@@ -147,7 +134,8 @@ class _LoginState extends State<Login> with ValidationMixin {
                                           FocusScope.of(context).unfocus();
                                           FocusScope.of(context)
                                               .requestFocus(FocusNode());
-                                          loginData.loginUserRepository(context);
+                                          loginData
+                                              .loginUserRepository(context);
                                         },
                                   child: loginData.isLoading.value
                                       ? const CircularProgressIndicator()

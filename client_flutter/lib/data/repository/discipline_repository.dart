@@ -69,9 +69,7 @@ class DisciplineRepository with ChangeNotifier {
   }
 
   Future insertScoreToStudentRepository(data) async {
-    var request = await insertScoreToStudent(data);
-    await getDisciplineByStudentAvailibleListRepository();
-    notifyListeners();
+    var request = await insertScoreToStudent(data); 
     if (request.containsKey('success')) {
       return Fluttertoast.showToast(
           msg: request["success"].toString(),
@@ -128,7 +126,7 @@ class DisciplineRepository with ChangeNotifier {
     var response = await getScoreApi();
 
     for (var item in response) {
-      var itemFromJson = ScoreModel.fromJson(item);
+      var itemFromJson = ScoreModel2.fromJson(item);
       scores.add(itemFromJson);
     }
 
