@@ -11,6 +11,9 @@ class DisciplineRepository with ChangeNotifier {
 
   DisciplineRepository._();
 
+  final ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
+  final ValueNotifier<String> valueFieldText = ValueNotifier<String>("");
+
   List disciplineTeacher = [];
   List disciplineStudentAvailible = [];
   List scoreDisciplineStudentAvailible = [];
@@ -36,12 +39,14 @@ class DisciplineRepository with ChangeNotifier {
   }
 
   Future getDisciplineByStudentListRepository() async {
+    isLoading.value = true;
     disciplineStudent.clear();
     var request = await getDisciplineByStudent();
     for (var item in request) {
       var discipline = DisciplineModel.fromJson(item);
       disciplineStudent.add(discipline);
     }
+    isLoading.value = false;
     notifyListeners();
   }
 
@@ -56,12 +61,16 @@ class DisciplineRepository with ChangeNotifier {
   }
 
   Future getDisciplineByStudentAvailibleListRepository() async {
+    isLoading.value = true;
+    print("first ${isLoading.value}");
     disciplineStudentAvailible.clear();
     var request = await getDisciplineAvailibleByStudent();
     for (var item in request) {
       var discipline = DisciplineModel.fromJson(item);
       disciplineStudentAvailible.add(discipline);
     }
+    isLoading.value = false;
+    print("second ${isLoading.value}");
     notifyListeners();
   }
 

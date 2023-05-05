@@ -18,7 +18,6 @@ class AvailibleDisciplinesScreen extends StatefulWidget {
 
 class _AvailibleDisciplinesScreenState
     extends State<AvailibleDisciplinesScreen> {
-  bool _initialized = false;
   String valueList = "";
   final TextEditingController _controllerAdsicpline = TextEditingController();
 
@@ -28,9 +27,6 @@ class _AvailibleDisciplinesScreenState
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Provider.of<DisciplineRepository>(context, listen: false)
           .getDisciplineByStudentAvailibleListRepository();
-      setState(() {
-        _initialized = true;
-      });
     });
   }
 
@@ -50,7 +46,7 @@ class _AvailibleDisciplinesScreenState
             style: TextStyle(color: ColorsTheme.secondaryColor),
           ),
         ),
-        body: _initialized
+        body: disciplineList.isLoading.value
             ? Container(
                 height: MediaQuerySize.heigthSizeCustom(context),
                 decoration: const BoxDecoration(
