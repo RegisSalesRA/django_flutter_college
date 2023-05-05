@@ -33,7 +33,7 @@ class TestScoreInsertStudenteApi(APITestCase):
 
         response = self.client.post(ApiRouteMocks().url_api_score_add_student, DataMocks.data_score, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data, {"success": "create"})
+        self.assertEqual(response.data, {"success": "Score was inserted to student"})
 
     def test_score_insert_student_api_already_exists(self):
         teacher_instance = Teacher.objects.get(

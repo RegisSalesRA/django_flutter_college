@@ -197,7 +197,7 @@ class TestDisciplineChoseByStudent(APITestCase):
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, {"success": "create"})
+        self.assertEqual(response.data, {"success": "Discipline was chosed"})
 
     def test_discipline_chose_by_student_already_created_fail(self):
         student_instance = Student.objects.get(phone="12345678", name="userStudent")

@@ -6,14 +6,12 @@ from rest_framework.views import APIView
 from core.v1.models.auth_models import Student
 from core.v1.models.college_models import Discipline, Scores, Semester
 from core.v1.permissions.permissions import StudentUser, TeacherUser
-from core.v1.serializers.serializers_college import (
-    DisciplineSerializer,
-    DisciplineSerializerPost,
-    ScoresPostSerializer,
-    ScoresSerializer,
-    ScoresSerializerStudent,
-    SemesterSerializer,
-)
+from core.v1.serializers.serializers_college import (DisciplineSerializer,
+                                                     DisciplineSerializerPost,
+                                                     ScoresPostSerializer,
+                                                     ScoresSerializer,
+                                                     ScoresSerializerStudent,
+                                                     SemesterSerializer)
 
 
 # Discpline
@@ -123,7 +121,7 @@ class InsertScoreToStudent(APIView):
 
             query_score = Scores.objects.create(student=querset_student, discipline=queryset_discipline, score=nota)
             query_score.save()
-            return Response({"success": "create"}, status=status.HTTP_201_CREATED)
+            return Response({"success": "Score was inserted to student"}, status=status.HTTP_201_CREATED)
 
         except Exception as err_error:
             print(err_error)
@@ -145,7 +143,7 @@ class ChoseDisciplineByStudent(APIView):
                 return Response({"error": "object alerady exists"}, status=status.HTTP_400_BAD_REQUEST)
 
             queryset_discipline.student.add(querset_student)
-            return Response({"success": "create"}, status=status.HTTP_200_OK)
+            return Response({"success": "Discipline was chosed"}, status=status.HTTP_200_OK)
 
         except Exception as wrong_error:
             print(wrong_error)
