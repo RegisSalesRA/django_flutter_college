@@ -1,7 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:client_flutter/presentation/common/alert_dialog.dart';
 import 'package:client_flutter/presentation/discipline_student/widgets/card_discipline_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../app/app.dart';
@@ -17,11 +18,6 @@ class AvailibleDisciplinesScreen extends StatefulWidget {
 
 class _AvailibleDisciplinesScreenState
     extends State<AvailibleDisciplinesScreen> {
-  String dateTimeFormat(data) {
-    final formattedDate = DateFormat.yMMMEd().format(data);
-    return formattedDate;
-  }
-
   bool _initialized = false;
   String valueList = "";
   final TextEditingController _controllerAdsicpline = TextEditingController();
@@ -141,8 +137,7 @@ class _AvailibleDisciplinesScreenState
                                               await disciplineList
                                                   .getDisciplineByStudentAvailibleListRepository();
                                             }, false, _controllerAdsicpline),
-                                            icon: const Icon(Icons
-                                                .insert_chart_outlined_sharp),
+                                            icon: const Icon(Icons.add),
                                             color: Colors.white,
                                           ),
                                         ),

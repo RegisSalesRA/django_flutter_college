@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter/material.dart'; 
 import 'package:provider/provider.dart';
 import '../../app/app.dart';
 import '../../data/repository/discipline_repository.dart';
@@ -14,10 +13,7 @@ class ScoresDisciplinesScreen extends StatefulWidget {
 }
 
 class _ScoresDisciplinesScreenState extends State<ScoresDisciplinesScreen> {
-  String dateTimeFormat(data) {
-    final formattedDate = DateFormat.yMMMEd().format(data);
-    return formattedDate;
-  }
+
 
   bool _initialized = false;
   String valueList = "";

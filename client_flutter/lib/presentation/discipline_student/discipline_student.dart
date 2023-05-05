@@ -1,6 +1,5 @@
 import 'package:client_flutter/presentation/discipline_student/widgets/card_discipline_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter/material.dart'; 
 import 'package:provider/provider.dart';
 
 import '../../app/app.dart';
@@ -15,10 +14,7 @@ class StudentDisciplinesScreen extends StatefulWidget {
 }
 
 class _StudentDisciplinesScreenState extends State<StudentDisciplinesScreen> {
-  String dateTimeFormat(data) {
-    final formattedDate = DateFormat.yMMMEd().format(data);
-    return formattedDate;
-  }
+ 
 
   bool _initialized = false;
   String valueList = "";

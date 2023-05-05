@@ -49,7 +49,6 @@ class DisciplineRepository with ChangeNotifier {
     scoreDisciplineStudentAvailible.clear();
     var request = await getScoreDisciplineByStudent();
     for (var item in request) {
-      print(item);
       var discipline = ScoreModel.fromJson(item);
       scoreDisciplineStudentAvailible.add(discipline);
     }
@@ -58,18 +57,16 @@ class DisciplineRepository with ChangeNotifier {
 
   Future getDisciplineByStudentAvailibleListRepository() async {
     disciplineStudentAvailible.clear();
-    print("Lista primeira $disciplineStudentAvailible");
     var request = await getDisciplineAvailibleByStudent();
     for (var item in request) {
       var discipline = DisciplineModel.fromJson(item);
       disciplineStudentAvailible.add(discipline);
     }
-    print("Lista final $disciplineStudentAvailible");
     notifyListeners();
   }
 
   Future insertScoreToStudentRepository(data) async {
-    var request = await insertScoreToStudent(data); 
+    var request = await insertScoreToStudent(data);
     if (request.containsKey('success')) {
       return Fluttertoast.showToast(
           msg: request["success"].toString(),
@@ -126,7 +123,7 @@ class DisciplineRepository with ChangeNotifier {
     var response = await getScoreApi();
 
     for (var item in response) {
-      var itemFromJson = ScoreModel2.fromJson(item);
+      var itemFromJson = ScoreModelSmall.fromJson(item);
       scores.add(itemFromJson);
     }
 

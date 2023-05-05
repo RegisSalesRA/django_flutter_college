@@ -1,6 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:client_flutter/presentation/discipline_student/widgets/card_discipline_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter/material.dart'; 
 import 'package:provider/provider.dart';
 import '../../data/data.dart';
 import '../../app/app.dart';
@@ -25,10 +26,7 @@ class _DisciplineStudentByTeacherState
     extends State<DisciplineStudentByTeacher> {
   final disciplineRepository = DisciplineRepository();
 
-  String dateTimeFormat(data) {
-    final formattedDate = DateFormat.yMMMEd().format(data);
-    return formattedDate;
-  }
+ 
 
   bool _initialized = false;
   String valueList = "";

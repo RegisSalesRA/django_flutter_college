@@ -1,5 +1,5 @@
-class ScoreModel2 {
-  ScoreModel2({
+class ScoreModelSmall {
+  ScoreModelSmall({
     required this.id,
     required this.updateAt,
     required this.createAt,
@@ -15,7 +15,7 @@ class ScoreModel2 {
   Aluno aluno;
   Discipline2 discipline;
 
-  factory ScoreModel2.fromJson(Map<String, dynamic> json) => ScoreModel2(
+  factory ScoreModelSmall.fromJson(Map<String, dynamic> json) => ScoreModelSmall(
         id: json["id"],
         updateAt: DateTime.parse(json["updateAt"]),
         createAt: DateTime.parse(json["createAt"]),

@@ -1,5 +1,5 @@
-import 'package:client_flutter/app/constant/address.dart';
 import 'package:dio/dio.dart';
+import '../../app/app.dart';
 import '../../data/data.dart';
 
 Future getDisciplineByTeacher() async {
@@ -178,8 +178,7 @@ Future disciplineChosedByStudent(data) async {
         method: 'POST',
         headers: defaultHeaders,
       ),
-      data: data);
-  print(response);
+      data: data); 
   if (response.statusCode == 200) {
     return response.data;
   }
