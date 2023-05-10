@@ -5,11 +5,8 @@ import '../../../app/app.dart';
 class CardConfig extends StatelessWidget {
   final String title;
   final String content;
-  const CardConfig({
-    Key? key,
-    required this.title,
-    required this.content
-  }) : super(key: key);
+  const CardConfig({Key? key, required this.title, required this.content})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +31,7 @@ class CardConfig extends StatelessWidget {
               width: 5,
             ),
             Text(
-             content,
+              content,
               style: Theme.of(context).textTheme.headline1,
             ),
           ]),
