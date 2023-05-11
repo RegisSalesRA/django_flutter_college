@@ -18,8 +18,7 @@ class AvailibleDisciplinesScreen extends StatefulWidget {
 
 class _AvailibleDisciplinesScreenState
     extends State<AvailibleDisciplinesScreen> {
-  String valueList = "";
-  final TextEditingController _controllerAdsicpline = TextEditingController();
+  final TextEditingController _controllerDiscicpline = TextEditingController();
 
   @override
   void initState() {
@@ -28,6 +27,12 @@ class _AvailibleDisciplinesScreenState
       await Provider.of<DisciplineRepository>(context, listen: false)
           .getDisciplineByStudentAvailibleListRepository();
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controllerDiscicpline.dispose();
   }
 
   @override
@@ -46,121 +51,163 @@ class _AvailibleDisciplinesScreenState
             style: TextStyle(color: ColorsTheme.secondaryColor),
           ),
         ),
-        body: disciplineList.isLoading.value
-            ? Container(
-                height: MediaQuerySize.heigthSizeCustom(context),
-                decoration: const BoxDecoration(
-                  color: Colors.white10,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 10,
+        body: Consumer<DisciplineRepository>(
+          builder: (context, disciplineRepository, child) {
+            return ValueListenableBuilder(
+              valueListenable: disciplineRepository.isLoading,
+              builder: (context, value, child) {
+                return !value
+                    ? Container(
+                        height: MediaQuerySize.heigthSizeCustom(context),
+                        decoration: const BoxDecoration(
+                          color: Colors.white10,
                         ),
-                        TextField(
-                            onChanged: (value) {
-                              setState(() {
-                                valueList = value.toLowerCase().toString();
-                              });
-                            },
-                            style: const TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                              hintStyle: const TextStyle(color: Colors.white),
-                              contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 15.0),
-                              fillColor: ColorsTheme.primaryColor,
-                              filled: true,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              hintText: 'Search Discipline',
-                              prefixIcon: const Icon(Icons.search,
-                                  size: 30.0, color: Colors.white),
-                            )),
-                        if (disciplineList
-                            .disciplineStudentAvailible.isNotEmpty) ...{
-                          ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: disciplineList
-                                  .disciplineStudentAvailible.length,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: ((context, index) {
-                                return disciplineList
-                                        .disciplineStudentAvailible[index].name
-                                        .toLowerCase()
-                                        .contains(valueList)
-                                    ? CardDisciplineWidget(
-                                        isColorScore: null,
-                                        iconChose: const Icon(
-                                          Icons.menu_book_outlined,
-                                          size: 35,
-                                          color: ColorsTheme.primaryColor,
-                                        ),
-                                        discipline: disciplineList
-                                            .disciplineStudentAvailible[index]
-                                            .name,
-                                        name:
-                                            "Teacher - ${disciplineList.disciplineStudentAvailible[index].teacher.name}",
-                                        argsExtra:
-                                            "Created at - ${dateTimeFormat(disciplineList.disciplineStudentAvailible[index].createAt)}",
-                                        iconWidget: Container(
-                                          height: 50,
-                                          width: 50,
-                                          decoration: const BoxDecoration(
-                                              color: ColorsTheme.primaryColor,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(15))),
-                                          child: IconButton(
-                                            onPressed: () => alertDialog(
-                                                context,
-                                                '${disciplineList.disciplineStudentAvailible[index].name}',
-                                                'Are you sure you want accept this discipline? after that you can not back your decision',
-                                                () async {
-                                              var data = {
-                                                "id_discpline": disciplineList
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                TextField(
+                                    onChanged: (value) {
+                                      setState(() {
+                                        disciplineRepository
+                                                .valueFieldText.value =
+                                            value.toLowerCase().toString();
+                                      });
+                                    },
+                                    style: const TextStyle(color: Colors.white),
+                                    decoration: InputDecoration(
+                                      hintStyle:
+                                          const TextStyle(color: Colors.white),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              vertical: 15.0),
+                                      fillColor: ColorsTheme.primaryColor,
+                                      filled: true,
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                      hintText: 'Search Discipline',
+                                      prefixIcon: const Icon(Icons.search,
+                                          size: 30.0, color: Colors.white),
+                                    )),
+                                if (disciplineList
+                                    .disciplineStudentAvailible.isNotEmpty) ...{
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: disciplineList
+                                          .disciplineStudentAvailible.length,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemBuilder: ((context, index) {
+                                        return ValueListenableBuilder(
+                                          valueListenable:
+                                              disciplineList.valueFieldText,
+                                          builder: (context, value, child) {
+                                            return disciplineList
                                                     .disciplineStudentAvailible[
                                                         index]
-                                                    .id
-                                              };
-                                              await disciplineList
-                                                  .disciplineChosedByStudentRepository(
-                                                      data);
-                                              Navigator.of(context).pop();
-                                              await disciplineList
-                                                  .getDisciplineByStudentAvailibleListRepository();
-                                            }, false, _controllerAdsicpline),
-                                            icon: const Icon(Icons.add),
-                                            color: Colors.white,
-                                          ),
+                                                    .name
+                                                    .toLowerCase()
+                                                    .contains(
+                                                        disciplineRepository
+                                                            .valueFieldText
+                                                            .value)
+                                                ? CardDisciplineWidget(
+                                                    isColorScore: null,
+                                                    iconChose: const Icon(
+                                                      Icons.menu_book_outlined,
+                                                      size: 35,
+                                                      color: ColorsTheme
+                                                          .primaryColor,
+                                                    ),
+                                                    discipline: disciplineList
+                                                        .disciplineStudentAvailible[
+                                                            index]
+                                                        .name,
+                                                    name:
+                                                        "Teacher - ${disciplineList.disciplineStudentAvailible[index].teacher.name}",
+                                                    argsExtra:
+                                                        "Created at - ${dateTimeFormat(disciplineList.disciplineStudentAvailible[index].createAt)}",
+                                                    iconWidget: Container(
+                                                      height: 50,
+                                                      width: 50,
+                                                      decoration: const BoxDecoration(
+                                                          color: ColorsTheme
+                                                              .primaryColor,
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          15))),
+                                                      child: IconButton(
+                                                        onPressed: () => alertDialog(
+                                                            context,
+                                                            '${disciplineList.disciplineStudentAvailible[index].name}',
+                                                            'Are you sure you want accept this discipline? after that you can not back your decision',
+                                                            () async {
+                                                          var data = {
+                                                            "id_discpline":
+                                                                disciplineList
+                                                                    .disciplineStudentAvailible[
+                                                                        index]
+                                                                    .id
+                                                          };
+                                                          await disciplineList
+                                                              .disciplineChosedByStudentRepository(
+                                                                  data);
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                          await disciplineList
+                                                              .getDisciplineByStudentAvailibleListRepository();
+                                                        }, false,
+                                                            _controllerDiscicpline),
+                                                        icon: const Icon(
+                                                            Icons.add),
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  )
+                                                : Container();
+                                          },
+                                        );
+                                      }))
+                                },
+                                if (disciplineList
+                                    .disciplineStudentAvailible.isEmpty) ...{
+                                  SizedBox(
+                                    height: MediaQuerySize.heigthSizeCustom(
+                                            context) *
+                                        0.70,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        Center(
+                                          child:
+                                              Text("No discipline availible!"),
                                         ),
-                                      )
-                                    : Container();
-                              }))
-                        },
-                        if (disciplineList
-                            .disciplineStudentAvailible.isEmpty) ...{
-                          SizedBox(
-                            height:
-                                MediaQuerySize.heigthSizeCustom(context) * 0.70,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Center(
-                                  child: Text("No discipline availible!"),
-                                ),
+                                      ],
+                                    ),
+                                  )
+                                }
                               ],
                             ),
-                          )
-                        }
-                      ],
-                    ),
-                  ),
-                ))
-            : const Center(child: CircularProgressIndicator()));
+                          ),
+                        ))
+                    : const Center(
+                        child: CircularProgressIndicator(),
+                      );
+              },
+            );
+          },
+        ));
   }
 }

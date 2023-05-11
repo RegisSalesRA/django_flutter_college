@@ -71,7 +71,7 @@ class _DisciplineStudentByTeacherState
                                     style: const TextStyle(color: Colors.white),
                                     onChanged: (value) {
                                       disciplineRepository
-                                          .valueFieldTextTeacherDisciplineStudents
+                                          .valueFieldText
                                           .value = value.toLowerCase().toString();
                                     },
                                     decoration: InputDecoration(
@@ -102,13 +102,13 @@ class _DisciplineStudentByTeacherState
                                       itemBuilder: ((context, index) {
                                         return ValueListenableBuilder(
                                           valueListenable: disciplineRepository
-                                              .valueFieldTextTeacherDisciplineStudents,
+                                              .valueFieldText,
                                           builder: (context, value, child) {
                                             return disciplineRepository
                                                     .studentScore[index]["name"]
                                                     .toLowerCase()
                                                     .contains(disciplineRepository
-                                                        .valueFieldTextTeacherDisciplineStudents
+                                                        .valueFieldText
                                                         .value)
                                                 ? CardDisciplineWidget(
                                                     isColorScore: formatScoreColor(

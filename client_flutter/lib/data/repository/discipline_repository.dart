@@ -15,10 +15,6 @@ class DisciplineRepository with ChangeNotifier {
 
   // TextField
   final ValueNotifier<String> valueFieldText = ValueNotifier<String>("");
-  final ValueNotifier<String> valueFieldTextTeacherDiscipline =
-      ValueNotifier<String>("");
-  final ValueNotifier<String> valueFieldTextTeacherDisciplineStudents =
-      ValueNotifier<String>("");
 
   List disciplineTeacher = [];
   List disciplineStudentAvailible = [];
@@ -33,8 +29,6 @@ class DisciplineRepository with ChangeNotifier {
   void cleanFidelds() {
     scoreController.clear();
     valueFieldText.value = "";
-    valueFieldTextTeacherDiscipline.value = "";
-    valueFieldTextTeacherDisciplineStudents.value = "";
   }
 
   Future getDisciplineByTeacherRepository() async {
@@ -70,6 +64,7 @@ class DisciplineRepository with ChangeNotifier {
       var discipline = ScoreModel.fromJson(item);
       scoreDisciplineStudentAvailible.add(discipline);
     }
+    cleanFidelds();
     notifyListeners();
   }
 
@@ -87,6 +82,7 @@ class DisciplineRepository with ChangeNotifier {
   }
 
   Future insertScoreToStudentRepository(data) async {
+    isLoading.value = true;
     var request = await insertScoreToStudent(data);
     if (request.containsKey('success')) {
       return Fluttertoast.showToast(
@@ -108,11 +104,13 @@ class DisciplineRepository with ChangeNotifier {
           textColor: Colors.white,
           fontSize: 16.0);
     }
+    isLoading.value = false;
     cleanFidelds();
     notifyListeners();
   }
 
   Future disciplineChosedByStudentRepository(data) async {
+    isLoading.value = true;
     var request = await disciplineChosedByStudent(data);
     if (request.containsKey('success')) {
       return Fluttertoast.showToast(
@@ -134,6 +132,8 @@ class DisciplineRepository with ChangeNotifier {
           textColor: Colors.white,
           fontSize: 16.0);
     }
+    cleanFidelds();
+    isLoading.value = false;
   }
 
   Future getScoreRepository(idDiscipline) async {

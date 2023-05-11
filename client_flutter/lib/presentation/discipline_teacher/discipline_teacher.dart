@@ -60,8 +60,7 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
                               ),
                               TextField(
                                   onChanged: (value) {
-                                    disciplineTeacherRepository
-                                        .valueFieldTextTeacherDiscipline
+                                    disciplineTeacherRepository.valueFieldText
                                         .value = value.toLowerCase().toString();
                                   },
                                   style: const TextStyle(color: Colors.white),
@@ -92,7 +91,7 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
                                       return ValueListenableBuilder(
                                           valueListenable:
                                               disciplineTeacherRepository
-                                                  .valueFieldTextTeacherDiscipline,
+                                                  .valueFieldText,
                                           builder: ((context, value, child) {
                                             return disciplineTeacherRepository
                                                     .disciplineTeacher[index]
@@ -100,7 +99,7 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
                                                     .toLowerCase()
                                                     .contains(
                                                         disciplineTeacherRepository
-                                                            .valueFieldTextTeacherDiscipline
+                                                            .valueFieldText
                                                             .value)
                                                 ? CardDisciplineWidget(
                                                     isColorScore: null,
