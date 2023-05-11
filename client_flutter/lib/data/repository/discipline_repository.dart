@@ -12,7 +12,13 @@ class DisciplineRepository with ChangeNotifier {
   DisciplineRepository._();
 
   final ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
+
+  // TextField
   final ValueNotifier<String> valueFieldText = ValueNotifier<String>("");
+  final ValueNotifier<String> valueFieldTextTeacherDiscipline =
+      ValueNotifier<String>("");
+  final ValueNotifier<String> valueFieldTextTeacherDisciplineStudents =
+      ValueNotifier<String>("");
 
   List disciplineTeacher = [];
   List disciplineStudentAvailible = [];
@@ -26,15 +32,21 @@ class DisciplineRepository with ChangeNotifier {
 
   void cleanFidelds() {
     scoreController.clear();
+    valueFieldText.value = "";
+    valueFieldTextTeacherDiscipline.value = "";
+    valueFieldTextTeacherDisciplineStudents.value = "";
   }
 
   Future getDisciplineByTeacherRepository() async {
+    isLoading.value = true;
     disciplineTeacher.clear();
     var request = await getDisciplineByTeacher();
     for (var item in request) {
       var discipline = DisciplineModel.fromJson(item);
       disciplineTeacher.add(discipline);
     }
+    isLoading.value = false;
+    cleanFidelds();
     notifyListeners();
   }
 
@@ -46,6 +58,7 @@ class DisciplineRepository with ChangeNotifier {
       var discipline = DisciplineModel.fromJson(item);
       disciplineStudent.add(discipline);
     }
+    cleanFidelds();
     isLoading.value = false;
     notifyListeners();
   }
@@ -62,15 +75,14 @@ class DisciplineRepository with ChangeNotifier {
 
   Future getDisciplineByStudentAvailibleListRepository() async {
     isLoading.value = true;
-    print("first ${isLoading.value}");
     disciplineStudentAvailible.clear();
     var request = await getDisciplineAvailibleByStudent();
     for (var item in request) {
       var discipline = DisciplineModel.fromJson(item);
       disciplineStudentAvailible.add(discipline);
     }
+    cleanFidelds();
     isLoading.value = false;
-    print("second ${isLoading.value}");
     notifyListeners();
   }
 
@@ -96,6 +108,7 @@ class DisciplineRepository with ChangeNotifier {
           textColor: Colors.white,
           fontSize: 16.0);
     }
+    cleanFidelds();
     notifyListeners();
   }
 
@@ -124,6 +137,7 @@ class DisciplineRepository with ChangeNotifier {
   }
 
   Future getScoreRepository(idDiscipline) async {
+    isLoading.value = true;
     studentScore.clear();
     scores.clear();
     disciplineTeacherStudentsScore.clear();
@@ -174,6 +188,8 @@ class DisciplineRepository with ChangeNotifier {
       }
       studentScore.add(map1);
     }
+    cleanFidelds();
+    isLoading.value = false;
     notifyListeners();
   }
 }
