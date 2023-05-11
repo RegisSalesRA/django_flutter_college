@@ -22,41 +22,11 @@ class DrawerWidget extends StatelessWidget {
                   decoration: const BoxDecoration(
                     color: ColorsTheme.primaryColor,
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Center(
-                        child: Text(
-                          "Welcome",
-                          style: Theme.of(context).textTheme.headline1,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "User - ",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            userRepository.currentUser.user,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      )
-                    ],
+                  child: Center(
+                    child: Text(
+                      "Welcome",
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
                   ),
                 ),
               ),

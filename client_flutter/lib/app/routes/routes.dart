@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../presentation/discipline_student/discipline_student.dart';
 import '../../presentation/discipline_teacher/discipline_teacher.dart';
 
-import '../../presentation/home/config_screen.dart';
+import '../../presentation/home/settings_users.dart';
 import '../../presentation/home/home_screen.dart';
 import '../../presentation/login/login.dart';
 
@@ -16,7 +16,7 @@ class Routes {
     '/login': (context) => const Login(),
     '/register': (context) => const SignUp(),
     '/home': (context) => const HomeScreen(),
-    '/myconfig': (context) => const MyConfigScreen(),
+    '/myconfig': (context) => const SettingsUser(),
     '/currentDiscipline': (context) => const StudentDisciplinesScreen(),
     '/availibleDiscipline': (context) => const AvailibleDisciplinesScreen(),
     '/scoreDiscipline': (context) => const ScoresDisciplinesScreen(),
