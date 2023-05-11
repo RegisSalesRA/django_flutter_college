@@ -14,7 +14,6 @@ class StudentDisciplinesScreen extends StatefulWidget {
 }
 
 class _StudentDisciplinesScreenState extends State<StudentDisciplinesScreen> {
-  
   @override
   void initState() {
     super.initState();
@@ -81,17 +80,17 @@ class _StudentDisciplinesScreenState extends State<StudentDisciplinesScreen> {
                                   )),
                               if (disciplineList
                                   .disciplineStudent.isNotEmpty) ...{
-                                ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount:
-                                        disciplineList.disciplineStudent.length,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemBuilder: ((context, index) {
-                                      return ValueListenableBuilder<String>(
-                                        valueListenable:
-                                            disciplineList.valueFieldText,
-                                        builder: (context, valueString, child) {
+                                ValueListenableBuilder(
+                                  valueListenable:
+                                      disciplineList.valueFieldText,
+                                  builder: (context, value, child) {
+                                    return ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: disciplineList
+                                            .disciplineStudent.length,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemBuilder: ((context, index) {
                                           return disciplineList
                                                   .disciplineStudent[index].name
                                                   .toLowerCase()
@@ -115,9 +114,9 @@ class _StudentDisciplinesScreenState extends State<StudentDisciplinesScreen> {
                                                   iconWidget: Container(),
                                                 )
                                               : Container();
-                                        },
-                                      );
-                                    }))
+                                        }));
+                                  },
+                                )
                               },
                               if (disciplineList.disciplineStudent.isEmpty) ...{
                                 SizedBox(

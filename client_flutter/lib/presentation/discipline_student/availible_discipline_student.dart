@@ -98,26 +98,24 @@ class _AvailibleDisciplinesScreenState
                                     )),
                                 if (disciplineList
                                     .disciplineStudentAvailible.isNotEmpty) ...{
-                                  ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: disciplineList
-                                          .disciplineStudentAvailible.length,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemBuilder: ((context, index) {
-                                        return ValueListenableBuilder(
-                                          valueListenable:
-                                              disciplineList.valueFieldText,
-                                          builder: (context, value, child) {
+                                  ValueListenableBuilder(
+                                    valueListenable:
+                                        disciplineList.valueFieldText,
+                                    builder: (context, value, child) {
+                                      return ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: disciplineList
+                                              .disciplineStudentAvailible
+                                              .length,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemBuilder: ((context, index) {
                                             return disciplineList
                                                     .disciplineStudentAvailible[
                                                         index]
                                                     .name
                                                     .toLowerCase()
-                                                    .contains(
-                                                        disciplineRepository
-                                                            .valueFieldText
-                                                            .value)
+                                                    .contains(value)
                                                 ? CardDisciplineWidget(
                                                     isColorScore: null,
                                                     iconChose: const Icon(
@@ -174,9 +172,9 @@ class _AvailibleDisciplinesScreenState
                                                     ),
                                                   )
                                                 : Container();
-                                          },
-                                        );
-                                      }))
+                                          }));
+                                    },
+                                  )
                                 },
                                 if (disciplineList
                                     .disciplineStudentAvailible.isEmpty) ...{
