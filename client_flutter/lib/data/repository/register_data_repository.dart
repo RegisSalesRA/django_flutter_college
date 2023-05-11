@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../app/routes/routes.dart';
 import '../data/register_data.dart';
 
 class RegisterDataRepository {
@@ -43,7 +44,8 @@ class RegisterDataRepository {
     );
   }
 
-  Future<void> onSaveTeacherRepository() async {
+  Future<void> onSaveTeacherRepository(
+      BuildContext context, bool mounted) async {
     isLoading.value = !isLoading.value;
     if (formKeyTeacher.currentState!.validate()) {
       var data = {
@@ -64,7 +66,10 @@ class RegisterDataRepository {
             backgroundColor: Colors.green,
             textColor: Colors.white,
             fontSize: 16.0);
-        cleanFields();
+        if (mounted) {
+          cleanFields();
+          Navigator.pushReplacementNamed(context, Routes.initial);
+        }
       }
       if (result.containsKey('error')) {
         await Future.delayed(const Duration(seconds: 4));
@@ -81,7 +86,8 @@ class RegisterDataRepository {
     isLoading.value = !isLoading.value;
   }
 
-  Future<void> onSaveStudentRepository() async {
+  Future<void> onSaveStudentRepository(
+      BuildContext context, bool mounted) async {
     isLoading.value = !isLoading.value;
     if (formKeyStudent.currentState!.validate()) {
       var data = {
@@ -92,6 +98,7 @@ class RegisterDataRepository {
         "password2": password2Controller.text,
       };
       var result = await registerStudent(data);
+
       if (result!.containsKey('result')) {
         await Future.delayed(const Duration(seconds: 4));
         Fluttertoast.showToast(
@@ -102,7 +109,10 @@ class RegisterDataRepository {
             backgroundColor: Colors.green,
             textColor: Colors.white,
             fontSize: 16.0);
-        cleanFields();
+        if (mounted) {
+          cleanFields();
+          Navigator.pushReplacementNamed(context, Routes.initial);
+        }
       }
       if (result.containsKey('error')) {
         await Future.delayed(const Duration(seconds: 4));

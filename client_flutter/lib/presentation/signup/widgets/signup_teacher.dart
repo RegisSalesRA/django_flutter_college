@@ -141,8 +141,11 @@ class _SignUpTeacherState extends State<SignUpTeacher> with ValidationMixin {
                             borderRadius: BorderRadius.circular(25))),
                     onPressed: registerData.isLoading.value
                         ? null
-                        : () {
-                            registerData.onSaveTeacherRepository();
+                        : () async {
+                            FocusScope.of(context).unfocus();
+                            FocusScope.of(context).requestFocus(FocusNode());
+                            await registerData.onSaveTeacherRepository(
+                                context, mounted);
                           },
                     child: registerData.isLoading.value
                         ? const CircularProgressIndicator()

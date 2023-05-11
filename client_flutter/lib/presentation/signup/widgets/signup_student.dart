@@ -18,6 +18,13 @@ class _SignUpStudentState extends State<SignUpStudent> with ValidationMixin {
   final registerData = RegisterDataRepository();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    if (!mounted) {}
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -140,7 +147,8 @@ class _SignUpStudentState extends State<SignUpStudent> with ValidationMixin {
                         : () async {
                             FocusScope.of(context).unfocus();
                             FocusScope.of(context).requestFocus(FocusNode());
-                            registerData.onSaveStudentRepository();
+                            await registerData.onSaveStudentRepository(
+                                context, mounted);
                           },
                     child: registerData.isLoading.value
                         ? const CircularProgressIndicator()
