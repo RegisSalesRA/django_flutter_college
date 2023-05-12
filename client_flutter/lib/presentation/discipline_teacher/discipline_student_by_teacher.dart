@@ -34,7 +34,7 @@ class _DisciplineStudentByTeacherState
   }
 
   @override
-  Widget build(BuildContext context4) {
+  Widget build(BuildContext contextDisciplineStudentByTeacher) {
     return Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(
@@ -146,7 +146,7 @@ class _DisciplineStudentByTeacherState
                                                                             15))),
                                                             child: IconButton(
                                                               onPressed: () => alertDialog(
-                                                                  context4,
+                                                                  contextDisciplineStudentByTeacher,
                                                                   'Score',
                                                                   'Attention after send score you can not do again',
                                                                   () async {
@@ -173,10 +173,9 @@ class _DisciplineStudentByTeacherState
                                                                     .getScoreRepository(
                                                                         widget
                                                                             .idDiscipline);
-
                                                                 if (mounted) {
                                                                   Navigator.of(
-                                                                          context4)
+                                                                          contextDisciplineStudentByTeacher)
                                                                       .pop();
                                                                 }
                                                               },

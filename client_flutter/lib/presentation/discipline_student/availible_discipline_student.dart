@@ -19,7 +19,6 @@ class AvailibleDisciplinesScreen extends StatefulWidget {
 class _AvailibleDisciplinesScreenState
     extends State<AvailibleDisciplinesScreen> {
   final TextEditingController _controllerDiscicpline = TextEditingController();
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -36,9 +35,8 @@ class _AvailibleDisciplinesScreenState
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext contextDisciplineAvailible) {
     return Scaffold(
-        key: scaffoldKey,
         appBar: AppBar(
           iconTheme: const IconThemeData(
             color: ColorsTheme.secondaryColor,
@@ -142,8 +140,7 @@ class _AvailibleDisciplinesScreenState
                                                                           15))),
                                                       child: IconButton(
                                                         onPressed: () => alertDialog(
-                                                            scaffoldKey
-                                                                .currentContext,
+                                                            contextDisciplineAvailible,
                                                             '${disciplineRepository.disciplineStudentAvailible[index].name}',
                                                             'Are you sure you want accept this discipline? after that you can not back your decision',
                                                             () async {
@@ -160,8 +157,11 @@ class _AvailibleDisciplinesScreenState
 
                                                           await disciplineRepository
                                                               .getDisciplineByStudentAvailibleListRepository();
-                                                          Navigator.pop(context,
-                                                              'Accept');
+                                                          if (mounted) {
+                                                            Navigator.of(
+                                                                    contextDisciplineAvailible)
+                                                                .pop();
+                                                          }
                                                         }, false,
                                                             _controllerDiscicpline),
                                                         icon: const Icon(
