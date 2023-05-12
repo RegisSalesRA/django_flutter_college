@@ -19,7 +19,7 @@ class AvailibleDisciplinesScreen extends StatefulWidget {
 class _AvailibleDisciplinesScreenState
     extends State<AvailibleDisciplinesScreen> {
   final TextEditingController _controllerDiscicpline = TextEditingController();
-
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -37,8 +37,8 @@ class _AvailibleDisciplinesScreenState
 
   @override
   Widget build(BuildContext context) {
-    final disciplineList = Provider.of<DisciplineRepository>(context);
     return Scaffold(
+        key: scaffoldKey,
         appBar: AppBar(
           iconTheme: const IconThemeData(
             color: ColorsTheme.secondaryColor,
@@ -72,11 +72,8 @@ class _AvailibleDisciplinesScreenState
                                 ),
                                 TextField(
                                     onChanged: (value) {
-                                      setState(() {
-                                        disciplineRepository
-                                                .valueFieldText.value =
-                                            value.toLowerCase().toString();
-                                      });
+                                      disciplineRepository.valueFieldText
+                                          .value = value.toLowerCase();
                                     },
                                     style: const TextStyle(color: Colors.white),
                                     decoration: InputDecoration(
@@ -96,21 +93,21 @@ class _AvailibleDisciplinesScreenState
                                       prefixIcon: const Icon(Icons.search,
                                           size: 30.0, color: Colors.white),
                                     )),
-                                if (disciplineList
+                                if (disciplineRepository
                                     .disciplineStudentAvailible.isNotEmpty) ...{
                                   ValueListenableBuilder(
                                     valueListenable:
-                                        disciplineList.valueFieldText,
+                                        disciplineRepository.valueFieldText,
                                     builder: (context, value, child) {
                                       return ListView.builder(
                                           shrinkWrap: true,
-                                          itemCount: disciplineList
+                                          itemCount: disciplineRepository
                                               .disciplineStudentAvailible
                                               .length,
                                           physics:
                                               const NeverScrollableScrollPhysics(),
                                           itemBuilder: ((context, index) {
-                                            return disciplineList
+                                            return disciplineRepository
                                                     .disciplineStudentAvailible[
                                                         index]
                                                     .name
@@ -124,14 +121,14 @@ class _AvailibleDisciplinesScreenState
                                                       color: ColorsTheme
                                                           .primaryColor,
                                                     ),
-                                                    discipline: disciplineList
+                                                    discipline: disciplineRepository
                                                         .disciplineStudentAvailible[
                                                             index]
                                                         .name,
                                                     name:
-                                                        "Teacher - ${disciplineList.disciplineStudentAvailible[index].teacher.name}",
+                                                        "Teacher - ${disciplineRepository.disciplineStudentAvailible[index].teacher.name}",
                                                     argsExtra:
-                                                        "Created at - ${dateTimeFormat(disciplineList.disciplineStudentAvailible[index].createAt)}",
+                                                        "Created at - ${dateTimeFormat(disciplineRepository.disciplineStudentAvailible[index].createAt)}",
                                                     iconWidget: Container(
                                                       height: 50,
                                                       width: 50,
@@ -145,24 +142,26 @@ class _AvailibleDisciplinesScreenState
                                                                           15))),
                                                       child: IconButton(
                                                         onPressed: () => alertDialog(
-                                                            context,
-                                                            '${disciplineList.disciplineStudentAvailible[index].name}',
+                                                            scaffoldKey
+                                                                .currentContext,
+                                                            '${disciplineRepository.disciplineStudentAvailible[index].name}',
                                                             'Are you sure you want accept this discipline? after that you can not back your decision',
                                                             () async {
                                                           var data = {
                                                             "id_discpline":
-                                                                disciplineList
+                                                                disciplineRepository
                                                                     .disciplineStudentAvailible[
                                                                         index]
                                                                     .id
                                                           };
-                                                          await disciplineList
+                                                          await disciplineRepository
                                                               .disciplineChosedByStudentRepository(
                                                                   data);
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                          await disciplineList
+
+                                                          await disciplineRepository
                                                               .getDisciplineByStudentAvailibleListRepository();
+                                                          Navigator.pop(context,
+                                                              'Accept');
                                                         }, false,
                                                             _controllerDiscicpline),
                                                         icon: const Icon(
@@ -176,7 +175,7 @@ class _AvailibleDisciplinesScreenState
                                     },
                                   )
                                 },
-                                if (disciplineList
+                                if (disciplineRepository
                                     .disciplineStudentAvailible.isEmpty) ...{
                                   SizedBox(
                                     height: MediaQuerySize.heigthSizeCustom(

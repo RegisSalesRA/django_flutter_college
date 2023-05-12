@@ -81,18 +81,17 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
                                   )),
                               if (disciplineTeacherRepository
                                   .disciplineTeacher.isNotEmpty) ...{
-                                ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount: disciplineTeacherRepository
-                                        .disciplineTeacher.length,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemBuilder: ((context, index) {
-                                      return ValueListenableBuilder(
-                                          valueListenable:
-                                              disciplineTeacherRepository
-                                                  .valueFieldText,
-                                          builder: ((context, value, child) {
+                                ValueListenableBuilder(
+                                    valueListenable: disciplineTeacherRepository
+                                        .valueFieldText,
+                                    builder: ((context, value, child) {
+                                      return ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: disciplineTeacherRepository
+                                              .disciplineTeacher.length,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemBuilder: ((context, index) {
                                             return disciplineTeacherRepository
                                                     .disciplineTeacher[index]
                                                     .name

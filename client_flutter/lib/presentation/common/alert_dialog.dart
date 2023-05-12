@@ -2,8 +2,8 @@ import 'package:client_flutter/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-Future<String?> alertDialog(BuildContext context, title, description,
-    var onPressed, bool isTextInput, TextEditingController controller) {
+Future<String?> alertDialog(var context, title, description, var onPressed,
+    bool isTextInput, TextEditingController controller) {
   return showDialog<String>(
     context: context,
     builder: (BuildContext context) => AlertDialog(

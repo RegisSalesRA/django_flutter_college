@@ -34,7 +34,7 @@ class _DisciplineStudentByTeacherState
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context4) {
     return Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(
@@ -71,8 +71,8 @@ class _DisciplineStudentByTeacherState
                                     style: const TextStyle(color: Colors.white),
                                     onChanged: (value) {
                                       disciplineRepository
-                                          .valueFieldText
-                                          .value = value.toLowerCase().toString();
+                                              .valueFieldText.value =
+                                          value.toLowerCase().toString();
                                     },
                                     decoration: InputDecoration(
                                       hintStyle:
@@ -93,23 +93,24 @@ class _DisciplineStudentByTeacherState
                                     )),
                                 if (disciplineRepository
                                     .studentScore.isNotEmpty) ...{
-                                  ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: disciplineRepository
-                                          .studentScore.length,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemBuilder: ((context, index) {
-                                        return ValueListenableBuilder(
-                                          valueListenable: disciplineRepository
-                                              .valueFieldText,
-                                          builder: (context, value, child) {
+                                  ValueListenableBuilder(
+                                    valueListenable:
+                                        disciplineRepository.valueFieldText,
+                                    builder: (context, value, child) {
+                                      return ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: disciplineRepository
+                                              .studentScore.length,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemBuilder: ((context, index) {
                                             return disciplineRepository
                                                     .studentScore[index]["name"]
                                                     .toLowerCase()
-                                                    .contains(disciplineRepository
-                                                        .valueFieldText
-                                                        .value)
+                                                    .contains(
+                                                        disciplineRepository
+                                                            .valueFieldText
+                                                            .value)
                                                 ? CardDisciplineWidget(
                                                     isColorScore: formatScoreColor(
                                                         disciplineRepository
@@ -145,7 +146,7 @@ class _DisciplineStudentByTeacherState
                                                                             15))),
                                                             child: IconButton(
                                                               onPressed: () => alertDialog(
-                                                                  context,
+                                                                  context4,
                                                                   'Score',
                                                                   'Attention after send score you can not do again',
                                                                   () async {
@@ -167,13 +168,17 @@ class _DisciplineStudentByTeacherState
                                                                         data);
                                                                 disciplineRepository
                                                                     .cleanFidelds();
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
+
                                                                 await disciplineRepository
                                                                     .getScoreRepository(
                                                                         widget
                                                                             .idDiscipline);
+
+                                                                if (mounted) {
+                                                                  Navigator.of(
+                                                                          context4)
+                                                                      .pop();
+                                                                }
                                                               },
                                                                   true,
                                                                   disciplineRepository
@@ -202,9 +207,9 @@ class _DisciplineStudentByTeacherState
                                                           ),
                                                   )
                                                 : Container();
-                                          },
-                                        );
-                                      }))
+                                          }));
+                                    },
+                                  )
                                 },
                                 if (disciplineRepository
                                     .studentScore.isEmpty) ...{
