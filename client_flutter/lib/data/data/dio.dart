@@ -1,3 +1,7 @@
 import 'package:dio/dio.dart';
 
-final dio = Dio();
+final options = BaseOptions(
+  connectTimeout: 5000,
+);
+
+final dio = Dio(options);

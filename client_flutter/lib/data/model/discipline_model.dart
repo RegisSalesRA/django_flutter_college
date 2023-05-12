@@ -1,4 +1,6 @@
-import '../domain.dart';
+ 
+
+import '../data.dart';
 
 class DisciplineModel {
   DisciplineModel({

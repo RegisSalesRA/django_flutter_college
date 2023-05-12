@@ -1,3 +1,10 @@
 poetry run pylint --generate-rcfile > .pylintrc
 
 # Vermelho
+
+
+connectTimeout: É o tempo limite para estabelecer a conexão com o servidor. Se a conexão não puder ser estabelecida dentro do tempo limite especificado (em segundos), uma exceção DioError será lançada. Esse timeout é útil para lidar com problemas de conexão com o servidor, como quando o servidor não está respondendo ou a rede está congestionada.
+
+sendTimeout: É o tempo limite para enviar a solicitação HTTP. Se a solicitação não puder ser enviada dentro do tempo limite especificado (em segundos), uma exceção DioError será lançada. Esse timeout é útil para lidar com problemas de lentidão na rede.
+
+receiveTimeout: É o tempo limite para receber uma resposta do servidor após a conexão ter sido estabelecida. Se a resposta não for recebida dentro do tempo limite especificado (em segundos), uma exceção DioError será lançada. Esse timeout é útil para lidar com problemas de lentidão da rede ou do servidor.

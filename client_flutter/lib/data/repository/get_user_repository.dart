@@ -1,6 +1,5 @@
-import 'package:client_flutter/domain/domain.dart';
 import 'package:flutter/cupertino.dart';
-import '../data/get_user.dart';
+import '../data.dart';
 
 class GetCurrentUserRepository with ChangeNotifier {
   UserModel currentUser = UserModel(
@@ -17,7 +16,11 @@ class GetCurrentUserRepository with ChangeNotifier {
 
   Future<dynamic> functionGetCurrentUserLoggedRepository() async {
     var request = await getCurrentUser();
-    currentUser = UserModel.fromJson(request);
+    print("AQUI MEU FIII $request");
+    if (request.isNotEmpty) {
+      currentUser = UserModel.fromJson(request);
+    }
+
     notifyListeners();
   }
 

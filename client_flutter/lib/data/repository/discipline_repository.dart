@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-
-import '../../domain/domain.dart';
+import 'package:fluttertoast/fluttertoast.dart'; 
+import '../data.dart';
 import '../data/get_discipline.dart';
 
 class DisciplineRepository with ChangeNotifier {

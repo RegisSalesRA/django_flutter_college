@@ -1,7 +1,6 @@
 import 'package:client_flutter/app/app.dart';
-import 'package:flutter/material.dart';
-
-import '../../domain/domain.dart';
+import 'package:flutter/material.dart'; 
+import '../../data/data.dart';
 import 'widgets/settings_card.dart';
 
 class SettingsUser extends StatelessWidget {
