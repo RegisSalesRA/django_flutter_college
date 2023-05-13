@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../data.dart';
 
 class GetCurrentUserRepository with ChangeNotifier {
@@ -15,19 +15,15 @@ class GetCurrentUserRepository with ChangeNotifier {
   final ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
 
   Future<dynamic> functionGetCurrentUserLoggedRepository() async {
+    isLoading.value = true;
     var request = await getCurrentUser();
-    print("AQUI MEU FIII $request");
-    if (request.isNotEmpty) {
+
+    if (request is! String) {
       currentUser = UserModel.fromJson(request);
     }
-
-    notifyListeners();
-  }
-
-  Future<void> init() async {
-    isLoading.value = true;
-    await functionGetCurrentUserLoggedRepository();
+    
     isLoading.value = false;
     notifyListeners();
+    return request;
   }
 }

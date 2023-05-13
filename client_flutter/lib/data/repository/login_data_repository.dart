@@ -33,14 +33,28 @@ class LoginRepository {
       };
       var result = await loginUser(data);
 
-      if (result!.containsKey('success')) {
+      if (result is String) {
+        isLoading.value = !isLoading.value;
+        return Fluttertoast.showToast(
+            msg: result,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
+
+      if (result.containsKey('success')) {
         await Future.delayed(const Duration(seconds: 3));
+        isLoading.value = !isLoading.value;
         clearFields();
         Navigator.pushReplacementNamed(context, Routes.home);
       }
       if (result.containsKey('error')) {
         await Future.delayed(const Duration(seconds: 3));
-        Fluttertoast.showToast(
+        isLoading.value = !isLoading.value;
+        return Fluttertoast.showToast(
             msg: result["error"].toString(),
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
@@ -50,7 +64,5 @@ class LoginRepository {
             fontSize: 16.0);
       }
     }
-
-    isLoading.value = !isLoading.value;
   }
 }

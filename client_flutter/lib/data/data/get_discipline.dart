@@ -178,7 +178,7 @@ Future disciplineChosedByStudent(data) async {
         method: 'POST',
         headers: defaultHeaders,
       ),
-      data: data); 
+      data: data);
   if (response.statusCode == 200) {
     return response.data;
   }

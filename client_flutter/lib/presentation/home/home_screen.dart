@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../app/app.dart';
 import '../../data/repository/get_user_repository.dart';
+import 'widgets/alert_dialog_status.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,12 +19,16 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Provider.of<GetCurrentUserRepository>(context, listen: false)
-          .init();
+      var request =
+          await Provider.of<GetCurrentUserRepository>(context, listen: false)
+              .functionGetCurrentUserLoggedRepository();
+      if (request is String && mounted) {
+        alertDialogStatus(context, request, () async {
+          await Navigator.of(context).pushReplacementNamed(Routes.initial);
+        });
+      }
     });
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
