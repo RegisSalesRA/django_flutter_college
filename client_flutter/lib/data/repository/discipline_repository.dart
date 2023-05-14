@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart'; 
-import '../data.dart'; 
+import 'package:fluttertoast/fluttertoast.dart';
+import '../data.dart';
 
 class DisciplineRepository with ChangeNotifier {
   static final DisciplineRepository _instance = DisciplineRepository._();
@@ -10,7 +10,7 @@ class DisciplineRepository with ChangeNotifier {
   DisciplineRepository._();
 
   final ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
-  
+
   final ValueNotifier<String> valueFieldText = ValueNotifier<String>("");
 
   List disciplineTeacher = [];
@@ -55,6 +55,7 @@ class DisciplineRepository with ChangeNotifier {
   }
 
   Future getScoreDisciplineByStudentListRepository() async {
+    isLoading.value = true;
     scoreDisciplineStudentAvailible.clear();
     var request = await getScoreDisciplineByStudent();
     for (var item in request) {
@@ -62,6 +63,7 @@ class DisciplineRepository with ChangeNotifier {
       scoreDisciplineStudentAvailible.add(discipline);
     }
     cleanFidelds();
+    isLoading.value = false;
     notifyListeners();
   }
 

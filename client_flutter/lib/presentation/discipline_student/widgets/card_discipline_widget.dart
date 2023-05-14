@@ -56,14 +56,4 @@ class CardDisciplineWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-
-/*
-
-
-          
-
-          
-
-*/
+} 

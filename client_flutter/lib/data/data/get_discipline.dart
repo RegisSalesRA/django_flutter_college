@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import '../../app/app.dart';
 import '../../data/data.dart';
 
@@ -64,22 +67,37 @@ Future getScoreDisciplineByStudent() async {
     'Authorization': "Bearer $token",
   });
 
-  final response = await dio.request(
-    '$baseUrl/api/discipline_score_student/',
-    options: Options(
-        validateStatus: (status) => true,
-        method: HttpMethods.get,
-        headers: defaultHeaders),
-  );
-
-  if (response.statusCode == 200) {
-    return response.data;
-  }
-  if (response.statusCode == 401) {
-    return exceptErrorResponse(response.data);
-  }
-  if (response.statusCode == 400) {
-    return exceptErrorResponse(response.data);
+  try {
+    final response = await dio.request(
+      '$baseUrl/api/discipline_score_student/',
+      options: Options(
+          validateStatus: (status) => true,
+          method: HttpMethods.get,
+          headers: defaultHeaders),
+    );
+    if (response.statusCode == 200) {
+      return response.data;
+    } else if (response.statusCode == 401) {
+      throw AuthenticationException('Your session has expired');
+    } else {
+      throw ApiException('Request failed with status: ${response.statusCode}');
+    }
+  } on DioError catch (error) {
+    if (error.type == DioErrorType.connectTimeout) {
+      throw TimeoutException('Connection timeout');
+    } else if (error.type == DioErrorType.sendTimeout) {
+      throw TimeoutException('Send timeout');
+    } else if (error.type == DioErrorType.receiveTimeout) {
+      throw TimeoutException('Receive timeout');
+    } else {
+      throw ApiException('Request failed with error: ${error.message}');
+    }
+  } on SocketException catch (error) {
+    debugPrint('SocketException error: $error');
+    throw NoInternetException('No internet connection');
+  } catch (error) {
+    debugPrint('Unhandled error: $error');
+    rethrow;
   }
 }
 
@@ -91,22 +109,37 @@ Future getDisciplineAvailibleByStudent() async {
     'Authorization': "Bearer $token",
   });
 
-  final response = await dio.request(
-    '$baseUrl/api/discipline_left_student/',
-    options: Options(
-        validateStatus: (status) => true,
-        method: HttpMethods.get,
-        headers: defaultHeaders),
-  );
-
-  if (response.statusCode == 200) {
-    return response.data;
-  }
-  if (response.statusCode == 401) {
-    return exceptErrorResponse(response.data);
-  }
-  if (response.statusCode == 400) {
-    return exceptErrorResponse(response.data);
+  try {
+    final response = await dio.request(
+      '$baseUrl/api/discipline_left_student/',
+      options: Options(
+          validateStatus: (status) => true,
+          method: HttpMethods.get,
+          headers: defaultHeaders),
+    );
+    if (response.statusCode == 200) {
+      return response.data;
+    } else if (response.statusCode == 401) {
+      throw AuthenticationException('Your session has expired');
+    } else {
+      throw ApiException('Request failed with status: ${response.statusCode}');
+    }
+  } on DioError catch (error) {
+    if (error.type == DioErrorType.connectTimeout) {
+      throw TimeoutException('Connection timeout');
+    } else if (error.type == DioErrorType.sendTimeout) {
+      throw TimeoutException('Send timeout');
+    } else if (error.type == DioErrorType.receiveTimeout) {
+      throw TimeoutException('Receive timeout');
+    } else {
+      throw ApiException('Request failed with error: ${error.message}');
+    }
+  } on SocketException catch (error) {
+    debugPrint('SocketException error: $error');
+    throw NoInternetException('No internet connection');
+  } catch (error) {
+    debugPrint('Unhandled error: $error');
+    rethrow;
   }
 }
 
@@ -117,25 +150,37 @@ Future insertScoreToStudent(data) async {
     "accept": "application/json",
     'Authorization': "Bearer $token",
   });
+  try {
+    final response = await dio.request('$baseUrl/api/score_add_student/',
+        options: Options(
+            validateStatus: (status) => true,
+            method: HttpMethods.post,
+            headers: defaultHeaders),
+        data: data);
 
-  final response = await dio.request('$baseUrl/api/score_add_student/',
-      options: Options(
-          validateStatus: (status) => true,
-          method: HttpMethods.post,
-          headers: defaultHeaders),
-      data: data);
-
-  if (response.statusCode == 201) {
-    return response.data;
-  }
-  if (response.statusCode == 401) {
-    return exceptErrorResponse(response.data);
-  }
-  if (response.statusCode == 400) {
-    return {
-      'error': "Check if your text field are empty or is a number",
-      'status_code': data['status_code']
-    };
+    if (response.statusCode == 200) {
+      return response.data;
+    } else if (response.statusCode == 401) {
+      throw AuthenticationException('Your session has expired');
+    } else {
+      throw ApiException('Request failed with status: ${response.statusCode}');
+    }
+  } on DioError catch (error) {
+    if (error.type == DioErrorType.connectTimeout) {
+      throw TimeoutException('Connection timeout');
+    } else if (error.type == DioErrorType.sendTimeout) {
+      throw TimeoutException('Send timeout');
+    } else if (error.type == DioErrorType.receiveTimeout) {
+      throw TimeoutException('Receive timeout');
+    } else {
+      throw ApiException('Request failed with error: ${error.message}');
+    }
+  } on SocketException catch (error) {
+    debugPrint('SocketException error: $error');
+    throw NoInternetException('No internet connection');
+  } catch (error) {
+    debugPrint('Unhandled error: $error');
+    rethrow;
   }
 }
 
@@ -145,22 +190,38 @@ Future getScoreApi() async {
     "accept": "application/json",
   });
 
-  final response = await dio.request(
-    '$baseUrl/api/score/',
-    options: Options(
-        validateStatus: (status) => true,
-        method: HttpMethods.get,
-        headers: defaultHeaders),
-  );
+  try {
+    final response = await dio.request(
+      '$baseUrl/api/score/',
+      options: Options(
+          validateStatus: (status) => true,
+          method: HttpMethods.get,
+          headers: defaultHeaders),
+    );
 
-  if (response.statusCode == 200) {
-    return response.data;
-  }
-  if (response.statusCode == 401) {
-    return exceptErrorResponse(response.data);
-  }
-  if (response.statusCode == 400) {
-    return exceptErrorResponse(response.data);
+    if (response.statusCode == 200) {
+      return response.data;
+    } else if (response.statusCode == 401) {
+      throw AuthenticationException('Your session has expired');
+    } else {
+      throw ApiException('Request failed with status: ${response.statusCode}');
+    }
+  } on DioError catch (error) {
+    if (error.type == DioErrorType.connectTimeout) {
+      throw TimeoutException('Connection timeout');
+    } else if (error.type == DioErrorType.sendTimeout) {
+      throw TimeoutException('Send timeout');
+    } else if (error.type == DioErrorType.receiveTimeout) {
+      throw TimeoutException('Receive timeout');
+    } else {
+      throw ApiException('Request failed with error: ${error.message}');
+    }
+  } on SocketException catch (error) {
+    debugPrint('SocketException error: $error');
+    throw NoInternetException('No internet connection');
+  } catch (error) {
+    debugPrint('Unhandled error: $error');
+    rethrow;
   }
 }
 

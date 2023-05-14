@@ -1,9 +1,11 @@
+import 'package:client_flutter/data/data/storage_data.dart';
 import 'package:client_flutter/presentation/discipline_student/widgets/card_discipline_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../app/app.dart';
 import '../../data/repository/discipline_repository.dart';
+import '../home/widgets/alert_dialog_status.dart';
 
 class StudentDisciplinesScreen extends StatefulWidget {
   const StudentDisciplinesScreen({super.key});
@@ -18,8 +20,18 @@ class _StudentDisciplinesScreenState extends State<StudentDisciplinesScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Provider.of<DisciplineRepository>(context, listen: false)
-          .getDisciplineByStudentListRepository();
+      final token = await readSecureData('token');
+      try {
+        await Provider.of<DisciplineRepository>(context, listen: false)
+            .getDisciplineByStudentListRepository();
+      } catch (e) {
+        if (mounted) {
+          alertDialogStatus(context, e.toString(), () async {
+            await deleteSecureData(StorageItem('token', token!));
+            Navigator.pushReplacementNamed(context, Routes.initial);
+          });
+        }
+      }
     });
   }
 

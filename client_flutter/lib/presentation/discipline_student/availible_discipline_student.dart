@@ -2,10 +2,12 @@
 
 import 'package:client_flutter/presentation/common/alert_dialog.dart';
 import 'package:client_flutter/presentation/discipline_student/widgets/card_discipline_widget.dart';
+import 'package:client_flutter/presentation/home/widgets/alert_dialog_status.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../app/app.dart';
+import '../../data/data/data.dart';
 import '../../data/repository/discipline_repository.dart';
 
 class AvailibleDisciplinesScreen extends StatefulWidget {
@@ -23,8 +25,18 @@ class _AvailibleDisciplinesScreenState
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Provider.of<DisciplineRepository>(context, listen: false)
-          .getDisciplineByStudentAvailibleListRepository();
+      final token = await readSecureData('token');
+      try {
+        await Provider.of<DisciplineRepository>(context, listen: false)
+            .getDisciplineByStudentAvailibleListRepository();
+      } catch (e) {
+        if (mounted) {
+          alertDialogStatus(context, e.toString(), () async {
+            await deleteSecureData(StorageItem('token', token!));
+            Navigator.pushReplacementNamed(context, Routes.initial);
+          });
+        }
+      }
     });
   }
 
@@ -144,23 +156,44 @@ class _AvailibleDisciplinesScreenState
                                                             '${disciplineRepository.disciplineStudentAvailible[index].name}',
                                                             'Are you sure you want accept this discipline? after that you can not back your decision',
                                                             () async {
-                                                          var data = {
-                                                            "id_discpline":
-                                                                disciplineRepository
-                                                                    .disciplineStudentAvailible[
-                                                                        index]
-                                                                    .id
-                                                          };
-                                                          await disciplineRepository
-                                                              .disciplineChosedByStudentRepository(
-                                                                  data);
-
-                                                          await disciplineRepository
-                                                              .getDisciplineByStudentAvailibleListRepository();
-                                                          if (mounted) {
-                                                            Navigator.of(
-                                                                    contextDisciplineAvailible)
-                                                                .pop();
+                                                          try {
+                                                            var data = {
+                                                              "id_discpline":
+                                                                  disciplineRepository
+                                                                      .disciplineStudentAvailible[
+                                                                          index]
+                                                                      .id
+                                                            };
+                                                            await disciplineRepository
+                                                                .disciplineChosedByStudentRepository(
+                                                                    data);
+                                                            await disciplineRepository
+                                                                .getDisciplineByStudentAvailibleListRepository();
+                                                            if (mounted) {
+                                                              Navigator.of(
+                                                                      contextDisciplineAvailible)
+                                                                  .pop();
+                                                            }
+                                                          } catch (e) {
+                                                            final token =
+                                                                await readSecureData(
+                                                                    'token');
+                                                            if (mounted) {
+                                                              alertDialogStatus(
+                                                                  context,
+                                                                  e.toString(),
+                                                                  () async {
+                                                                await deleteSecureData(
+                                                                    StorageItem(
+                                                                        'token',
+                                                                        token!));
+                                                                Navigator
+                                                                    .pushReplacementNamed(
+                                                                        context,
+                                                                        Routes
+                                                                            .initial);
+                                                              });
+                                                            }
                                                           }
                                                         }, false,
                                                             _controllerDiscicpline),
