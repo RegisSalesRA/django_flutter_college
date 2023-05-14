@@ -46,7 +46,7 @@ class RegisterDataRepository {
 
   Future<void> onSaveTeacherRepository(
       BuildContext context, bool mounted) async {
-    isLoading.value = !isLoading.value;
+    isLoading.value = true;
     if (formKeyTeacher.currentState!.validate()) {
       var data = {
         "username": usernameController.text,
@@ -55,26 +55,49 @@ class RegisterDataRepository {
         "name": nameController.text,
         "password2": password2Controller.text,
       };
-      var result = await registerTeacher(data);
-      if (result!.containsKey('result')) {
-        await Future.delayed(const Duration(seconds: 4));
-        Fluttertoast.showToast(
-            msg: result["result"].toString(),
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.green,
-            textColor: Colors.white,
-            fontSize: 16.0);
-        if (mounted) {
-          cleanFields();
-          Navigator.pushReplacementNamed(context, Routes.initial);
+      try {
+        var result = await registerTeacher(data);
+        print(result);
+        if (result is String) {
+          Fluttertoast.showToast(
+              msg: result,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
         }
-      }
-      if (result.containsKey('error')) {
-        await Future.delayed(const Duration(seconds: 4));
+        if (result is Map) {
+          if (result.containsKey('result')) {
+            await Future.delayed(const Duration(seconds: 4));
+            Fluttertoast.showToast(
+                msg: result["result"].toString(),
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.green,
+                textColor: Colors.white,
+                fontSize: 16.0);
+            if (mounted) {
+              cleanFields();
+              Navigator.pushReplacementNamed(context, Routes.initial);
+            }
+          } else if (result.containsKey('error')) {
+            await Future.delayed(const Duration(seconds: 4));
+            Fluttertoast.showToast(
+                msg: result["error"].toString(),
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0);
+          }
+        }
+      } catch (e) {
         Fluttertoast.showToast(
-            msg: result["error"].toString(),
+            msg: e.toString(),
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1,
@@ -83,12 +106,12 @@ class RegisterDataRepository {
             fontSize: 16.0);
       }
     }
-    isLoading.value = !isLoading.value;
+    isLoading.value = false;
   }
 
   Future<void> onSaveStudentRepository(
       BuildContext context, bool mounted) async {
-    isLoading.value = !isLoading.value;
+    isLoading.value = true;
     if (formKeyStudent.currentState!.validate()) {
       var data = {
         "username": usernameController.text,
@@ -97,27 +120,50 @@ class RegisterDataRepository {
         "password": passwordController.text,
         "password2": password2Controller.text,
       };
-      var result = await registerStudent(data);
+      try {
+        var result = await registerStudent(data);
 
-      if (result!.containsKey('result')) {
-        await Future.delayed(const Duration(seconds: 4));
-        Fluttertoast.showToast(
-            msg: result["result"].toString(),
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.green,
-            textColor: Colors.white,
-            fontSize: 16.0);
-        if (mounted) {
-          cleanFields();
-          Navigator.pushReplacementNamed(context, Routes.initial);
+        if (result is String) {
+          Fluttertoast.showToast(
+              msg: result,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
         }
-      }
-      if (result.containsKey('error')) {
-        await Future.delayed(const Duration(seconds: 4));
+        if (result is Map) {
+          if (result.containsKey('result')) {
+            await Future.delayed(const Duration(seconds: 4));
+            Fluttertoast.showToast(
+                msg: result["result"].toString(),
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.green,
+                textColor: Colors.white,
+                fontSize: 16.0);
+            if (mounted) {
+              cleanFields();
+              Navigator.pushReplacementNamed(context, Routes.initial);
+            }
+          }
+          if (result.containsKey('error')) {
+            await Future.delayed(const Duration(seconds: 4));
+            Fluttertoast.showToast(
+                msg: result["error"].toString(),
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0);
+          }
+        }
+      } catch (e) {
         Fluttertoast.showToast(
-            msg: result["error"].toString(),
+            msg: e.toString(),
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1,
@@ -125,7 +171,7 @@ class RegisterDataRepository {
             textColor: Colors.white,
             fontSize: 16.0);
       }
+      isLoading.value = false;
     }
-    isLoading.value = !isLoading.value;
   }
 }

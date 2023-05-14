@@ -19,7 +19,6 @@ class _SignUpStudentState extends State<SignUpStudent> with ValidationMixin {
 
   @override
   void initState() {
-    // TODO: implement initState
     if (!mounted) {}
     super.initState();
   }

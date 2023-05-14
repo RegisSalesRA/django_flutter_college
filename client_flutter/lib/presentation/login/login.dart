@@ -128,7 +128,7 @@ class _LoginState extends State<Login> with ValidationMixin {
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(25))),
-                                  onPressed: loginData.isLoading.value
+                                  onPressed: isLoading
                                       ? null
                                       : () async {
                                           FocusScope.of(context).unfocus();
@@ -137,7 +137,7 @@ class _LoginState extends State<Login> with ValidationMixin {
                                           loginData
                                               .loginUserRepository(context);
                                         },
-                                  child: loginData.isLoading.value
+                                  child: isLoading
                                       ? const CircularProgressIndicator()
                                       : const Text(
                                           "Login",

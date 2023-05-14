@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart'; 
-import '../data.dart';
-import '../data/get_discipline.dart';
+import '../data.dart'; 
 
 class DisciplineRepository with ChangeNotifier {
   static final DisciplineRepository _instance = DisciplineRepository._();
@@ -11,8 +10,7 @@ class DisciplineRepository with ChangeNotifier {
   DisciplineRepository._();
 
   final ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
-
-  // TextField
+  
   final ValueNotifier<String> valueFieldText = ValueNotifier<String>("");
 
   List disciplineTeacher = [];

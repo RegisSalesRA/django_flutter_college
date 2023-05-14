@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 Future<String?> alertDialogStatus(
   var context,
-  description,
+  var description,
   var onPressed,
 ) {
   return showDialog<String>(

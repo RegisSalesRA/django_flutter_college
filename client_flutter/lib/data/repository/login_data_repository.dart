@@ -24,38 +24,44 @@ class LoginRepository {
     passwordController.clear();
   }
 
-  Future loginUserRepository(context) async {
-    isLoading.value = !isLoading.value;
+  Future<void> loginUserRepository(context) async {
+    isLoading.value = true;
     if (formKeyLogin.currentState!.validate()) {
       Map data = {
         "username": usernameController.text,
         "password": passwordController.text,
       };
-      var result = await loginUser(data);
-
-      if (result is String) {
-        isLoading.value = !isLoading.value;
-        return Fluttertoast.showToast(
-            msg: result,
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
-      }
-
-      if (result.containsKey('success')) {
+      try {
         await Future.delayed(const Duration(seconds: 3));
-        isLoading.value = !isLoading.value;
-        clearFields();
-        Navigator.pushReplacementNamed(context, Routes.home);
-      }
-      if (result.containsKey('error')) {
-        await Future.delayed(const Duration(seconds: 3));
-        isLoading.value = !isLoading.value;
-        return Fluttertoast.showToast(
-            msg: result["error"].toString(),
+        var result = await loginUser(data); 
+        if (result is String) {
+          Fluttertoast.showToast(
+              msg: result,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
+        }
+        if (result is Map) {
+          if (result.containsKey('success')) {
+            clearFields();
+            Navigator.pushReplacementNamed(context, Routes.home);
+          } else if (result.containsKey('error')) {
+            Fluttertoast.showToast(
+                msg: result["error"].toString(),
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0);
+          }
+        }
+      } catch (e) {
+        Fluttertoast.showToast(
+            msg: e.toString(),
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1,
@@ -64,5 +70,6 @@ class LoginRepository {
             fontSize: 16.0);
       }
     }
+    isLoading.value = false;
   }
 }

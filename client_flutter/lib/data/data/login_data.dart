@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import '../../app/app.dart';
+import '../../app/app.dart'; 
 import '../data/data.dart';
 
 Future loginUser(data) async {
@@ -10,38 +10,35 @@ Future loginUser(data) async {
     final response = await dio.request('$baseUrl/api/token/',
         options: Options(
           validateStatus: (status) => true,
-          method: 'POST',
+          method: HttpMethods.post,
         ),
-        data: data);
-
+        data: data); 
     if (response.statusCode == 200) {
       await writeSecureData(StorageItem('token', response.data["access"]));
       Map<String, dynamic> success = {"success": "login user with success"};
       return success;
-    }
-    if (response.statusCode == 401) {
-      return exceptErrorResponse(response.data);
-    }
-    if (response.statusCode == 400) {
-      return exceptErrorResponse(response.data);
+    } else if (response.statusCode == 401) {
+      throw AuthenticationException('Your session has expired');
+    } else if (response.statusCode == 400) {
+      throw BadRequestException('Data is not valid');
+    } else {
+      throw ApiException('Request failed with status: ${response.statusCode}');
     }
   } on DioError catch (error) {
     if (error.type == DioErrorType.connectTimeout) {
-      return 'connect Timeout';
-    }
-    if (error.type == DioErrorType.sendTimeout) {
-      return 'connect SendTimeout';
-    }
-    if (error.type == DioErrorType.receiveTimeout) {
-      return 'receive Timeout';
+      throw TimeoutException('Connection timeout');
+    } else if (error.type == DioErrorType.sendTimeout) {
+      throw TimeoutException('Send timeout');
+    } else if (error.type == DioErrorType.receiveTimeout) {
+      throw TimeoutException('Receive timeout');
+    } else {
+      throw ApiException('Request failed with error: ${error.message}');
     }
   } on SocketException catch (error) {
-    String? token = await readSecureData('token');
-    await deleteSecureData(StorageItem('token', token!));
-    Navigator.of(Routes.navigatorKey!.currentContext!)
-        .pushReplacementNamed(Routes.initial);
-    debugPrint('No internet connection $error');
+    debugPrint('SocketException error: $error');
+    throw NoInternetException('No internet connection');
   } catch (error) {
-    debugPrint('error: $error');
+    debugPrint('Unhandled error: $error');
+    rethrow;
   }
 }

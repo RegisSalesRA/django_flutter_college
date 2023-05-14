@@ -1,5 +1,8 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+
 import '../../app/app.dart';
-import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
 import '../data/data.dart';
 
@@ -17,7 +20,7 @@ Future registerTeacher(data) async {
       '$baseUrl/api/signup/teacher/',
       options: Options(
         validateStatus: (status) => true,
-        method: 'POST',
+        method: HttpMethods.post,
       ),
       data: data,
     );
@@ -28,8 +31,21 @@ Future registerTeacher(data) async {
       return exceptErrorResponse(response.data);
     }
   } on DioError catch (error) {
-    debugPrint('Dio error: $error');
-    return error.response?.data ?? {};
+    if (error.type == DioErrorType.connectTimeout) {
+      return 'connect Timeout';
+    }
+    if (error.type == DioErrorType.sendTimeout) {
+      return 'connect SendTimeout';
+    }
+    if (error.type == DioErrorType.receiveTimeout) {
+      return 'receive Timeout';
+    }
+  } on SocketException catch (error) {
+    String? token = await readSecureData('token');
+    await deleteSecureData(StorageItem('token', token!));
+    Navigator.of(Routes.navigatorKey!.currentContext!)
+        .pushReplacementNamed(Routes.initial);
+    debugPrint('No internet connection $error');
   } catch (error) {
     debugPrint('error: $error');
   }
@@ -41,7 +57,7 @@ Future registerStudent(data) async {
       '$baseUrl/api/signup/student/',
       options: Options(
         validateStatus: (status) => true,
-        method: 'POST',
+        method: HttpMethods.post,
       ),
       data: data,
     );
@@ -51,8 +67,23 @@ Future registerStudent(data) async {
     if (response.statusCode == 400) {
       return exceptErrorResponse(response.data);
     }
-  } catch (e) {
-    debugPrint('err $e');
+  } on DioError catch (error) {
+    if (error.type == DioErrorType.connectTimeout) {
+      return 'connect Timeout';
+    }
+    if (error.type == DioErrorType.sendTimeout) {
+      return 'connect SendTimeout';
+    }
+    if (error.type == DioErrorType.receiveTimeout) {
+      return 'receive Timeout';
+    }
+  } on SocketException catch (error) {
+    String? token = await readSecureData('token');
+    await deleteSecureData(StorageItem('token', token!));
+    Navigator.of(Routes.navigatorKey!.currentContext!)
+        .pushReplacementNamed(Routes.initial);
+    debugPrint('No internet connection $error');
+  } catch (error) {
+    debugPrint('error: $error');
   }
 }
-

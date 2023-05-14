@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../app/app.dart';
-import '../../data/repository/get_user_repository.dart';
+import '../../data/data.dart';
 import 'widgets/alert_dialog_status.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,13 +19,18 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      var request =
-          await Provider.of<GetCurrentUserRepository>(context, listen: false)
-              .functionGetCurrentUserLoggedRepository();
-      if (request is String && mounted) {
-        alertDialogStatus(context, request, () async {
-          await Navigator.of(context).pushReplacementNamed(Routes.initial);
-        });
+      final token = await readSecureData('token');
+      try {
+        // ignore: use_build_context_synchronously
+        await Provider.of<GetCurrentUserRepository>(context, listen: false)
+            .functionGetCurrentUserLoggedRepository();
+      } catch (e) {
+        if (mounted) {
+          alertDialogStatus(context, e.toString(), () async {
+            await deleteSecureData(StorageItem('token', token!));
+            Navigator.pushReplacementNamed(context, Routes.initial);
+          });
+        }
       }
     });
   }

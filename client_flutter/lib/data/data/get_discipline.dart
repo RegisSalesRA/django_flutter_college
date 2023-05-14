@@ -14,7 +14,7 @@ Future getDisciplineByTeacher() async {
     '$baseUrl/api/discipline_teacher/',
     options: Options(
         validateStatus: (status) => true,
-        method: 'GET',
+        method: HttpMethods.get,
         headers: defaultHeaders),
   );
 
@@ -41,7 +41,7 @@ Future getDisciplineByStudent() async {
     '$baseUrl/api/discipline_student/',
     options: Options(
         validateStatus: (status) => true,
-        method: 'GET',
+        method: HttpMethods.get,
         headers: defaultHeaders),
   );
 
@@ -68,7 +68,7 @@ Future getScoreDisciplineByStudent() async {
     '$baseUrl/api/discipline_score_student/',
     options: Options(
         validateStatus: (status) => true,
-        method: 'GET',
+        method: HttpMethods.get,
         headers: defaultHeaders),
   );
 
@@ -95,7 +95,7 @@ Future getDisciplineAvailibleByStudent() async {
     '$baseUrl/api/discipline_left_student/',
     options: Options(
         validateStatus: (status) => true,
-        method: 'GET',
+        method: HttpMethods.get,
         headers: defaultHeaders),
   );
 
@@ -121,7 +121,7 @@ Future insertScoreToStudent(data) async {
   final response = await dio.request('$baseUrl/api/score_add_student/',
       options: Options(
           validateStatus: (status) => true,
-          method: 'POST',
+          method: HttpMethods.post,
           headers: defaultHeaders),
       data: data);
 
@@ -149,7 +149,7 @@ Future getScoreApi() async {
     '$baseUrl/api/score/',
     options: Options(
         validateStatus: (status) => true,
-        method: 'GET',
+        method: HttpMethods.get,
         headers: defaultHeaders),
   );
 
@@ -175,7 +175,7 @@ Future disciplineChosedByStudent(data) async {
   final response = await dio.request('$baseUrl/api/discipline_chose/',
       options: Options(
         validateStatus: (status) => true,
-        method: 'POST',
+        method: HttpMethods.post,
         headers: defaultHeaders,
       ),
       data: data);

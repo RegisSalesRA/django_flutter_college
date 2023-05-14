@@ -21,7 +21,6 @@ class GetCurrentUserRepository with ChangeNotifier {
     if (request is! String) {
       currentUser = UserModel.fromJson(request);
     }
-    
     isLoading.value = false;
     notifyListeners();
     return request;
