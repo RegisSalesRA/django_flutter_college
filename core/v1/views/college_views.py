@@ -6,12 +6,14 @@ from rest_framework.views import APIView
 from core.v1.models.auth_models import Student
 from core.v1.models.college_models import Discipline, Scores, Semester
 from core.v1.permissions.permissions import StudentUser, TeacherUser
-from core.v1.serializers.serializers_college import (DisciplineSerializer,
-                                                     DisciplineSerializerPost,
-                                                     ScoresPostSerializer,
-                                                     ScoresSerializer,
-                                                     ScoresSerializerStudent,
-                                                     SemesterSerializer)
+from core.v1.serializers.serializers_college import (
+    DisciplineSerializer,
+    DisciplineSerializerPost,
+    ScoresPostSerializer,
+    ScoresSerializer,
+    ScoresSerializerStudent,
+    SemesterSerializer,
+)
 
 
 # Discpline
@@ -64,6 +66,15 @@ class DisciplineListLeftStudent(generics.ListAPIView):
 class SemesterListCreateView(generics.ListCreateAPIView):
     queryset = Semester.objects.all()
     serializer_class = SemesterSerializer
+
+    def post(self, request, *args, **kwargs):
+        dataValue = request.data["semester"]
+        queryset = Semester.objects.filter(semester=dataValue)
+        if queryset.exists():
+            return Response({"error": "object already exist"}, status=status.HTTP_409_CONFLICT)
+        else:
+            self.create(request, *args, **kwargs)
+            return Response({"success": "Semester created with success"}, status=status.HTTP_201_CREATED)
 
 
 class SemesterRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):

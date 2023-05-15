@@ -195,7 +195,6 @@ class _DisciplineStudentByTeacherState
                                                                     disciplineRepository
                                                                         .cleanFidelds();
                                                                   } catch (e) {
-                                                                    print(e);
                                                                     final token =
                                                                         await readSecureData(
                                                                             'token');
