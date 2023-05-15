@@ -47,7 +47,7 @@ class _AvailibleDisciplinesScreenState
   }
 
   @override
-  Widget build(BuildContext contextDisciplineAvailible) {
+  Widget build(BuildContext contextPageAvalibleDisciplineStudent) {
     return Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(
@@ -62,13 +62,15 @@ class _AvailibleDisciplinesScreenState
           ),
         ),
         body: Consumer<DisciplineRepository>(
-          builder: (context, disciplineRepository, child) {
+          builder: (contextPageAvalibleDisciplineStudent, disciplineRepository,
+              child) {
             return ValueListenableBuilder(
               valueListenable: disciplineRepository.isLoading,
-              builder: (context, value, child) {
+              builder: (contextPageAvalibleDisciplineStudent, value, child) {
                 return !value
                     ? Container(
-                        height: MediaQuerySize.heigthSizeCustom(context),
+                        height: MediaQuerySize.heigthSizeCustom(
+                            contextPageAvalibleDisciplineStudent),
                         decoration: const BoxDecoration(
                           color: Colors.white10,
                         ),
@@ -108,7 +110,9 @@ class _AvailibleDisciplinesScreenState
                                   ValueListenableBuilder(
                                     valueListenable:
                                         disciplineRepository.valueFieldText,
-                                    builder: (context, value, child) {
+                                    builder:
+                                        (contextPageAvalibleDisciplineStudent,
+                                            value, child) {
                                       return ListView.builder(
                                           shrinkWrap: true,
                                           itemCount: disciplineRepository
@@ -116,7 +120,9 @@ class _AvailibleDisciplinesScreenState
                                               .length,
                                           physics:
                                               const NeverScrollableScrollPhysics(),
-                                          itemBuilder: ((context, index) {
+                                          itemBuilder:
+                                              ((contextPageAvalibleDisciplineStudent,
+                                                  index) {
                                             return disciplineRepository
                                                     .disciplineStudentAvailible[
                                                         index]
@@ -151,35 +157,34 @@ class _AvailibleDisciplinesScreenState
                                                                       .circular(
                                                                           15))),
                                                       child: IconButton(
-                                                        onPressed: () => alertDialog(
-                                                            contextDisciplineAvailible,
-                                                            '${disciplineRepository.disciplineStudentAvailible[index].name}',
-                                                            'Are you sure you want accept this discipline? after that you can not back your decision',
-                                                            () async {
-                                                          try {
-                                                            var data = {
-                                                              "id_discpline":
-                                                                  disciplineRepository
-                                                                      .disciplineStudentAvailible[
-                                                                          index]
-                                                                      .id
-                                                            };
-                                                            await disciplineRepository
-                                                                .disciplineChosedByStudentRepository(
-                                                                    data);
-                                                            await disciplineRepository
-                                                                .getDisciplineByStudentAvailibleListRepository();
-                                                            if (mounted) {
-                                                              Navigator.of(
-                                                                      contextDisciplineAvailible)
-                                                                  .pop();
-                                                            }
-                                                          } catch (e) {
-                                                            final token =
-                                                                await readSecureData(
-                                                                    'token');
-                                                            if (mounted) {
-                                                              alertDialogStatus(
+                                                        onPressed: () {
+                                                          alertDialog(
+                                                              contextPageAvalibleDisciplineStudent,
+                                                              '${disciplineRepository.disciplineStudentAvailible[index].name}',
+                                                              'Are you sure you want accept this discipline? after that you can not back your decision',
+                                                              () async {
+                                                            try {
+                                                              var data = {
+                                                                "id_discpline":
+                                                                    disciplineRepository
+                                                                        .disciplineStudentAvailible[
+                                                                            index]
+                                                                        .id
+                                                              };
+                                                              Navigator.pop(
+                                                                  contextPageAvalibleDisciplineStudent,
+                                                                  'Accept');
+                                                              await disciplineRepository
+                                                                  .disciplineChosedByStudentRepository(
+                                                                      data);
+                                                              await disciplineRepository
+                                                                  .getDisciplineByStudentAvailibleListRepository();
+                                                            } catch (e) {
+                                                              final token =
+                                                                  await readSecureData(
+                                                                      'token');
+
+                                                              return alertDialogStatus(
                                                                   context,
                                                                   e.toString(),
                                                                   () async {
@@ -187,16 +192,15 @@ class _AvailibleDisciplinesScreenState
                                                                     StorageItem(
                                                                         'token',
                                                                         token!));
-                                                                Navigator
-                                                                    .pushReplacementNamed(
-                                                                        context,
-                                                                        Routes
-                                                                            .initial);
+                                                                Navigator.pushReplacementNamed(
+                                                                    contextPageAvalibleDisciplineStudent,
+                                                                    Routes
+                                                                        .initial);
                                                               });
                                                             }
-                                                          }
-                                                        }, false,
-                                                            _controllerDiscicpline),
+                                                          }, false,
+                                                              _controllerDiscicpline);
+                                                        },
                                                         icon: const Icon(
                                                             Icons.add),
                                                         color: Colors.white,
@@ -212,7 +216,7 @@ class _AvailibleDisciplinesScreenState
                                     .disciplineStudentAvailible.isEmpty) ...{
                                   SizedBox(
                                     height: MediaQuerySize.heigthSizeCustom(
-                                            context) *
+                                            contextPageAvalibleDisciplineStudent) *
                                         0.70,
                                     child: Column(
                                       crossAxisAlignment:

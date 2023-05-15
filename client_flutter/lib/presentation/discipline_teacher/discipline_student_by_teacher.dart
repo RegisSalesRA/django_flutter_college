@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../data/data.dart';
 import '../../app/app.dart';
 import '../common/alert_dialog.dart';
+import '../home/widgets/alert_dialog_status.dart';
 
 class DisciplineStudentByTeacher extends StatefulWidget {
   final int idDiscipline;
@@ -24,14 +25,22 @@ class DisciplineStudentByTeacher extends StatefulWidget {
 
 class _DisciplineStudentByTeacherState
     extends State<DisciplineStudentByTeacher> {
-
-      
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Provider.of<DisciplineRepository>(context, listen: false)
-          .getScoreRepository(widget.idDiscipline);
+      final token = await readSecureData('token');
+      try {
+        await Provider.of<DisciplineRepository>(context, listen: false)
+            .getScoreRepository(widget.idDiscipline);
+      } catch (e) {
+        if (mounted) {
+          alertDialogStatus(context, e.toString(), () async {
+            await deleteSecureData(StorageItem('token', token!));
+            Navigator.pushReplacementNamed(context, Routes.initial);
+          });
+        }
+      }
     });
   }
 
@@ -51,13 +60,15 @@ class _DisciplineStudentByTeacherState
           ),
         ),
         body: Consumer<DisciplineRepository>(
-          builder: (context, disciplineRepository, child) {
+          builder:
+              (contextDisciplineStudentByTeacher, disciplineRepository, child) {
             return ValueListenableBuilder(
               valueListenable: disciplineRepository.isLoading,
-              builder: (context, value, child) {
+              builder: (contextDisciplineStudentByTeacher, value, child) {
                 return !value
                     ? Container(
-                        height: MediaQuerySize.heigthSizeCustom(context),
+                        height: MediaQuerySize.heigthSizeCustom(
+                            contextDisciplineStudentByTeacher),
                         decoration: const BoxDecoration(
                           color: Colors.white10,
                         ),
@@ -98,14 +109,17 @@ class _DisciplineStudentByTeacherState
                                   ValueListenableBuilder(
                                     valueListenable:
                                         disciplineRepository.valueFieldText,
-                                    builder: (context, value, child) {
+                                    builder: (contextDisciplineStudentByTeacher,
+                                        value, child) {
                                       return ListView.builder(
                                           shrinkWrap: true,
                                           itemCount: disciplineRepository
                                               .studentScore.length,
                                           physics:
                                               const NeverScrollableScrollPhysics(),
-                                          itemBuilder: ((context, index) {
+                                          itemBuilder:
+                                              ((contextDisciplineStudentByTeacher,
+                                                  index) {
                                             return disciplineRepository
                                                     .studentScore[index]["name"]
                                                     .toLowerCase()
@@ -147,43 +161,63 @@ class _DisciplineStudentByTeacherState
                                                                         .circular(
                                                                             15))),
                                                             child: IconButton(
-                                                              onPressed: () => alertDialog(
-                                                                  contextDisciplineStudentByTeacher,
-                                                                  'Score',
-                                                                  'Attention after send score you can not do again',
-                                                                  () async {
-                                                                var data = {
-                                                                  "id_student":
-                                                                      disciplineRepository
-                                                                              .studentScore[index]
-                                                                          [
-                                                                          "id"],
-                                                                  "id_discpline":
-                                                                      widget
-                                                                          .idDiscipline,
-                                                                  "nota": disciplineRepository
-                                                                      .scoreController
-                                                                      .text
-                                                                };
-                                                                await disciplineRepository
-                                                                    .insertScoreToStudentRepository(
-                                                                        data);
-                                                                disciplineRepository
-                                                                    .cleanFidelds();
+                                                              onPressed: () {
+                                                                alertDialog(
+                                                                    contextDisciplineStudentByTeacher,
+                                                                    'Score',
+                                                                    'Attention after send score you can not do again',
+                                                                    () async {
+                                                                  try {
+                                                                    var data = {
+                                                                      "id_student":
+                                                                          disciplineRepository.studentScore[index]
+                                                                              [
+                                                                              "id"],
+                                                                      "id_discpline":
+                                                                          widget
+                                                                              .idDiscipline,
+                                                                      "nota": disciplineRepository
+                                                                          .scoreController
+                                                                          .text
+                                                                    };
 
-                                                                await disciplineRepository
-                                                                    .getScoreRepository(
-                                                                        widget
-                                                                            .idDiscipline);
-                                                                if (mounted) {
-                                                                  Navigator.of(
-                                                                          contextDisciplineStudentByTeacher)
-                                                                      .pop();
-                                                                }
+                                                                    Navigator.of(
+                                                                            contextDisciplineStudentByTeacher)
+                                                                        .pop();
+
+                                                                    await disciplineRepository
+                                                                        .insertScoreToStudentRepository(
+                                                                            data);
+
+                                                                    await disciplineRepository
+                                                                        .getScoreRepository(
+                                                                            widget.idDiscipline);
+                                                                    disciplineRepository
+                                                                        .cleanFidelds();
+                                                                  } catch (e) {
+                                                                    print(e);
+                                                                    final token =
+                                                                        await readSecureData(
+                                                                            'token');
+
+                                                                    return alertDialogStatus(
+                                                                        context,
+                                                                        e.toString(),
+                                                                        () async {
+                                                                      await deleteSecureData(StorageItem(
+                                                                          'token',
+                                                                          token!));
+                                                                      Navigator.pushReplacementNamed(
+                                                                          context,
+                                                                          Routes
+                                                                              .initial);
+                                                                    });
+                                                                  }
+                                                                },
+                                                                    true,
+                                                                    disciplineRepository
+                                                                        .scoreController);
                                                               },
-                                                                  true,
-                                                                  disciplineRepository
-                                                                      .scoreController),
                                                               icon: const Icon(
                                                                   Icons.add),
                                                               color:

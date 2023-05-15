@@ -108,11 +108,11 @@ class DisciplineRepository with ChangeNotifier {
     notifyListeners();
   }
 
-  Future disciplineChosedByStudentRepository(data) async {
+  Future<void> disciplineChosedByStudentRepository(data) async {
     isLoading.value = true;
     var request = await disciplineChosedByStudent(data);
     if (request.containsKey('success')) {
-      return Fluttertoast.showToast(
+      Fluttertoast.showToast(
           msg: request["success"].toString(),
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
@@ -122,7 +122,7 @@ class DisciplineRepository with ChangeNotifier {
           fontSize: 16.0);
     }
     if (request.containsKey('error')) {
-      return Fluttertoast.showToast(
+      Fluttertoast.showToast(
           msg: request["error"].toString(),
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
