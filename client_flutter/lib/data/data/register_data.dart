@@ -17,7 +17,7 @@ final defaultHeaders = ({
 Future registerTeacher(data) async {
   try {
     final response = await dio.request(
-      '$baseUrl/api/signup/teacher/',
+      '/api/signup/teacher/',
       options: Options(
         validateStatus: (status) => true,
         method: HttpMethods.post,
@@ -54,7 +54,7 @@ Future registerTeacher(data) async {
 Future registerStudent(data) async {
   try {
     final response = await dio.request(
-      '$baseUrl/api/signup/student/',
+      '/api/signup/student/',
       options: Options(
         validateStatus: (status) => true,
         method: HttpMethods.post,

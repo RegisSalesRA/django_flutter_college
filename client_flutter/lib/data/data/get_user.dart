@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import '../../app/app.dart'; 
+import '../../app/app.dart';
 import '../data/data.dart';
 
 Future getCurrentUser() async {
@@ -14,7 +14,7 @@ Future getCurrentUser() async {
 
   try {
     final response = await dio.request(
-      '$baseUrl/api/user/',
+      '/api/user/',
       options: Options(
           validateStatus: (status) => true,
           method: HttpMethods.get,

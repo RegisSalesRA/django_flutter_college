@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../app/helpers/toeast_helper.dart';
 import '../../app/routes/routes.dart';
 import '../data/register_data.dart';
 
@@ -57,53 +57,26 @@ class RegisterDataRepository {
       };
       try {
         var result = await registerTeacher(data);
-        print(result);
         if (result is String) {
-          Fluttertoast.showToast(
-              msg: result,
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
-              fontSize: 16.0);
+          toastHelper(result, false);
         }
         if (result is Map) {
           if (result.containsKey('result')) {
             await Future.delayed(const Duration(seconds: 4));
-            Fluttertoast.showToast(
-                msg: result["result"].toString(),
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.green,
-                textColor: Colors.white,
-                fontSize: 16.0);
+
+            toastHelper(result["result"].toString(), false);
+
             if (mounted) {
               cleanFields();
               Navigator.pushReplacementNamed(context, Routes.initial);
             }
           } else if (result.containsKey('error')) {
             await Future.delayed(const Duration(seconds: 4));
-            Fluttertoast.showToast(
-                msg: result["error"].toString(),
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
-                textColor: Colors.white,
-                fontSize: 16.0);
+            toastHelper(result["error"].toString(), true);
           }
         }
       } catch (e) {
-        Fluttertoast.showToast(
-            msg: e.toString(),
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
+        toastHelper(e.toString(), true);
       }
     }
     isLoading.value = false;
@@ -124,26 +97,13 @@ class RegisterDataRepository {
         var result = await registerStudent(data);
 
         if (result is String) {
-          Fluttertoast.showToast(
-              msg: result,
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
-              fontSize: 16.0);
+          toastHelper(result, false);
         }
         if (result is Map) {
           if (result.containsKey('result')) {
             await Future.delayed(const Duration(seconds: 4));
-            Fluttertoast.showToast(
-                msg: result["result"].toString(),
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.green,
-                textColor: Colors.white,
-                fontSize: 16.0);
+            toastHelper(result["result"].toString(), false);
+
             if (mounted) {
               cleanFields();
               Navigator.pushReplacementNamed(context, Routes.initial);
@@ -151,25 +111,11 @@ class RegisterDataRepository {
           }
           if (result.containsKey('error')) {
             await Future.delayed(const Duration(seconds: 4));
-            Fluttertoast.showToast(
-                msg: result["error"].toString(),
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
-                textColor: Colors.white,
-                fontSize: 16.0);
+            toastHelper(result["error"].toString(), true);
           }
         }
       } catch (e) {
-        Fluttertoast.showToast(
-            msg: e.toString(),
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
+        toastHelper(e.toString(), true);
       }
       isLoading.value = false;
     }

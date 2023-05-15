@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import '../../app/helpers/toeast_helper.dart';
 import '../data.dart';
 
 class DisciplineRepository with ChangeNotifier {
@@ -84,24 +84,13 @@ class DisciplineRepository with ChangeNotifier {
     isLoading.value = true;
     var request = await insertScoreToStudent(data);
     if (request.containsKey('success')) {
-      return Fluttertoast.showToast(
-          msg: request["success"].toString(),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      return toastHelper(
+        request["success"].toString(),
+        false,
+      );
     }
     if (request.containsKey('error')) {
-      return Fluttertoast.showToast(
-          msg: request["error"].toString(),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      return toastHelper(request["error"].toString(), true);
     }
     isLoading.value = false;
     cleanFidelds();
@@ -112,24 +101,10 @@ class DisciplineRepository with ChangeNotifier {
     isLoading.value = true;
     var request = await disciplineChosedByStudent(data);
     if (request.containsKey('success')) {
-      Fluttertoast.showToast(
-          msg: request["success"].toString(),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      toastHelper(request["success"].toString(), false);
     }
     if (request.containsKey('error')) {
-      Fluttertoast.showToast(
-          msg: request["error"].toString(),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      toastHelper(request["error"].toString(), true);
     }
     cleanFidelds();
     isLoading.value = false;

@@ -7,7 +7,7 @@ import '../data/data.dart';
 
 Future loginUser(data) async {
   try {
-    final response = await dio.request('$baseUrl/api/token/',
+    final response = await dio.request('/api/token/',
         options: Options(
           validateStatus: (status) => true,
           method: HttpMethods.post,

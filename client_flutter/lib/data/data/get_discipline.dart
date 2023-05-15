@@ -15,7 +15,7 @@ Future getDisciplineByTeacher() async {
 
   try {
     final response = await dio.request(
-      '$baseUrl/api/discipline_teacher/',
+      '/api/discipline_teacher/',
       options: Options(
           validateStatus: (status) => true,
           method: HttpMethods.get,
@@ -60,7 +60,7 @@ Future getDisciplineByStudent() async {
 
   try {
     final response = await dio.request(
-      '$baseUrl/api/discipline_student/',
+      '/api/discipline_student/',
       options: Options(
           validateStatus: (status) => true,
           method: HttpMethods.get,
@@ -105,7 +105,7 @@ Future getScoreDisciplineByStudent() async {
 
   try {
     final response = await dio.request(
-      '$baseUrl/api/discipline_score_student/',
+      '/api/discipline_score_student/',
       options: Options(
           validateStatus: (status) => true,
           method: HttpMethods.get,
@@ -147,7 +147,7 @@ Future getDisciplineAvailibleByStudent() async {
 
   try {
     final response = await dio.request(
-      '$baseUrl/api/discipline_left_student/',
+      '/api/discipline_left_student/',
       options: Options(
           validateStatus: (status) => true,
           method: HttpMethods.get,
@@ -187,21 +187,23 @@ Future insertScoreToStudent(data) async {
     'Authorization': "Bearer $token",
   });
   try {
-    final response = await dio.request('$baseUrl/api/score_add_student/',
+    final response = await dio.request('/api/score_add_student/',
         options: Options(
             validateStatus: (status) => true,
             method: HttpMethods.post,
             headers: defaultHeaders),
         data: data);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       return response.data;
     } else if (response.statusCode == 401) {
       throw AuthenticationException('Your session has expired');
     } else {
       throw ApiException('Request failed with status: ${response.statusCode}');
     }
-  } on DioError catch (error) {
+  }
+  
+   on DioError catch (error) {
     if (error.type == DioErrorType.connectTimeout) {
       throw TimeoutException('Connection timeout');
     } else if (error.type == DioErrorType.sendTimeout) {
@@ -228,7 +230,7 @@ Future getScoreApi() async {
 
   try {
     final response = await dio.request(
-      '$baseUrl/api/score/',
+      '/api/score/',
       options: Options(
           validateStatus: (status) => true,
           method: HttpMethods.get,
@@ -270,7 +272,7 @@ Future disciplineChosedByStudent(data) async {
   });
 
   try {
-    final response = await dio.request('$baseUrl/api/discipline_chose/',
+    final response = await dio.request('/api/discipline_chose/',
         options: Options(
           validateStatus: (status) => true,
           method: HttpMethods.post,
