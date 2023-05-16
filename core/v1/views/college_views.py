@@ -156,8 +156,7 @@ class ChoseDisciplineByStudent(APIView):
             queryset_discipline.student.add(querset_student)
             return Response({"success": "Discipline was chosed"}, status=status.HTTP_200_OK)
 
-        except Exception as wrong_error:
-            print(wrong_error)
+        except Exception:
             return Response({"error": "object missing variables"}, status=status.HTTP_400_BAD_REQUEST)
 
 
