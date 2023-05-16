@@ -198,8 +198,10 @@ class _AvailibleDisciplinesScreenState
                                                                         .initial);
                                                               });
                                                             }
-                                                          }, false,
-                                                              _controllerDiscicpline);
+                                                          },
+                                                              false,
+                                                              _controllerDiscicpline,
+                                                              null);
                                                         },
                                                         icon: const Icon(
                                                             Icons.add),

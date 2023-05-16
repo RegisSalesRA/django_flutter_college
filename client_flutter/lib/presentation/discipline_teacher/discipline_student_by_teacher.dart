@@ -25,6 +25,8 @@ class DisciplineStudentByTeacher extends StatefulWidget {
 
 class _DisciplineStudentByTeacherState
     extends State<DisciplineStudentByTeacher> {
+  final formKeyDialog = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -168,32 +170,34 @@ class _DisciplineStudentByTeacherState
                                                                     'Attention after send score you can not do again',
                                                                     () async {
                                                                   try {
-                                                                    var data = {
-                                                                      "id_student":
-                                                                          disciplineRepository.studentScore[index]
-                                                                              [
-                                                                              "id"],
-                                                                      "id_discpline":
-                                                                          widget
-                                                                              .idDiscipline,
-                                                                      "nota": disciplineRepository
-                                                                          .scoreController
-                                                                          .text
-                                                                    };
+                                                                    if (formKeyDialog
+                                                                        .currentState!
+                                                                        .validate()) {
+                                                                      var data =
+                                                                          {
+                                                                        "id_student":
+                                                                            disciplineRepository.studentScore[index]["id"],
+                                                                        "id_discpline":
+                                                                            widget.idDiscipline,
+                                                                        "nota": disciplineRepository
+                                                                            .scoreController
+                                                                            .text
+                                                                      };
 
-                                                                    Navigator.of(
-                                                                            contextDisciplineStudentByTeacher)
-                                                                        .pop();
+                                                                      Navigator.of(
+                                                                              contextDisciplineStudentByTeacher)
+                                                                          .pop();
 
-                                                                    await disciplineRepository
-                                                                        .insertScoreToStudentRepository(
-                                                                            data);
+                                                                      await disciplineRepository
+                                                                          .insertScoreToStudentRepository(
+                                                                              data);
 
-                                                                    await disciplineRepository
-                                                                        .getScoreRepository(
-                                                                            widget.idDiscipline);
-                                                                    disciplineRepository
-                                                                        .cleanFidelds();
+                                                                      await disciplineRepository
+                                                                          .getScoreRepository(
+                                                                              widget.idDiscipline);
+                                                                      disciplineRepository
+                                                                          .cleanFidelds();
+                                                                    }
                                                                   } catch (e) {
                                                                     final token =
                                                                         await readSecureData(
@@ -215,7 +219,8 @@ class _DisciplineStudentByTeacherState
                                                                 },
                                                                     true,
                                                                     disciplineRepository
-                                                                        .scoreController);
+                                                                        .scoreController,
+                                                                    formKeyDialog);
                                                               },
                                                               icon: const Icon(
                                                                   Icons.add),
