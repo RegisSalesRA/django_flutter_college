@@ -19,6 +19,14 @@ class TestLoginUserStudent(APITestCase):
         response = self.client.post(ApiRouteMocks().url_api_token, self.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK, response.content)
 
+    def test_login_user_method_delete_not_allowed(self):
+        response = self.client.delete(ApiRouteMocks().url_api_token, self.data)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED, response.content)
+
+    def test_login_user_method_put_not_allowed(self):
+        response = self.client.put(ApiRouteMocks().url_api_token, self.data)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED, response.content)
+
     def test_login_user_student_fail(self):
         response = self.client.post(ApiRouteMocks().url_api_token, self.wrong_data)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED, response.content)
@@ -33,7 +41,15 @@ class TestGetStudentUserLogged(APITestCase):
         response = self.client.get(ApiRouteMocks().url_api_user)
         self.assertEqual(response.status_code, status.HTTP_200_OK, response.content)
 
-    def test_get_user_logged_fail(self):
+    def test_get_user_method_delete_not_allowed(self):
+        response = self.client.delete(ApiRouteMocks().url_api_user)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED, response.content)
+
+    def test_get_user_method_put_not_allowed(self):
+        response = self.client.put(ApiRouteMocks().url_api_user)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED, response.content)
+
+    def test_get_user_logged_unauthorized(self):
         self.client.credentials(HTTP_AUTHORIZATION="Bearer invalid_token")
         response = self.client.get(ApiRouteMocks().url_api_user)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -48,7 +64,15 @@ class TestSignUpStudentTest(APITestCase):
         response = self.client.post(ApiRouteMocks().url_signup_student, self.data_student)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED, response.content)
 
-    def test_signup_student_fail(self):
+    def test_signup_student_method_put_not_allowed(self):
+        response = self.client.put(ApiRouteMocks().url_signup_student, self.data_student)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED, response.content)
+
+    def test_signup_student_method_delete_not_allowed(self):
+        response = self.client.delete(ApiRouteMocks().url_signup_student, self.data_student)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED, response.content)
+
+    def test_signup_student_bad_request(self):
         response = self.client.post(ApiRouteMocks().url_signup_student, self.data_user_student_wrong)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST, response.content)
 
@@ -64,9 +88,21 @@ class TestLoginUserTeacher(APITestCase):
         response = self.client.post(ApiRouteMocks().url_api_token, self.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK, response.content)
 
-    def test_login_user_teacher_fail(self):
+    def test_login_user_teacher_unauthorized(self):
         response = self.client.post(ApiRouteMocks().url_api_token, self.wrong_data)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED, response.content)
+
+    def test_login_user_teacher_bad_request(self):
+        response = self.client.post(ApiRouteMocks().url_api_token, {"methods": 2})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST, response.content)
+
+    def test_login_user_teacher_method_put_not_allowed(self):
+        response = self.client.put(ApiRouteMocks().url_api_token, self.wrong_data)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED, response.content)
+
+    def test_login_user_teacher_method_delete_not_allowed(self):
+        response = self.client.delete(ApiRouteMocks().url_api_token, self.wrong_data)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED, response.content)
 
 
 class TestGetTeacherUserLogged(APITestCase):
@@ -78,10 +114,26 @@ class TestGetTeacherUserLogged(APITestCase):
         response = self.client.get(ApiRouteMocks().url_api_user)
         self.assertEqual(response.status_code, status.HTTP_200_OK, response.content)
 
-    def test_get_user_logged_fail(self):
+    def test_get_user_logged_unauthorized(self):
         self.client.credentials(HTTP_AUTHORIZATION="Bearer invalid_token")
         response = self.client.get(ApiRouteMocks().url_api_user)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_signup_student_method_put_not_allowed(self):
+        response = self.client.put(
+            ApiRouteMocks().url_api_user,
+        )
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_405_METHOD_NOT_ALLOWED,
+        )
+
+    def test_signup_student_method_delete_not_allowed(self):
+        response = self.client.delete(ApiRouteMocks().url_api_user)
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_405_METHOD_NOT_ALLOWED,
+        )
 
 
 class TestSignUpTeacherTest(APITestCase):
@@ -93,6 +145,14 @@ class TestSignUpTeacherTest(APITestCase):
         response = self.client.post(ApiRouteMocks().url_signup_teacher, self.data_teacher)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED, response.content)
 
-    def test_signup_teacher_fail(self):
+    def test_signup_teacher_bad_request(self):
         response = self.client.post(ApiRouteMocks().url_signup_teacher, self.data_user_teacher_wrong)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST, response.content)
+
+    def test_signup_teacher_method_put_not_allowed(self):
+        response = self.client.put(ApiRouteMocks().url_signup_teacher, self.data_user_teacher_wrong)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED, response.content)
+
+    def test_signup_teacher_method_delete_not_allowed(self):
+        response = self.client.delete(ApiRouteMocks().url_signup_teacher, self.data_user_teacher_wrong)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED, response.content)
