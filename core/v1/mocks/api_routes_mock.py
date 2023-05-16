@@ -93,3 +93,7 @@ class ApiRouteMocks(ApiRouteInterface):
     @property
     def url_api_discipline_score_student(self):
         return "/api/discipline_score_student/"
+
+    @property
+    def url_api_semester_add(self):
+        return "/api/semester/"
