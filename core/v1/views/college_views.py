@@ -64,6 +64,11 @@ class DisciplineListLeftStudent(generics.ListAPIView):
 
 
 class SemesterListCreateView(generics.ListCreateAPIView):
+    """
+    This code is responsible to list and create a new semester
+    if semester is already created a map with error will be release
+    """
+
     queryset = Semester.objects.all()
     serializer_class = SemesterSerializer
 
