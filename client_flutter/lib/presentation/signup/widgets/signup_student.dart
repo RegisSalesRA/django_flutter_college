@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../../../app/app.dart';
 import '../../../data/repository/register_data_repository.dart';
 
@@ -73,9 +73,13 @@ class _SignUpStudentState extends State<SignUpStudent> with ValidationMixin {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: TextFormField(
+                  inputFormatters: [
+                    MaskTextInputFormatter(mask: "+# (###) ###-##-##")
+                  ],
                   controller: registerData.phoneController,
                   decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.phone), hintText: 'Phone'),
+                      prefixIcon: Icon(Icons.phone),
+                      hintText: '+1 (234) 567-89-01'),
                   validator: isPhoneNumberValid,
                 ),
               ),

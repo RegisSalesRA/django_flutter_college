@@ -117,7 +117,7 @@ class RegisterDataRepository {
       } catch (e) {
         toastHelper(e.toString(), true);
       }
-      isLoading.value = false;
     }
+    isLoading.value = false;
   }
 }

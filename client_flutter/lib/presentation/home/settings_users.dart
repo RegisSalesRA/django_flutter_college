@@ -1,5 +1,5 @@
 import 'package:client_flutter/app/app.dart';
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import '../../data/data.dart';
 import 'widgets/settings_card.dart';
 
@@ -8,7 +8,7 @@ class SettingsUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var userData = ModalRoute.of(context)?.settings.arguments as UserModel; 
+    var userData = ModalRoute.of(context)?.settings.arguments as UserModel;
     return Scaffold(
       appBar: AppBar(
           title: Text(

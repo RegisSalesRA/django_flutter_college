@@ -37,23 +37,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: SizedBox(
         height: MediaQuerySize.heigthSizeCustom(context),
         width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            GridComponent(
-              voidCall: widget.forwardPageView,
-              nameImage: "student_register.png",
-              text_1: "Register",
-              text_2: "Student",
-            ),
-            GridComponent(
-              voidCall: widget.backPageView,
-              nameImage: "teacher_register.png",
-              text_1: "Register",
-              text_2: "Teacher",
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              GridComponent(
+                voidCall: widget.forwardPageView,
+                nameImage: "student_register.png",
+                text_1: "Register",
+                text_2: "Student",
+              ),
+              SizedBox(
+                height: MediaQuerySize.heigthSizeCustom(context) / 10,
+              ),
+              GridComponent(
+                voidCall: widget.backPageView,
+                nameImage: "teacher_register.png",
+                text_1: "Register",
+                text_2: "Teacher",
+              ),
+            ],
+          ),
         ),
       ),
     );

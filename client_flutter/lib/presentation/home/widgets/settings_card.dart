@@ -4,7 +4,11 @@ class SettingsCard extends StatelessWidget {
   final String data;
   final String hintText;
   final Icon icon;
-  const SettingsCard({super.key, required this.data, required this.hintText, required this.icon});
+  const SettingsCard(
+      {super.key,
+      required this.data,
+      required this.hintText,
+      required this.icon});
 
   @override
   Widget build(BuildContext context) {
