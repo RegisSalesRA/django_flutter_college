@@ -18,21 +18,39 @@ from core.v1.serializers.serializers_college import (
 
 # Discpline
 class DisciplineListView(generics.ListAPIView):
+    """
+    This view of code is responsible for bringing all the project disciplines registered in the database
+    """
+
     queryset = Discipline.objects.all()
     serializer_class = DisciplineSerializer
 
 
 class DisciplineCreateView(generics.CreateAPIView):
+    """
+    This view of code is responsible for create all the project disciplines in the database
+    """
+
     queryset = Discipline.objects.all()
     serializer_class = DisciplineSerializerPost
 
 
 class DisciplineRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    This view of code is responsible for retrieve,update and destroy disciplines from database
+    """
+
     queryset = Discipline.objects.all()
     serializer_class = DisciplineSerializer
 
 
 class DisciplineListByTeacher(generics.ListAPIView):
+
+    """
+    This view of code is responsible list all disciplines by teacher
+    if teacher login only his own discipline will be showed to him
+    """
+
     serializer_class = DisciplineSerializer
     permission_classes = [IsAuthenticated, TeacherUser]
 
@@ -43,6 +61,12 @@ class DisciplineListByTeacher(generics.ListAPIView):
 
 
 class DisciplineListLeftStudent(generics.ListAPIView):
+
+    """
+    This view of code is responsible list all disciplines by teacher
+    if teacher login only his own discipline will be showed to him
+    """
+
     permission_classes = [IsAuthenticated, StudentUser]
     serializer_class = DisciplineSerializer
 
@@ -65,7 +89,7 @@ class DisciplineListLeftStudent(generics.ListAPIView):
 
 class SemesterListCreateView(generics.ListCreateAPIView):
     """
-    This code is responsible to list and create a new semester
+    This view is responsible to list and create a new semester
     if semester is already created a map with error will be release
     """
 
@@ -83,6 +107,11 @@ class SemesterListCreateView(generics.ListCreateAPIView):
 
 
 class SemesterRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+
+    """
+    This view is responsible to retrieve, destroy and update a semester
+    """
+
     queryset = Semester.objects.all()
     serializer_class = SemesterSerializer
 
@@ -91,21 +120,39 @@ class SemesterRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ScoresListView(generics.ListAPIView):
+    """
+    This view is responsible to list all scores from database
+    """
+
     queryset = Scores.objects.all()
     serializer_class = ScoresSerializer
 
 
 class ScoresCreateView(generics.CreateAPIView):
+    """
+    This view is responsible to create all scores from database
+    """
+
     queryset = Scores.objects.all()
     serializer_class = ScoresPostSerializer
 
 
 class ScoresRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+
+    """
+    This view is responsible to update,retrieve and destroy all scores from database
+    """
+
     queryset = Scores.objects.all()
     serializer_class = ScoresSerializer
 
 
 class DisciplinyByStudent(generics.ListAPIView):
+    """
+        This view of code is responsible list all disciplines by student
+    if student login only his own discipline will be showed to him
+    """
+
     serializer_class = DisciplineSerializer
     permission_classes = [IsAuthenticated, StudentUser]
 
@@ -116,6 +163,10 @@ class DisciplinyByStudent(generics.ListAPIView):
 
 
 class InsertScoreToStudent(APIView):
+    """
+    This view is responsible to insert a score to student by discipline
+    only teacher logged has access with this view and can excute this action
+    """
     permission_classes = [IsAuthenticated, TeacherUser]
 
     def get(self):
@@ -145,6 +196,11 @@ class InsertScoreToStudent(APIView):
 
 
 class ChoseDisciplineByStudent(APIView):
+
+    """
+    This view is responsible to get and insert discipline to student by his choice
+    only students logged has this permission if the discipline is already chosed will be not showed here
+    """
     permission_classes = [IsAuthenticated, StudentUser]
 
     def post(self, request):
@@ -166,6 +222,9 @@ class ChoseDisciplineByStudent(APIView):
 
 
 class ScoreDisciplineByStudent(APIView):
+    """"
+    This view is responsible to get discipline from student with more detail response
+    """
     permission_classes = [IsAuthenticated, StudentUser]
 
     def get(self, request):
