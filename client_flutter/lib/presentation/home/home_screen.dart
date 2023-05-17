@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:client_flutter/presentation/common/grid_widget.dart';
 import 'package:client_flutter/presentation/home/widgets/drawer.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../app/app.dart';
 import '../../data/data.dart';
 import 'widgets/alert_dialog_status.dart';
@@ -15,6 +18,31 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Future checkInternetConnectivity() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+
+    try {
+      if (connectivityResult == ConnectivityResult.none) {
+        return false; // Sem conexão com a internet
+      } else {
+        await Provider.of<GetCurrentUserRepository>(context, listen: false)
+            .functionGetCurrentUserLoggedRepository();
+        return true;
+      }
+    } catch (e) {
+      toastHelper(e.toString(), true);
+    }
+  }
+
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  void _onRefresh() async {
+    await Future.delayed(const Duration(milliseconds: 1000));
+    await checkInternetConnectivity();
+    _refreshController.headerMode!.value = RefreshStatus.completed;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -27,8 +55,8 @@ class _HomeScreenState extends State<HomeScreen> {
       } catch (e) {
         if (mounted) {
           alertDialogStatus(context, e.toString(), () async {
-            await deleteSecureData(StorageItem('token', token!));
             Navigator.pushReplacementNamed(context, Routes.initial);
+            await deleteSecureData(StorageItem('token', token!));
           });
         }
       }
@@ -54,106 +82,115 @@ class _HomeScreenState extends State<HomeScreen> {
           centerTitle: true,
           title: Text(
             "Home Screen",
-            style: Theme.of(context).textTheme.headline1,
+            style: Theme.of(context).textTheme.displayLarge,
           )),
-      body: Consumer<GetCurrentUserRepository>(
-        builder: (context, userRepository, _) {
-          return ValueListenableBuilder(
-              valueListenable: userRepository.isLoading,
-              builder: (BuildContext context, isLoading, child) {
-                if (isLoading == false) {
-                  return Container(
-                    height: MediaQuerySize.heigthSizeCustom(context),
-                    decoration: const BoxDecoration(
-                        color: Colors.white10,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20))),
-                    child: SingleChildScrollView(
-                      child: Column(children: [
-                        if (userRepository.currentUser.isStudent) ...{
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                GridComponent(
-                                  nameImage: "current_discipline.png",
-                                  voidCall: () {
-                                    Navigator.pushNamed(
-                                        context, Routes.currentDiscipline);
-                                  },
-                                  text_1: "Current",
-                                  text_2: "Disciplines",
-                                ),
-                                const SizedBox(
-                                  width: 15,
-                                ),
-                                GridComponent(
-                                  nameImage: "availible_disciplines.png",
-                                  voidCall: () {
-                                    Navigator.pushNamed(
-                                        context, Routes.availibleDiscipline);
-                                  },
-                                  text_1: "Avalible",
-                                  text_2: "Disciplines",
-                                ),
-                              ],
+      body: SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: false,
+        header: const MaterialClassicHeader(
+          color: ColorsTheme.primaryColor,
+        ),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        child: Consumer<GetCurrentUserRepository>(
+          builder: (context, userRepository, _) {
+            return ValueListenableBuilder(
+                valueListenable: userRepository.isLoading,
+                builder: (BuildContext context, isLoading, child) {
+                  if (isLoading == false) {
+                    return Container(
+                      height: MediaQuerySize.heigthSizeCustom(context),
+                      decoration: const BoxDecoration(
+                          color: Colors.white10,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20))),
+                      child: SingleChildScrollView(
+                        child: Column(children: [
+                          if (userRepository.currentUser.isStudent) ...{
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  GridComponent(
+                                    nameImage: "current_discipline.png",
+                                    voidCall: () {
+                                      Navigator.pushNamed(
+                                          context, Routes.currentDiscipline);
+                                    },
+                                    text_1: "Current",
+                                    text_2: "Disciplines",
+                                  ),
+                                  const SizedBox(
+                                    width: 15,
+                                  ),
+                                  GridComponent(
+                                    nameImage: "availible_disciplines.png",
+                                    voidCall: () {
+                                      Navigator.pushNamed(
+                                          context, Routes.availibleDiscipline);
+                                    },
+                                    text_1: "Avalible",
+                                    text_2: "Disciplines",
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const SizedBox(
-                                  width: 30,
-                                ),
-                                GridComponent(
-                                  nameImage: "discipline_score.png",
-                                  voidCall: () {
-                                    Navigator.pushNamed(
-                                        context, Routes.scoreDiscipline);
-                                  },
-                                  text_1: "Discipline",
-                                  text_2: "Scores",
-                                ),
-                              ],
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const SizedBox(
+                                    width: 30,
+                                  ),
+                                  GridComponent(
+                                    nameImage: "discipline_score.png",
+                                    voidCall: () {
+                                      Navigator.pushNamed(
+                                          context, Routes.scoreDiscipline);
+                                    },
+                                    text_1: "Discipline",
+                                    text_2: "Scores",
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        },
-                        if (userRepository.currentUser.isTeacher) ...{
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const SizedBox(
-                                  width: 30,
-                                ),
-                                GridComponent(
-                                  nameImage: "insert_score.png",
-                                  voidCall: () {
-                                    Navigator.pushNamed(
-                                        context, Routes.teacherDiscipline);
-                                  },
-                                  text_1: "Teacher",
-                                  text_2: "Disciplines",
-                                ),
-                              ],
+                          },
+                          if (userRepository.currentUser.isTeacher) ...{
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const SizedBox(
+                                    width: 30,
+                                  ),
+                                  GridComponent(
+                                    nameImage: "insert_score.png",
+                                    voidCall: () {
+                                      Navigator.pushNamed(
+                                          context, Routes.teacherDiscipline);
+                                    },
+                                    text_1: "Teacher",
+                                    text_2: "Disciplines",
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        }
-                      ]),
-                    ),
-                  );
-                }
-                return const Center(child: CircularProgressIndicator());
-              });
-        },
+                          }
+                        ]),
+                      ),
+                    );
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                });
+          },
+        ),
       ),
     );
   }
