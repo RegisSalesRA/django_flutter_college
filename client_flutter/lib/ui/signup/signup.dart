@@ -1,6 +1,6 @@
-import 'package:client_flutter/presentation/signup/widgets/signup_screen.dart';
-import 'package:client_flutter/presentation/signup/widgets/signup_student.dart';
-import 'package:client_flutter/presentation/signup/widgets/signup_teacher.dart';
+import 'package:client_flutter/ui/signup/widgets/signup_screen.dart';
+import 'package:client_flutter/ui/signup/widgets/signup_student.dart';
+import 'package:client_flutter/ui/signup/widgets/signup_teacher.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/repository/register_data_repository.dart';

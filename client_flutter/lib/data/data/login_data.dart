@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import '../../app/app.dart'; 
+import '../../app/app.dart';
 import '../data/data.dart';
 
 Future loginUser(data) async {
@@ -12,7 +12,7 @@ Future loginUser(data) async {
           validateStatus: (status) => true,
           method: HttpMethods.post,
         ),
-        data: data); 
+        data: data);
     if (response.statusCode == 200) {
       await writeSecureData(StorageItem('token', response.data["access"]));
       Map<String, dynamic> success = {"success": "login user with success"};
@@ -25,7 +25,7 @@ Future loginUser(data) async {
       throw ApiException('Request failed with status: ${response.statusCode}');
     }
   } on DioError catch (error) {
-    if (error.type == DioErrorType.connectTimeout) {
+    if (error.type == DioErrorType.connectionTimeout) {
       throw TimeoutException('Connection timeout');
     } else if (error.type == DioErrorType.sendTimeout) {
       throw TimeoutException('Send timeout');

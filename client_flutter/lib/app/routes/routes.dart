@@ -1,14 +1,14 @@
-import 'package:client_flutter/presentation/discipline_student/availible_discipline_student.dart';
-import 'package:client_flutter/presentation/discipline_student/score_discipline_student.dart';
-import 'package:client_flutter/presentation/signup/signup.dart';
+import 'package:client_flutter/ui/discipline_student/availible_discipline_student.dart';
+import 'package:client_flutter/ui/discipline_student/score_discipline_student.dart';
+import 'package:client_flutter/ui/signup/signup.dart';
 import 'package:flutter/material.dart';
 
-import '../../presentation/discipline_student/discipline_student.dart';
-import '../../presentation/discipline_teacher/discipline_teacher.dart';
+import '../../ui/discipline_student/discipline_student.dart';
+import '../../ui/discipline_teacher/discipline_teacher.dart';
 
-import '../../presentation/home/settings_users.dart';
-import '../../presentation/home/home_screen.dart';
-import '../../presentation/login/login.dart';
+import '../../ui/home/settings_users.dart';
+import '../../ui/home/home_screen.dart';
+import '../../ui/login/login.dart';
 
 class Routes {
   static Map<String, Widget Function(BuildContext)> list =

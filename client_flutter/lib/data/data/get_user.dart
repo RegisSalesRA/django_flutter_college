@@ -30,7 +30,7 @@ Future getCurrentUser() async {
       throw ApiException('Request failed with status: ${response.statusCode}');
     }
   } on DioError catch (error) {
-    if (error.type == DioErrorType.connectTimeout) {
+    if (error.type == DioErrorType.connectionTimeout) {
       throw TimeoutException('Connection timeout');
     } else if (error.type == DioErrorType.sendTimeout) {
       throw TimeoutException('Send timeout');

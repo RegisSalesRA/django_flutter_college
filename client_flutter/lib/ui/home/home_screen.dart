@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:client_flutter/presentation/common/grid_widget.dart';
-import 'package:client_flutter/presentation/home/widgets/drawer.dart';
+import 'package:client_flutter/ui/common/grid_widget.dart';
+import 'package:client_flutter/ui/home/widgets/drawer.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,6 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
+  
+  
   void _onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     await checkInternetConnectivity();

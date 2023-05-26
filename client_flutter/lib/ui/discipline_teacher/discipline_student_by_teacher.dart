@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:client_flutter/presentation/discipline_student/widgets/card_discipline_widget.dart';
+import 'package:client_flutter/ui/discipline_student/widgets/card_discipline_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../data/data.dart';

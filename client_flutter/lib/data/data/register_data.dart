@@ -31,7 +31,7 @@ Future registerTeacher(data) async {
       return exceptErrorResponse(response.data);
     }
   } on DioError catch (error) {
-    if (error.type == DioErrorType.connectTimeout) {
+    if (error.type == DioErrorType.connectionTimeout) {
       return 'connect Timeout';
     }
     if (error.type == DioErrorType.sendTimeout) {
@@ -68,7 +68,7 @@ Future registerStudent(data) async {
       return exceptErrorResponse(response.data);
     }
   } on DioError catch (error) {
-    if (error.type == DioErrorType.connectTimeout) {
+    if (error.type == DioErrorType.connectionTimeout) {
       return 'connect Timeout';
     }
     if (error.type == DioErrorType.sendTimeout) {
