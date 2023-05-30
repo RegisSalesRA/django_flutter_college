@@ -256,12 +256,12 @@ class _DisciplineStudentByTeacherState
                                     height: MediaQuerySize.heigthSizeCustom(
                                             context) *
                                         0.70,
-                                    child: Column(
+                                    child: const Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: const [
+                                      children: [
                                         Center(
                                           child: Text("No student registed!"),
                                         ),

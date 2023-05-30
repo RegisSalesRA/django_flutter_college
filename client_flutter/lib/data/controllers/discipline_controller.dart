@@ -27,12 +27,13 @@ class DisciplineController with ChangeNotifier {
     valueFieldText.value = "";
   }
 
-  getDisciplineByTeacherController() {
+  getDisciplineByTeacherController() async {
     isLoading.value = true;
-    DisciplineRepository.getDisciplineByTeacherRepository(disciplineTeacher);
     disciplineTeacher.clear();
-    isLoading.value = false;
+    await DisciplineRepository.getDisciplineByTeacherRepository(
+        disciplineTeacher);
     notifyListeners();
+    isLoading.value = false;
   }
 
   getDisciplineByStudentListController() {
@@ -75,9 +76,13 @@ class DisciplineController with ChangeNotifier {
     notifyListeners();
   }
 
-  getScoreController(idDiscipline) {
+  getScoreController(idDiscipline) async {
     isLoading.value = true;
-    DisciplineRepository.getScoreRepository(
+    disciplineTeacher.clear();
+    studentScore.clear();
+    scores.clear();
+
+    await DisciplineRepository.getScoreRepository(
         idDiscipline, scores, disciplineTeacher, studentScore);
     isLoading.value = false;
     notifyListeners();

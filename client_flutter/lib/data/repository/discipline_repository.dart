@@ -63,7 +63,9 @@ class DisciplineRepository {
 
   static Future getScoreRepository(
       idDiscipline, scores, disciplineTeacher, studentScore) async {
+    print(disciplineTeacher.length);
     await getDisciplineByTeacherRepository(disciplineTeacher);
+    print(disciplineTeacher.length);
     var response = await getScoreApi();
 
     for (var item in response) {
@@ -75,8 +77,7 @@ class DisciplineRepository {
         .where((element) => element.id == idDiscipline)
         .toList();
 
-    var disciplineTeacherStudentsScore2 =
-        filterDiciplineById.fold<List<dynamic>>(
+    var disciplineTeacherStudentsScore2 = filterDiciplineById.fold<dynamic>(
       [],
       (previousValue, item) {
         item.student.forEach((itemSecundario) {
