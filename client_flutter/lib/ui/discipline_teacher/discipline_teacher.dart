@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../app/app.dart';
-import '../../data/repository/discipline_repository.dart';
+import '../../data/controllers/discipline_controller.dart';
 import 'discipline_student_by_teacher.dart';
 
 class TeacherDisciplinesScreen extends StatefulWidget {
@@ -23,8 +23,8 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final token = await readSecureData('token');
       try {
-        await Provider.of<DisciplineRepository>(context, listen: false)
-            .getDisciplineByTeacherRepository();
+        await Provider.of<DisciplineController>(context, listen: false)
+            .getDisciplineByTeacherController();
       } catch (e) {
         if (mounted) {
           alertDialogStatus(context, e.toString(), () async {
@@ -51,7 +51,7 @@ class _TeacherDisciplinesScreenState extends State<TeacherDisciplinesScreen> {
             style: TextStyle(color: ColorsTheme.secondaryColor),
           ),
         ),
-        body: Consumer<DisciplineRepository>(
+        body: Consumer<DisciplineController>(
           builder: ((context, disciplineTeacherRepository, child) {
             return ValueListenableBuilder(
               valueListenable: disciplineTeacherRepository.isLoading,

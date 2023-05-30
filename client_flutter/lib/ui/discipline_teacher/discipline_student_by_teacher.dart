@@ -33,8 +33,8 @@ class _DisciplineStudentByTeacherState
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final token = await readSecureData('token');
       try {
-        await Provider.of<DisciplineRepository>(context, listen: false)
-            .getScoreRepository(widget.idDiscipline);
+        await Provider.of<DisciplineController>(context, listen: false)
+            .getScoreController(widget.idDiscipline);
       } catch (e) {
         if (mounted) {
           alertDialogStatus(context, e.toString(), () async {
@@ -61,7 +61,7 @@ class _DisciplineStudentByTeacherState
             style: const TextStyle(color: ColorsTheme.secondaryColor),
           ),
         ),
-        body: Consumer<DisciplineRepository>(
+        body: Consumer<DisciplineController>(
           builder:
               (contextDisciplineStudentByTeacher, disciplineRepository, child) {
             return ValueListenableBuilder(
@@ -189,11 +189,11 @@ class _DisciplineStudentByTeacherState
                                                                           .pop();
 
                                                                       await disciplineRepository
-                                                                          .insertScoreToStudentRepository(
+                                                                          .insertScoreToStudentController(
                                                                               data);
 
                                                                       await disciplineRepository
-                                                                          .getScoreRepository(
+                                                                          .getScoreController(
                                                                               widget.idDiscipline);
                                                                       disciplineRepository
                                                                           .cleanFidelds();

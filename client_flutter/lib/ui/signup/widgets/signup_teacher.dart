@@ -1,4 +1,4 @@
-import 'package:client_flutter/data/repository/register_data_repository.dart';
+import 'package:client_flutter/data/controllers/register_data_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../../../app/app.dart';
@@ -12,7 +12,7 @@ class SignUpTeacher extends StatefulWidget {
 }
 
 class _SignUpTeacherState extends State<SignUpTeacher> with ValidationMixin {
-  final registerData = RegisterDataRepository();
+  final registerData = RegisterDataController();
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +54,9 @@ class _SignUpTeacherState extends State<SignUpTeacher> with ValidationMixin {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: TextFormField(
                   controller: registerData.usernameController,
+                  onChanged: (value) {
+                    print(registerData.usernameController.text);
+                  },
                   decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.person), hintText: 'Username'),
                   validator: inputCanNotBeEmptyOrNull,
@@ -149,7 +152,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> with ValidationMixin {
                         : () async {
                             FocusScope.of(context).unfocus();
                             FocusScope.of(context).requestFocus(FocusNode());
-                            await registerData.onSaveTeacherRepository(
+                            await registerData.onSaveTeacherController(
                                 context, mounted);
                           },
                     child: registerData.isLoading.value

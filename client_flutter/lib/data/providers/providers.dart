@@ -1,10 +1,10 @@
-import 'package:client_flutter/data/repository/get_user_repository.dart';
+import 'package:client_flutter/data/controllers/get_user_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-import '../repository/discipline_repository.dart';
+import '../controllers/discipline_controller.dart';
 
 List<SingleChildWidget> providers = [
-  ChangeNotifierProvider<GetCurrentUserRepository>(create: (context) => GetCurrentUserRepository()),
-  ChangeNotifierProvider<DisciplineRepository>(create: (context) => DisciplineRepository()),
+  ChangeNotifierProvider<GetCurrentUserController>(create: (context) => GetCurrentUserController()),
+  ChangeNotifierProvider<DisciplineController>(create: (context) => DisciplineController()),
 ];

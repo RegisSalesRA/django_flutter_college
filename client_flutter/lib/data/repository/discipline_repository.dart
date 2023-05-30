@@ -1,87 +1,18 @@
-import 'package:flutter/material.dart';
 import '../../app/helpers/toeast_helper.dart';
 import '../data.dart';
 
-class DisciplineRepository with ChangeNotifier {
-  static final DisciplineRepository _instance = DisciplineRepository._();
-
-  factory DisciplineRepository() => _instance;
-
-  DisciplineRepository._();
-
-  final ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
-
-  final ValueNotifier<String> valueFieldText = ValueNotifier<String>("");
-
-  List disciplineTeacher = [];
-  List disciplineStudentAvailible = [];
-  List scoreDisciplineStudentAvailible = [];
-  List disciplineStudent = [];
-  List scores = [];
-  List disciplineTeacherStudentsScore = [];
-  List studentScore = [];
-
-  final scoreController = TextEditingController();
-
-  void cleanFidelds() {
-    scoreController.clear();
-    valueFieldText.value = "";
-  }
-
-  Future getDisciplineByTeacherRepository() async {
-    isLoading.value = true;
-    disciplineTeacher.clear();
-    var request = await getDisciplineByTeacher();
-    for (var item in request) {
-      var discipline = DisciplineModel.fromJson(item);
-      disciplineTeacher.add(discipline);
+class DisciplineRepository {
+  static Future<void> disciplineChosedByStudentRepository(data) async {
+    var request = await disciplineChosedByStudent(data);
+    if (request.containsKey('success')) {
+      toastHelper(request["success"].toString(), false);
     }
-    isLoading.value = false;
-    cleanFidelds();
-    notifyListeners();
-  }
-
-  Future getDisciplineByStudentListRepository() async {
-    isLoading.value = true;
-    disciplineStudent.clear();
-    var request = await getDisciplineByStudent();
-    for (var item in request) {
-      var discipline = DisciplineModel.fromJson(item);
-      disciplineStudent.add(discipline);
+    if (request.containsKey('error')) {
+      toastHelper(request["error"].toString(), true);
     }
-    cleanFidelds();
-    isLoading.value = false;
-    notifyListeners();
   }
 
-  Future getScoreDisciplineByStudentListRepository() async {
-    isLoading.value = true;
-    scoreDisciplineStudentAvailible.clear();
-    var request = await getScoreDisciplineByStudent();
-    for (var item in request) {
-      var discipline = ScoreModel.fromJson(item);
-      scoreDisciplineStudentAvailible.add(discipline);
-    }
-    cleanFidelds();
-    isLoading.value = false;
-    notifyListeners();
-  }
-
-  Future getDisciplineByStudentAvailibleListRepository() async {
-    isLoading.value = true;
-    disciplineStudentAvailible.clear();
-    var request = await getDisciplineAvailibleByStudent();
-    for (var item in request) {
-      var discipline = DisciplineModel.fromJson(item);
-      disciplineStudentAvailible.add(discipline);
-    }
-    cleanFidelds();
-    isLoading.value = false;
-    notifyListeners();
-  }
-
-  Future insertScoreToStudentRepository(data) async {
-    isLoading.value = true;
+  static Future insertScoreToStudentRepository(data) async {
     var request = await insertScoreToStudent(data);
     if (request.containsKey('success')) {
       return toastHelper(
@@ -92,31 +23,47 @@ class DisciplineRepository with ChangeNotifier {
     if (request.containsKey('error')) {
       return toastHelper(request["error"].toString(), true);
     }
-    isLoading.value = false;
-    cleanFidelds();
-    notifyListeners();
   }
 
-  Future<void> disciplineChosedByStudentRepository(data) async {
-    isLoading.value = true;
-    var request = await disciplineChosedByStudent(data);
-    if (request.containsKey('success')) {
-      toastHelper(request["success"].toString(), false);
+  static Future getDisciplineByStudentAvailibleListRepository(
+      disciplineStudentAvailible) async {
+    disciplineStudentAvailible.clear();
+    var request = await getDisciplineAvailibleByStudent();
+    for (var item in request) {
+      var discipline = DisciplineModel.fromJson(item);
+      disciplineStudentAvailible.add(discipline);
     }
-    if (request.containsKey('error')) {
-      toastHelper(request["error"].toString(), true);
-    }
-    cleanFidelds();
-    isLoading.value = false;
   }
 
-  Future getScoreRepository(idDiscipline) async {
-    isLoading.value = true;
-    studentScore.clear();
-    scores.clear();
-    disciplineTeacherStudentsScore.clear();
+  static Future getScoreDisciplineByStudentListRepository(
+      scoreDisciplineStudentAvailible) async {
+    scoreDisciplineStudentAvailible.clear();
+    var request = await getScoreDisciplineByStudent();
+    for (var item in request) {
+      var discipline = ScoreModel.fromJson(item);
+      scoreDisciplineStudentAvailible.add(discipline);
+    }
+  }
 
-    await getDisciplineByTeacherRepository();
+  static Future getDisciplineByStudentListRepository(disciplineStudent) async {
+    var request = await getDisciplineByStudent();
+    for (var item in request) {
+      var discipline = DisciplineModel.fromJson(item);
+      disciplineStudent.add(discipline);
+    }
+  }
+
+  static Future getDisciplineByTeacherRepository(disciplineTeacher) async {
+    var request = await getDisciplineByTeacher();
+    for (var item in request) {
+      var discipline = DisciplineModel.fromJson(item);
+      disciplineTeacher.add(discipline);
+    }
+  }
+
+  static Future getScoreRepository(
+      idDiscipline, scores, disciplineTeacher, studentScore) async {
+    await getDisciplineByTeacherRepository(disciplineTeacher);
     var response = await getScoreApi();
 
     for (var item in response) {
@@ -162,8 +109,5 @@ class DisciplineRepository with ChangeNotifier {
       }
       studentScore.add(map1);
     }
-    cleanFidelds();
-    isLoading.value = false;
-    notifyListeners();
   }
 }

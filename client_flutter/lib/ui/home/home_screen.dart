@@ -25,8 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
       if (connectivityResult == ConnectivityResult.none) {
         return false; // Sem conexão com a internet
       } else {
-        await Provider.of<GetCurrentUserRepository>(context, listen: false)
-            .functionGetCurrentUserLoggedRepository();
+        await Provider.of<GetCurrentUserController>(context, listen: false)
+            .functionGetCurrentUserLoggedController();
         return true;
       }
     } catch (e) {
@@ -37,8 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
-  
-  
   void _onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     await checkInternetConnectivity();
@@ -51,9 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final token = await readSecureData('token');
       try {
-        // ignore: use_build_context_synchronously
-        await Provider.of<GetCurrentUserRepository>(context, listen: false)
-            .functionGetCurrentUserLoggedRepository();
+        await Provider.of<GetCurrentUserController>(context, listen: false)
+            .functionGetCurrentUserLoggedController();
       } catch (e) {
         if (mounted) {
           alertDialogStatus(context, e.toString(), () async {
@@ -94,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         controller: _refreshController,
         onRefresh: _onRefresh,
-        child: Consumer<GetCurrentUserRepository>(
+        child: Consumer<GetCurrentUserController>(
           builder: (context, userRepository, _) {
             return ValueListenableBuilder(
                 valueListenable: userRepository.isLoading,

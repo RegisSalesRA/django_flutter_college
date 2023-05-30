@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../app/app.dart';
 import '../../data/data/storage_data.dart';
-import '../../data/repository/discipline_repository.dart';
+import '../../data/controllers/discipline_controller.dart';
 import '../home/widgets/alert_dialog_status.dart';
 import 'widgets/card_discipline_widget.dart';
 
@@ -21,8 +21,8 @@ class _ScoresDisciplinesScreenState extends State<ScoresDisciplinesScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final token = await readSecureData('token');
       try {
-        await Provider.of<DisciplineRepository>(context, listen: false)
-            .getScoreDisciplineByStudentListRepository();
+        await Provider.of<DisciplineController>(context, listen: false)
+            .getScoreDisciplineByStudentListController();
       } catch (e) {
         if (mounted) {
           alertDialogStatus(context, e.toString(), () async {
@@ -49,7 +49,7 @@ class _ScoresDisciplinesScreenState extends State<ScoresDisciplinesScreen> {
             style: TextStyle(color: ColorsTheme.secondaryColor),
           ),
         ),
-        body: Consumer<DisciplineRepository>(
+        body: Consumer<DisciplineController>(
           builder: (context, disciplineRepository, child) {
             return ValueListenableBuilder(
               valueListenable: disciplineRepository.isLoading,
@@ -149,12 +149,12 @@ class _ScoresDisciplinesScreenState extends State<ScoresDisciplinesScreen> {
                                     height: MediaQuerySize.heigthSizeCustom(
                                             context) *
                                         0.70,
-                                    child: Column(
+                                    child: const Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: const [
+                                      children: [
                                         Center(
                                           child: Text("No discipline!"),
                                         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../app/app.dart';
-import '../../data/repository/login_data_repository.dart';
+import '../../data/controllers/login_data_controller.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -10,7 +10,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> with ValidationMixin {
-  final loginData = LoginRepository();
+  final loginData = LoginController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +44,13 @@ class _LoginState extends State<Login> with ValidationMixin {
                       ),
                       Text(
                         "Hello Again !",
-                        style: Theme.of(context).textTheme.headline1,
+                        style: Theme.of(context).textTheme.displayLarge,
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       Text("Welcome back you have been missed !",
-                          style: Theme.of(context).textTheme.headline3),
+                          style: Theme.of(context).textTheme.displaySmall),
                       const SizedBox(
                         height: 25,
                       ),
@@ -66,7 +66,9 @@ class _LoginState extends State<Login> with ValidationMixin {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text("Username",
-                                  style: Theme.of(context).textTheme.headline2),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayMedium),
                               TextFormField(
                                 controller: loginData.usernameController,
                                 autovalidateMode:
@@ -135,7 +137,7 @@ class _LoginState extends State<Login> with ValidationMixin {
                                           FocusScope.of(context)
                                               .requestFocus(FocusNode());
                                           loginData
-                                              .loginUserRepository(context);
+                                              .loginUserController(context);
                                         },
                                   child: isLoading
                                       ? const CircularProgressIndicator()

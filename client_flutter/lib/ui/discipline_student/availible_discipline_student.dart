@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../app/app.dart';
 import '../../data/data/data.dart';
-import '../../data/repository/discipline_repository.dart';
+import '../../data/controllers/discipline_controller.dart';
 
 class AvailibleDisciplinesScreen extends StatefulWidget {
   const AvailibleDisciplinesScreen({super.key});
@@ -27,8 +27,8 @@ class _AvailibleDisciplinesScreenState
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final token = await readSecureData('token');
       try {
-        await Provider.of<DisciplineRepository>(context, listen: false)
-            .getDisciplineByStudentAvailibleListRepository();
+        await Provider.of<DisciplineController>(context, listen: false)
+            .getDisciplineByStudentAvailibleListController();
       } catch (e) {
         if (mounted) {
           alertDialogStatus(context, e.toString(), () async {
@@ -61,7 +61,7 @@ class _AvailibleDisciplinesScreenState
             style: TextStyle(color: ColorsTheme.secondaryColor),
           ),
         ),
-        body: Consumer<DisciplineRepository>(
+        body: Consumer<DisciplineController>(
           builder: (contextPageAvalibleDisciplineStudent, disciplineRepository,
               child) {
             return ValueListenableBuilder(
@@ -175,10 +175,10 @@ class _AvailibleDisciplinesScreenState
                                                                   contextPageAvalibleDisciplineStudent,
                                                                   'Accept');
                                                               await disciplineRepository
-                                                                  .disciplineChosedByStudentRepository(
+                                                                  .disciplineChosedByStudentController(
                                                                       data);
                                                               await disciplineRepository
-                                                                  .getDisciplineByStudentAvailibleListRepository();
+                                                                  .getDisciplineByStudentAvailibleListController();
                                                             } catch (e) {
                                                               final token =
                                                                   await readSecureData(

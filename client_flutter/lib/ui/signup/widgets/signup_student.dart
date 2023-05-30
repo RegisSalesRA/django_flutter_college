@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../../../app/app.dart';
-import '../../../data/repository/register_data_repository.dart';
+import '../../../data/controllers/register_data_controller.dart';
 
 class SignUpStudent extends StatefulWidget {
   final VoidCallback backPageView;
@@ -15,7 +15,7 @@ class SignUpStudent extends StatefulWidget {
 }
 
 class _SignUpStudentState extends State<SignUpStudent> with ValidationMixin {
-  final registerData = RegisterDataRepository();
+  final registerData = RegisterDataController();
 
   @override
   void initState() {
@@ -150,7 +150,7 @@ class _SignUpStudentState extends State<SignUpStudent> with ValidationMixin {
                         : () async {
                             FocusScope.of(context).unfocus();
                             FocusScope.of(context).requestFocus(FocusNode());
-                            await registerData.onSaveStudentRepository(
+                            await registerData.onSaveStudentController(
                                 context, mounted);
                           },
                     child: registerData.isLoading.value

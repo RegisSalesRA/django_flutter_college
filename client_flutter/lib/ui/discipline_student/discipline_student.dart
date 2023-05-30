@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../app/app.dart';
-import '../../data/repository/discipline_repository.dart';
+import '../../data/controllers/discipline_controller.dart';
 import '../home/widgets/alert_dialog_status.dart';
 
 class StudentDisciplinesScreen extends StatefulWidget {
@@ -22,8 +22,8 @@ class _StudentDisciplinesScreenState extends State<StudentDisciplinesScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final token = await readSecureData('token');
       try {
-        await Provider.of<DisciplineRepository>(context, listen: false)
-            .getDisciplineByStudentListRepository();
+        await Provider.of<DisciplineController>(context, listen: false)
+            .getDisciplineByStudentListController();
       } catch (e) {
         if (mounted) {
           alertDialogStatus(context, e.toString(), () async {
@@ -51,7 +51,7 @@ class _StudentDisciplinesScreenState extends State<StudentDisciplinesScreen> {
         ),
       ),
       body:
-          Consumer<DisciplineRepository>(builder: (context, disciplineList, _) {
+          Consumer<DisciplineController>(builder: (context, disciplineList, _) {
         return ValueListenableBuilder<bool>(
             valueListenable: disciplineList.isLoading,
             builder: (BuildContext context, isLoading, child) {

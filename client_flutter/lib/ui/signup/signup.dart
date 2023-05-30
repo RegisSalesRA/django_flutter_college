@@ -3,7 +3,7 @@ import 'package:client_flutter/ui/signup/widgets/signup_student.dart';
 import 'package:client_flutter/ui/signup/widgets/signup_teacher.dart';
 import 'package:flutter/material.dart';
 
-import '../../data/repository/register_data_repository.dart';
+import '../../data/controllers/register_data_controller.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -13,7 +13,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  final _registerData = RegisterDataRepository();
+  final _registerData = RegisterDataController();
 
   @override
   Widget build(BuildContext context) {

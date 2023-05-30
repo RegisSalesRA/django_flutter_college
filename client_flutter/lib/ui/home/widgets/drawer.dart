@@ -9,7 +9,7 @@ class DrawerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<GetCurrentUserRepository>(
+    return Consumer<GetCurrentUserController>(
       builder: (context, userRepository, _) {
         return Drawer(
           child: Column(
@@ -24,7 +24,7 @@ class DrawerWidget extends StatelessWidget {
                   child: Center(
                     child: Text(
                       "Welcome",
-                      style: Theme.of(context).textTheme.headline1,
+                      style: Theme.of(context).textTheme.displayLarge,
                     ),
                   ),
                 ),
