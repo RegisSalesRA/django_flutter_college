@@ -36,9 +36,10 @@ class DisciplineController with ChangeNotifier {
     isLoading.value = false;
   }
 
-  getDisciplineByStudentListController() {
+  getDisciplineByStudentListController() async {
     isLoading.value = true;
-    DisciplineRepository.getDisciplineByStudentListRepository(
+    disciplineStudent.clear();
+    await DisciplineRepository.getDisciplineByStudentListRepository(
         disciplineStudent);
     isLoading.value = false;
     cleanFidelds();
@@ -54,12 +55,13 @@ class DisciplineController with ChangeNotifier {
     notifyListeners();
   }
 
-  getDisciplineByStudentAvailibleListController() {
+  getDisciplineByStudentAvailibleListController() async {
     isLoading.value = true;
-    DisciplineRepository.getDisciplineByStudentAvailibleListRepository(
+    await DisciplineRepository.getDisciplineByStudentAvailibleListRepository(
         disciplineStudentAvailible);
-    isLoading.value = false;
+    print(disciplineStudentAvailible);
     notifyListeners();
+    isLoading.value = false;
   }
 
   insertScoreToStudentController(data) {
