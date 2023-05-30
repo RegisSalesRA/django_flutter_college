@@ -19,8 +19,8 @@ Future getCurrentUser() async {
           validateStatus: (status) => true,
           method: HttpMethods.get,
           headers: defaultHeaders,
-          sendTimeout: 5000,
-          receiveTimeout: 10000),
+          sendTimeout: const Duration(seconds: 5),
+          receiveTimeout: const Duration(seconds: 10)),
     );
     if (response.statusCode == 200) {
       return response.data;
