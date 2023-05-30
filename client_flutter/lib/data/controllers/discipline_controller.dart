@@ -46,9 +46,9 @@ class DisciplineController with ChangeNotifier {
     notifyListeners();
   }
 
-  getScoreDisciplineByStudentListController() {
+  getScoreDisciplineByStudentListController() async {
     isLoading.value = true;
-    DisciplineRepository.getScoreDisciplineByStudentListRepository(
+    await DisciplineRepository.getScoreDisciplineByStudentListRepository(
         scoreDisciplineStudentAvailible);
     isLoading.value = false;
 

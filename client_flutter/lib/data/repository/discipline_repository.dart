@@ -33,7 +33,6 @@ class DisciplineRepository {
       var discipline = DisciplineModel.fromJson(item);
       disciplineStudentAvailible.add(discipline);
     }
-    print(disciplineStudentAvailible);
   }
 
   static Future getScoreDisciplineByStudentListRepository(
@@ -44,6 +43,7 @@ class DisciplineRepository {
       var discipline = ScoreModel.fromJson(item);
       scoreDisciplineStudentAvailible.add(discipline);
     }
+    print(scoreDisciplineStudentAvailible);
   }
 
   static Future getDisciplineByStudentListRepository(disciplineStudent) async {
