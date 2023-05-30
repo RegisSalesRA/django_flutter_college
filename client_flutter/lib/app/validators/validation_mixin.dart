@@ -49,7 +49,7 @@ String? isPhoneNumberValid(
 }) {
   if (phone != null && phone.isNotEmpty) {
     final RegExp regex = RegExp(
-      r'^1\d\d(\d\d)?$|^0800 ?\d{3} ?\d{4}$|^(\(0?([1-9a-zA-Z][0-9a-zA-Z])?[1-9]\d\) ?|0?([1-9a-zA-Z][0-9a-zA-Z])?[1-9]\d[ .-]?)?(9|9[ .-])?[2-9]\d{3}[ .-]?\d{4}$',
+      r'^\+1 \(\d{3}\) \d{3}-\d{2}-\d{2}$',
     );
     return regex.hasMatch(phone)
         ? null
