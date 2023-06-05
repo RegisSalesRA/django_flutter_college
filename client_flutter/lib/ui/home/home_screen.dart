@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:client_flutter/ui/common/grid_widget.dart';
 import 'package:client_flutter/ui/home/widgets/drawer.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../app/app.dart';
@@ -19,10 +19,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Future checkInternetConnectivity() async {
-    var connectivityResult = await Connectivity().checkConnectivity();
-
+    final hasConnection = await InternetConnectionChecker().hasConnection; 
     try {
-      if (connectivityResult == ConnectivityResult.none) {
+      if (hasConnection == false) {
         return false; // Sem conexão com a internet
       } else {
         await Provider.of<GetCurrentUserController>(context, listen: false)
