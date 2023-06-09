@@ -1,15 +1,14 @@
 import os
 import sys
-from server.settings import base
+
+from server.config import base
+
 
 def main():
-    
     if base.DEBUG:
-        os.environ.setdefault('DJANGO_SETTINGS_MODULE',
-                          'server.settings.local')
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "server.config.developer")
     else:
-        os.environ.setdefault('DJANGO_SETTINGS_MODULE',
-                               'server.settings.production')        
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "server.config.production")
 
     try:
         from django.core.management import execute_from_command_line
