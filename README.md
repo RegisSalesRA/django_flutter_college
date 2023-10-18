@@ -17,7 +17,7 @@
 <h2>About App</h2>
 
 <p>
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+College is a project that would like to test student and teacher grades, where the teacher needs to evaluate and tell the student's grade, the student logs in and checks their grades whether they failed or not, they can choose the subjects too
 </p>
 
 <h2>Screenshots</h2>
@@ -32,7 +32,8 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 <img src="https://img.shields.io/badge/Flutter Version-3.3.2-blue"> <img src="https://img.shields.io/badge/Dart Version-2.18.1-blueviolet"> <img src="https://img.shields.io/badge/JDK version-11.0.16-yellowgreen">
  
 <p>
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+
+This Application was created with django and flutter to try new features and to train a little on both
 </p>
 
 
@@ -68,8 +69,20 @@ $ flutter run
 <h2>Packages</h2>
 <p>
 
+-  provider: ^6.0.5
+-  faker: ^2.0.0
+-  equatable: ^2.0.5
 -  shimmer: ^2.0.0
--  http: ^0.13.4 
+-  dio: ^5.1.1
+-  flutter_secure_storage: ^8.0.0
+-  intl: ^0.17.0
+-  fluttertoast: ^8.2.1
+-  mask_text_input_formatter: ^2.4.0 
+-  pull_to_refresh: ^2.0.0
+-  internet_connection_checker: ^1.0.0+1
+-  lottie: ^1.4.2
+-  flutter_animate: ^4.1.1+1
+-  cupertino_icons: ^1.0.2
 
 </br>
 
