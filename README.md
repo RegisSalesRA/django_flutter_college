@@ -1,4 +1,4 @@
-# [Flutter][] Rick and Morty
+# [Flutter][] Django Flutter College
 
 [Flutter]: https://docs.flutter.dev/
 
@@ -39,21 +39,28 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 <h2>How to use</h2>
 <p>
 
-```
 
 - Clone o repositório:
-$ git clone https://github.com/RegisSalesRA/flutter_rick_and_morty.git
 
-- Entre no diretório:
-$ cd flutter_rick_and_morty
+git clone  https://github.com/RegisSalesRA/django_flutter_college.git
 
-- Instale as dependências:
-$ flutter pub get / flutter packages get
+# BACKEND
+
+inside folder there is docker or you can use poetry
+
+- poetry shell
+- poetry install
+- poetry run python manage.py migrate
+- poetry run python manage.py runserver
+
+# FRONTEND
+
+- flutter pub get
+- flutter packages get
 
 - Execute:
 $ flutter run
-
-```
+ 
 
 </p>
  
