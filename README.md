@@ -22,7 +22,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 
 <h2>Screenshots</h2>
 
-<img src="https://github.com/RegisSalesRA/flutter_rick_and_morty/blob/master/assets/readme/characters.gif" width="250"> <img src="https://github.com/RegisSalesRA/flutter_rick_and_morty/blob/master/assets/readme/locations.gif" width="250"> <img src="https://github.com/RegisSalesRA/flutter_rick_and_morty/blob/master/assets/readme/quiz.png" width="250"> 
+<img src="https://github.com/RegisSalesRA/django_flutter_college/blob/master/client_flutter/assets/readme/login.png" width="250"> <img src="https://github.com/RegisSalesRA/django_flutter_college/blob/master/client_flutter/assets/readme/home.png" width="250"> <img src="https://github.com/RegisSalesRA/django_flutter_college/blob/master/client_flutter/assets/readme/signup.png" width="250"> 
 
 <p>
 </p>
