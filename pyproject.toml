@@ -12,11 +12,13 @@ django = "^4.2.3"
 djangorestframework = "^3.14.0"
 python-dotenv = "^1.0.0"
 djangorestframework-simplejwt = "^5.2.2"
-coverage = "^7.2.2"
+
 drf-yasg = "^1.21.7"
+coverage = "^7.4.0"
+
 psycopg = "^3.1.9"
 psycopg2-binary = "^2.9.6"
-gunicorn = "^20.1.0"
+gunicorn = "^21.2.0"
 
 
 [tool.poetry.group.dev.dependencies]
